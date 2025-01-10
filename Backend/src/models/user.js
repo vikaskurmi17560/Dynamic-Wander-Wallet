@@ -1,36 +1,21 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const User_Schema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    role: { type: String, enum: ['customer', 'tripPlanner'], required: true }, // Role-based user types
+    preferences: {
+        // Preferences applicable only to customers
+        transportMode: { type: String, enum: ['car', 'bike', 'public'], default: 'car' },
+        hotelType: { type: String, enum: ['budget', '3-star', 'luxury'], default: 'budget' },
+        foodPreference: { type: String, enum: ['vegetarian', 'vegan', 'non-vegetarian'], default: 'vegetarian' },
+        maxBudget: { type: Number }
     },
-    email: {
-        type: String,
-        required: true,
-    },
-    Address: {
-        address: {
-            type: String,
-            required: true,
-        },
-        road: {
-            type: String,
-            required: true,
-        },
-        city: {
-            type: String,
-            required: true,
-        },
-        pin_code: {
-            type: Number,
-            required: true,
-        }
-    },
-    role: {
-        type: String,
-        enum: ['Customer', 'Trip Planner'],
-        default: 'Customer'
+    expertise: {
+        // Expertise applicable only to trip planners
+        specialties: [{ type: String }], //  trekking, cultural tours, etc.
+        regionsCovered: [{ type: String }], //  specific regions in Uttarakhand
+        yearsOfExperience: { type: Number }
     },
     phone_no: {
         type: String,
@@ -81,6 +66,18 @@ User_Schema.pre("save", async function (next) {
     this.confirm_password = undefined;
     next();
 })
+
+
+// Add role-based validation
+userSchema.pre('save', function (next) {
+    if (this.role === 'customer' && !this.preferences.maxBudget) {
+        return next(new Error('Max budget is required for customers.'));
+    }
+    if (this.role === 'tripPlanner' && !this.expertise.yearsOfExperience) {
+        return next(new Error('Years of experience is required for trip planners.'));
+    }
+    next();
+});
 
 const User = mongoose.model("User", User_Schema);
 module.exports = User;

@@ -6,7 +6,7 @@ const { WelcomeEmail } = require("../services/welcome-email");
 const sendEmail = require("../services/Reset-Password-email");
 
 exports.signup = async (req, res) => {
-    const { name, email, Address, phone_no, role, gender, password, confirm_password } = req.body;
+    const { name, email, Address, phone_no, role, gender, password , preferences , expertise , confirm_password } = req.body;
 
     try {
         
@@ -26,6 +26,13 @@ exports.signup = async (req, res) => {
             });
         }
 
+        if (role === 'customer' && (!preferences || !preferences.maxBudget)) {
+            return res.status(400).json({ message: "Max budget is required for customers." });
+        }
+        if (role === 'tripPlanner' && (!expertise || !expertise.yearsOfExperience)) {
+            return res.status(400).json({ message: "Years of experience is required for trip planners." });
+        }
+
        
         const newUser = await Users.create({
             name,
@@ -33,6 +40,8 @@ exports.signup = async (req, res) => {
             Address,
             phone_no,
             role,
+            preferences, 
+            expertise,
             gender,
             password
         });
@@ -193,5 +202,42 @@ exports.resetPassword = async (req, res) => {
             success: false,
             message: "error",
         });
+    }
+}
+
+exports.updateUser = async (req, res) => {
+    try {
+        const { name, email, Address, phone_no, role, preferences , expertise } = req.body;
+        const { user_id } = req.query;
+  const updated_object = {};
+  if (name) {
+    updated_object.name = name;
+  }
+  
+  if (email) {
+    updated_object.email = email;
+  }
+  if (Address) {
+    updated_object.Address = Address;
+  }
+  if (phone_no) {
+    updated_object.phone_no = phone_no;
+  }
+  if (role) {
+    updated_object.role = role;
+  }
+  if (preferences) {
+    updated_object.preferences = preferences;
+  }
+  if(expertise){
+    updated_object.expertise = expertise;
+  }
+        const update_user = await User.findByIdAndUpdate(user_id, updated_object, { new: true, runValidators: true });
+        if (!update_user) {
+            return res.status(404).json({ message: "User not found!" });
+        }
+        return res.status(200).json({ message: "User updated successfully!", update_user });
+    } catch (error) {
+       return res.status(500).json({ message: error.message });
     }
 }
