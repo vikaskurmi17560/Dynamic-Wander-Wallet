@@ -52,7 +52,17 @@ const User_Schema = new mongoose.Schema({
             message: "done",
         }
 
-    }
+    },
+    bio: {
+        type: String,
+        maxlength: 150, // Optional field for user bio
+    },
+    posts: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Post", // Reference to posts created by the user
+        },
+    ],
 
 }, { timestamp: true })
 
