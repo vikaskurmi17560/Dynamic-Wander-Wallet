@@ -1,8 +1,8 @@
-import Profile from "@/components/Profile/profile"
+import HeroSection from "@/components/Herosection"
 export default function Home() {
   return (
   <div className="" >
-   <Profile />
+   <HeroSection />
   </div>
   );
 }

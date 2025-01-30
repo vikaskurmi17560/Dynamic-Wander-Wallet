@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import Navbar from '@/components/Header/nav'
+import Navbar from '@/components/Navbar'
 function profile() {
   const [post,setPost] = useState <Boolean>(true);
   const [videos,setVideos] = useState <Boolean> (false);
@@ -8,7 +8,6 @@ function profile() {
   return (
   
     <main className='w-full min-h-screen flex flex-col bg-slate-200  '>
-      <Navbar />
       <section className='flex flex-col gap-24'>
       <section className="relative w-[100%] pl-6 h-60 bg-slate-600 flex items-center ">
         <div className="w-[200px] absolute top-[50%] h-[200px] bg-slate-300 rounded-full flex justify-center items-center">
