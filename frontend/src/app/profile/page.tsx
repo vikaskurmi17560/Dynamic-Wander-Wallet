@@ -99,46 +99,46 @@ function profile() {
        <div className=" h-auto w-[100%]">
        { post === true && (
         <div className="  w-[100%] grid grid-cols-4 gap-2 text-white">
-          <p className="w-[300px] h-[300px] bg-black">post</p>
-          <p className="w-[300px] h-[300px] bg-black">post</p>
-          <p className="w-[300px] h-[300px] bg-black">post</p>
-          <p className="w-[300px] h-[300px] bg-black">post</p>
-          <p className="w-[300px] h-[300px] bg-black">post</p>
-          <p className="w-[300px] h-[300px] bg-black">post</p>
-          <p className="w-[300px] h-[300px] bg-black">post</p>
-          <p className="w-[300px] h-[300px] bg-black">post</p>
-          <p className="w-[300px] h-[300px] bg-black">post</p>
-          <p className="w-[300px] h-[300px] bg-black">post</p>
+          <p className="w-[98%] h-[300px] bg-black">post</p>
+          <p className="w-[98%] h-[300px] bg-black">post</p>
+          <p className="w-[98%] h-[300px] bg-black">post</p>
+          <p className="w-[98%] h-[300px] bg-black">post</p>
+          <p className="w-[98%] h-[300px] bg-black">post</p>
+          <p className="w-[98%] h-[300px] bg-black">post</p>
+          <p className="w-[98%] h-[300px] bg-black">post</p>
+          <p className="w-[98%] h-[300px] bg-black">post</p>
+          <p className="w-[98%] h-[300px] bg-black">post</p>
+          <p className="w-[98%] h-[300px] bg-black">post</p>
         </div>
        )}
        
        { videos === true && (
         <div className="  w-[100%] grid grid-cols-4 gap-2 text-white">
-            <p className="w-[300px] h-[300px] bg-black">video</p>
-          <p className="w-[300px] h-[300px] bg-black">video</p>
-          <p className="w-[300px] h-[300px] bg-black">video</p>
-          <p className="w-[300px] h-[300px] bg-black">video</p>
-          <p className="w-[300px] h-[300px] bg-black">video</p>
-          <p className="w-[300px] h-[300px] bg-black">video</p>
-          <p className="w-[300px] h-[300px] bg-black">video</p>
-          <p className="w-[300px] h-[300px] bg-black">video</p>
-          <p className="w-[300px] h-[300px] bg-black">video</p>
-          <p className="w-[300px] h-[300px] bg-black">video</p>
+            <p className="w-[98%] h-[300px] bg-black">video</p>
+          <p className="w-[98%] h-[300px] bg-black">video</p>
+          <p className="w-[98%] h-[300px] bg-black">video</p>
+          <p className="w-[98%] h-[300px] bg-black">video</p>
+          <p className="w-[98%] h-[300px] bg-black">video</p>
+          <p className="w-[98%] h-[300px] bg-black">video</p>
+          <p className="w-[98%] h-[300px] bg-black">video</p>
+          <p className="w-[98%] h-[300px] bg-black">video</p>
+          <p className="w-[98%] h-[300px] bg-black">video</p>
+          <p className="w-[98%] h-[300px] bg-black">video</p>
         </div>
        )}
        
        { others === true && (
         <div className=" w-[100%] grid grid-cols-4 gap-2 text-white">
-          <p className="w-[300px] h-[300px] bg-black">others</p>
-          <p className="w-[300px] h-[300px] bg-black">others</p>
-          <p className="w-[300px] h-[300px] bg-black">others</p>
-          <p className="w-[300px] h-[300px] bg-black">others</p>
-          <p className="w-[300px] h-[300px] bg-black">others</p>
-          <p className="w-[300px] h-[300px] bg-black">others</p>
-          <p className="w-[300px] h-[300px] bg-black">others</p>
-          <p className="w-[300px] h-[300px] bg-black">others</p>
-          <p className="w-[300px] h-[300px] bg-black">others</p>
-          <p className="w-[300px] h-[300px] bg-black">others</p>
+          <p className="w-[98%] h-[300px] bg-black">others</p>
+          <p className="w-[98%] h-[300px] bg-black">others</p>
+          <p className="w-[98%] h-[300px] bg-black">others</p>
+          <p className="w-[98%] h-[300px] bg-black">others</p>
+          <p className="w-[98%] h-[300px] bg-black">others</p>
+          <p className="w-[98%] h-[300px] bg-black">others</p>
+          <p className="w-[98%] h-[300px] bg-black">others</p>
+          <p className="w-[98%] h-[300px] bg-black">others</p>
+          <p className="w-[98%] h-[300px] bg-black">others</p>
+          <p className="w-[98%] h-[300px] bg-black">others</p>
         </div>
        )}
        

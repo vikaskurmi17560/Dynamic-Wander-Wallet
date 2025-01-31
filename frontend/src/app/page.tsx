@@ -1,7 +1,7 @@
 import HeroSection from "@/components/Herosection"
 export default function Home() {
   return (
-  <div className="" >
+  <div className="bg-white" >
    <HeroSection />
   </div>
   );
