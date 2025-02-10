@@ -140,11 +140,11 @@ sm:bg-[length:100%_auto] md:bg-cover lg:bg-cover bg-no-repeat gap-4">
       <CardContainer className="inter-var " key={index}>
         <CardBody className="w-[98%] h-fit bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] rounded-xl lg:p-10 md:p-10 p-5 border flex flex-col">
           
-          <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 dark:text-white">
+          <CardItem  className="text-xl font-bold text-neutral-600 dark:text-white">
             {card.heading}
           </CardItem>
 
-          <CardItem translateZ="100" rotateX={20} rotateZ={-10} className="w-full mt-4">
+          <CardItem translateZ="100" rotateX={20} rotateZ={-5} className="w-full mt-4">
             <Image
               src={card.image.trim()} // Ensure no extra spaces in URL
               height={1000}
@@ -154,18 +154,16 @@ sm:bg-[length:100%_auto] md:bg-cover lg:bg-cover bg-no-repeat gap-4">
             />
           </CardItem>
 
-          <CardItem as="p" translateZ="60" className="text-neutral-500 text-sm max-w-sm py-6 dark:text-neutral-300 text-center">
+          <CardItem as="p" translateZ="100" rotateX={20}  className="text-neutral-500 text-sm max-w-sm py-6 dark:text-neutral-300 text-center">
             {card.desc}
           </CardItem>
 
           <div className="flex flex-row justify-between items-center mt-5">
-            <CardItem translateZ={20} translateX={-40} as="button" className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white text-black">
+            <CardItem  as="button" className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white text-black">
               Try now →
             </CardItem>
             <CardItem
-              translateZ={20}
-              translateX={40}
-              as="button"
+           as="button"
               className="px-4 py-2 rounded-xl hover:bg-white border-green-600 border-2 text-white hover:border-green-600 bg-green-600 hover:text-green-600 text-xs font-bold"
             >
               Sign up

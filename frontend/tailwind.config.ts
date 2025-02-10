@@ -1,10 +1,13 @@
 import type { Config } from "tailwindcss";
 const svgToDataUri = require("mini-svg-data-uri");
+const defaultTheme = require("tailwindcss/defaultTheme");
  
 const colors = require("tailwindcss/colors");
 const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
+
+
 
 export default {
   content: [
@@ -14,6 +17,29 @@ export default {
   ],
   theme: {
     extend: {
+      animation: {
+        scrollX: "scrollX 40s linear infinite",
+        scrollY: "scrollY 20s linear infinite",
+        aurora: "aurora 60s linear infinite",
+      },
+      keyframes: {
+        scrollX: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
+        aurora: {
+          from: {
+            backgroundPosition: "50% 50%, 50% 50%",
+          },
+          to: {
+            backgroundPosition: "350% 50%, 350% 50%",
+          },
+        },
+        scrollY: {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(-100%)" }, // Moves items upwards
+        },
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
@@ -44,6 +70,19 @@ export default {
           { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
         );
       },
+
+      addVariablesForColors
     ],
  
 } satisfies Config;
+
+function addVariablesForColors({ addBase, theme }: any) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+ 
+  addBase({
+    ":root": newVars,
+  });
+}
