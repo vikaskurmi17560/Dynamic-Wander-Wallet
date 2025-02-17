@@ -6,9 +6,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
-.heading{
+.heading {
     width: 85%;
     font-size: 1.4em;
     font-weight: bold;
@@ -17,24 +18,28 @@
     margin-bottom: 20px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.5em;
 }
 
+/* Scrollable container for cards */
 .gridContainer {
     display: flex;
     gap: 1.5em;
-    /* border: 1px solid black; */
-    width: 87%;
+    width: 86%;
     justify-content: flex-start; 
-    overflow-x: auto; 
+    overflow-x: auto;
     padding: 10px;
-    scroll-snap-type: x mandatory; 
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
 }
 
+/* Hide the scrollbar */
 ::-webkit-scrollbar {
     display: none; 
 }
 
+/* Card Styles */
 .card {
     background: #f9f9f9;
     border-radius: 1.2em;
@@ -42,11 +47,18 @@
     position: relative;
     width: 15em; 
     height: 12em;
-    flex: 0 0 auto; 
+    flex: 0 0 auto; /* Ensures the cards don’t shrink */
     scroll-snap-align: center;
     cursor: pointer;
+    transition: transform 0.3s ease-in-out;
 }
 
+/* Hover Effect */
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Image inside the card */
 .image {
     width: 100%;
     height: 100%;
@@ -54,6 +66,7 @@
     border-radius: 1.2em;
 }
 
+/* Overlay for card details */
 .about {
     position: absolute;
     top: 0;
@@ -61,54 +74,123 @@
     display: flex;
     flex-direction: column;
     justify-content: end;
+    align-items: center;
     border-radius: 1.2em;
     height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, 0.4);
+    color: white;
+    padding: 10px;
 }
 
-.call{
+/* Description */
+.call {
     font-size: 0.7em;
     text-transform: uppercase;
     font-weight: 600;
 }
 
-.name{
+/* Place Name */
+.name {
     font-size: 1.6em;
     font-weight: 800;
     font-family: cursive;
 }
 
+/* Scroll Arrows */
 .scrollWrapper {
     display: flex;
-    gap: 0.2em;
-    width: 4em;
+    gap: 0.5em;
+    width: 5em;
     height: 2em;
 }
 
-.line{
-    height: 0.2em;
+/* Underline Separator */
+.line {
+    height: 0.1em;
     background-color: black;
-    width: 65%;
+    width: 45%;
 }
 
+/* Arrow Buttons */
 .arrow {
     height: 100%;
     width: 48%;
     background: rgba(0, 0, 0, 1);
-    color: rgb(255 ,0,0,1);
+    color: rgb(255, 0, 0, 1);
     border: none;
     cursor: pointer;
     font-size: 20px;
     transition: color 0.3s;
 }
 
+/* Blinking Effect */
 .blink {
-    animation: blink-animation 2s infinite;
+    animation: blink-animation 1.5s infinite;
 }
 
 @keyframes blink-animation {
     0% { color: rgba(255, 0, 0, 1); } 
     50% { color: rgba(255, 0, 0, 0.4); } 
     100% { color: rgba(255, 0, 0, 1); } 
+}
+
+/* 📱 Responsive Styles */
+@media (max-width: 768px) {
+    .gridContainer {
+        width: 100%;
+        gap: 1em;
+        padding: 10px 5px;
+    }
+    
+    .line{
+        width: 30%;
+    }
+    .card {
+        width: 12em;
+        height: 10em;
+    }
+
+    .heading {
+        font-size: 1.2em;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .scrollWrapper {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .arrow {
+        font-size: 18px;
+        width: 2em;
+        height: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .gridContainer {
+        gap: 0.5em;
+        padding: 5px;
+    }
+
+    .card {
+        width: 10em;
+        height: 8em;
+    }
+
+    .call {
+        font-size: 0.6em;
+    }
+
+    .name {
+        font-size: 1.2em;
+    }
+
+    .arrow {
+        font-size: 16px;
+        width: 1.8em;
+        height: 1.8em;
+    }
 }
