@@ -1,0 +1,42 @@
+.image{
+    width: 7em;
+    height: 15vh;
+    border-radius: 50%;
+}
+
+.container{
+    /* border: 1px solid  red; */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    margin-top: 1em;
+}
+
+.grid{
+    display: flex;
+    gap : 2em;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.name{
+    color : #464E67
+}
+
+.card{
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9em;
+}
+
+.heading{
+    text-transform: uppercase;
+    color:#263140;
+    font-weight: 600;
+    font-size: 1.3em;
+    /* border: 1px solid black; */
+    padding-left: 6em;
+}
