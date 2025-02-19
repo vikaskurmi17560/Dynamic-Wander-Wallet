@@ -3,20 +3,7 @@ const bcrypt = require("bcryptjs");
 const User_Schema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    role: { type: String, enum: ['customer', 'tripPlanner'], required: true }, // Role-based user types
-    preferences: {
-        // Preferences applicable only to customers
-        transportMode: { type: String, enum: ['car', 'bike', 'public'], default: 'car' },
-        hotelType: { type: String, enum: ['budget', '3-star', 'luxury'], default: 'budget' },
-        foodPreference: { type: String, enum: ['vegetarian', 'vegan', 'non-vegetarian'], default: 'vegetarian' },
-        maxBudget: { type: Number }
-    },
-    expertise: {
-        // Expertise applicable only to trip planners
-        specialties: [{ type: String }], //  trekking, cultural tours, etc.
-        regionsCovered: [{ type: String }], //  specific regions in Uttarakhand
-        yearsOfExperience: { type: Number }
-    },
+    
     phone_no: {
         type: String,
         required: true,
@@ -28,9 +15,7 @@ const User_Schema = new mongoose.Schema({
         },
     },
     gender: {
-        type: String,
-        required: true,
-
+        type: String
     },
     password: {
         type: String,
@@ -77,17 +62,6 @@ User_Schema.pre("save", async function (next) {
     next();
 })
 
-
-// Add role-based validation
-userSchema.pre('save', function (next) {
-    if (this.role === 'customer' && !this.preferences.maxBudget) {
-        return next(new Error('Max budget is required for customers.'));
-    }
-    if (this.role === 'tripPlanner' && !this.expertise.yearsOfExperience) {
-        return next(new Error('Years of experience is required for trip planners.'));
-    }
-    next();
-});
 
 const User = mongoose.model("User", User_Schema);
 module.exports = User;
