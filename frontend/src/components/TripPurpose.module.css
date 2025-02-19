@@ -1,0 +1,178 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.redbox {
+    background-image: url('/images/RedBackground.webp');
+    width: 85%;
+    min-height: 59vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 1.2em;
+    display: flex;
+    flex-direction: column;
+    gap: 2.1em;
+    align-items: center;
+    justify-content: center;
+    padding: 2em 1em;
+}
+
+.choose {
+    font-size: 1.6em;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+}
+
+.travel {
+    font-size: 1.8em;
+    font-family: cursive;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.box_div {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 2em;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    width: 25vh;
+    height: 32vh;
+    border-radius: 1.2em;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+}
+
+.data {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: inherit;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    gap: 0.3em;
+}
+
+.name {
+    color: yellow;
+    font-size: 1.8em;
+    text-transform: capitalize;
+    font-family: cursive;
+    text-align: center;
+    font-weight: 700;
+}
+
+.subname {
+    color: green;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+
+@media (max-width: 1519px) {
+    .redbox {
+        width: 90%;
+    }
+
+    .card {
+        width: 23vh;
+        height: 30vh;
+    }
+
+    .choose {
+        font-size: 1.4em;
+    }
+
+    .travel {
+        font-size: 1.6em;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .redbox {
+        width: 95%;
+    }
+
+    .box_div {
+        flex-direction: column; 
+    }
+
+    .card {
+        width: 28vh;
+        height: 28vh;
+    }
+
+    .choose {
+        font-size: 1.2em;
+    }
+
+    .travel {
+        font-size: 1.4em;
+    }
+
+    .name {
+        font-size: 1.4em;
+    }
+
+    .subname {
+        font-size: 0.95em;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .redbox {
+        padding: 1em 0.5em;
+        gap: 1.5em;
+    }
+
+    .card {
+        width: 22vh;
+        height: 25vh;
+    }
+
+    .choose {
+        font-size: 1em;
+    }
+
+    .travel {
+        font-size: 1.2em;
+    }
+
+    .name {
+        font-size: 1.2em;
+    }
+
+    .subname {
+        font-size: 0.85em;
+    }
+}
