@@ -51,6 +51,7 @@
     scroll-snap-align: center;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
+    object-fit: cover;
 }
 
 /* Hover Effect */
@@ -58,6 +59,11 @@
     transform: scale(1.05);
 }
 
+.imageContainer{
+    width: 15em; 
+    height: 12em;
+    object-fit: cover;
+}
 /* Image inside the card */
 .image {
     width: 100%;
