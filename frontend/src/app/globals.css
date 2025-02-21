@@ -19,3 +19,11 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+:root {
+  --color-header: #0d0d0d;
+  --color-text: #404040;
+  --color-btn-text: #3363ff;
+  --color-btn-background: #e6ecff;
+  --transition-speed: 0.2s;
+}
