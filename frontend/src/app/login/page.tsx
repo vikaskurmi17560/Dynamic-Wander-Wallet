@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form'
 import { Signin } from "@/connection/userConnection";
 
+
 export default function page() {
   const router = useRouter();
   const { register, handleSubmit } = useForm();
@@ -12,14 +13,25 @@ export default function page() {
     try {
 
         const response = await Signin(data);
-        if (response.success) {
-            toast.success("Login SuccessFully");
-            router.replace("/");
-        }
-    }
-    catch (error: any) {
+        if (response.success ) {
+          
+          toast.success("Login Successfully");
+          const expiresAt = Date.now() + 60 * 60 * 1000; 
 
-        toast.error(error.response.message)
+         
+          localStorage.setItem("token", JSON.stringify({ value: response.token, expiresAt }));
+          localStorage.setItem("user_id", JSON.stringify({ value: response.user._id, expiresAt }));
+          localStorage.setItem("user_name", JSON.stringify({ value: response.user.name, expiresAt }));
+          localStorage.setItem("user_email", JSON.stringify({ value: response.user.email, expiresAt }));
+
+          router.replace("/");
+          
+    }
+  }
+    catch (error:any) {
+
+      console.error("Signin Error:", error.message);
+      toast.error(error.message || "An unexpected error occurred");
     }
 }
 
@@ -50,7 +62,7 @@ export default function page() {
                       type="email"
                       autoComplete="email"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -78,7 +90,7 @@ export default function page() {
                       type="password"
                       autoComplete="current-password"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -108,4 +120,8 @@ export default function page() {
       </div>
     </>
   );
+}
+
+function encrypt(arg0: { response: any; expires: Date; }) {
+  throw new Error("Function not implemented.");
 }
