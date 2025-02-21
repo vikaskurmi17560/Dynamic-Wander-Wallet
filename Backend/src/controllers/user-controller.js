@@ -4,9 +4,10 @@ const jwt = require("jsonwebtoken");
 const { randomBytes, createHash } = require("crypto");
 const { WelcomeEmail } = require("../services/welcome-email");
 const sendEmail = require("../services/Reset-Password-email");
+const { uploadSingleImage } = require("../services/cloudinary");
 
 exports.signup = async (req, res) => {
-    const { name, email, Address, phone_no, gender, password , confirm_password } = req.body;
+    const { name, email, phone_no, gender, password , confirm_password} = req.body;
 
     try {
         
@@ -31,7 +32,6 @@ exports.signup = async (req, res) => {
         const newUser = await Users.create({
             name,
             email,
-            Address,
             phone_no, 
             gender,
             password
@@ -88,6 +88,8 @@ exports.login = async (req, res) => {
         });
 
         return res.status(200).json({
+            token,
+            user:userExists,
             success: true,
             message: "Login successful"
         });
@@ -198,29 +200,82 @@ exports.resetPassword = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     try {
-        const { name, email, Address, phone_no, role, preferences , expertise } = req.body;
-        const { user_id } = req.query;
-  const updated_object = {};
-  if (name) {
-    updated_object.name = name;
-  }
-  
-  if (email) {
-    updated_object.email = email;
-  }
-  if (Address) {
-    updated_object.Address = Address;
-  }
-  if (phone_no) {
-    updated_object.phone_no = phone_no;
-  }
-  
-        const update_user = await User.findByIdAndUpdate(user_id, updated_object, { new: true, runValidators: true });
+        let { name, phone_no, email, bio } = req.body; // Added `email`
+        const { user_id } = req.query; // Ensure user_id is sent as a query parameter
+        let updated_object = {};
+
+        // Check and add text fields
+        if (name) updated_object.name = name;
+        if (email) updated_object.email = email;
+        if (bio) updated_object.bio = bio;
+        if (phone_no) updated_object.phone_no = phone_no;
+
+        // Handle multiple file uploads
+        if (req.files) {
+            if (req.files.profile) {
+                const uploadedProfile = await uploadSingleImage(req.files.profile[0].path);
+                if (uploadedProfile) {
+                    updated_object.profile = uploadedProfile.secure_url;
+                }
+            }
+            if (req.files.banner) {
+                const uploadedBanner = await uploadSingleImage(req.files.banner[0].path);
+                if (uploadedBanner) {
+                    updated_object.banner = uploadedBanner.secure_url;
+                }
+            }
+        }
+
+        // Update user in database
+        const update_user = await Users.findByIdAndUpdate(user_id, updated_object, { 
+            new: true, 
+            runValidators: true 
+        });
+
         if (!update_user) {
             return res.status(404).json({ message: "User not found!" });
         }
+
         return res.status(200).json({ message: "User updated successfully!", update_user });
+
     } catch (error) {
-       return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message });
     }
-}
+};
+
+exports.getUser = async (req, res) => {
+    try {
+        const { user_id } = req.query; // Extract user ID from query parameters
+
+        if (!user_id) {
+            return res.status(400).json({
+                success: false,
+                message: "User ID is required",
+            });
+        }
+
+        // Fetch user by ID correctly
+        const userExists = await Users.findOne({ _id: user_id });
+
+        if (!userExists) {
+            return res.status(404).json({
+                success: false,
+                message: "User does not exist",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "User exists",
+            user: userExists,
+        });
+
+    } catch (error) {
+        console.error("Error fetching user:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Server error",
+            error: error.message, // Include error details for debugging
+        });
+    }
+};
