@@ -80,7 +80,6 @@ function page() {
           <label className="block text-sm font-medium text-gray-900">Name</label>
           <input
             {...register("name")}
-            value={name}
             type="text"
             className="px-2 border-b-2 mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
@@ -90,7 +89,6 @@ function page() {
           <label className="block text-sm font-medium text-gray-900">Bio</label>
           <textarea
             {...register("bio")}
-            value={bio}
             className="px-2 border-b-2 mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
@@ -99,7 +97,6 @@ function page() {
           <label className="block text-sm font-medium text-gray-900">Phone Number</label>
           <input
             {...register("phone_no")}
-            value={phone_no}
             type="tel"
             className="px-2 border-b-2 mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />

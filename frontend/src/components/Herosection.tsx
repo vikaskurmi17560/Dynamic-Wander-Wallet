@@ -1,7 +1,11 @@
+"use client"
 import React from 'react'
-import { FloatingDock } from "@/components/ui/floating-dock";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import Image from "next/image";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 import {
   IconBrandX,
   IconExchange,
@@ -10,6 +14,23 @@ import {
   IconTerminal2,
 } from "@tabler/icons-react";
 
+const banners = [
+  {
+    image: "https://uttarakhandtourism.net/wp-content/uploads/2023/12/home_banner_1.jpg",
+   
+  },
+ 
+  {
+    image: "https://uttarakhandtourism.net/wp-content/uploads/2023/12/home_banner_3.jpg",
+  },
+  
+  {
+    image: " https://uttarakhandtourism.net/wp-content/uploads/2023/12/home_banner_6.jpg",
+   
+  },
+  
+ 
+];
 
 function Herosection() {
 
@@ -105,31 +126,47 @@ function Herosection() {
 
   return (
     <main className='flex bg-white  w-full h-auto  flex-col '>
-
-      <section className="bg-[url('https://stippl.io/assets/background_visual_footer-dfc36cdf.svg')] lg:h-[80vh] md:h-[60vh] h-[100px] w-[100%] bg-cover bg-center flex flex-col justify-center items-center 
-sm:bg-[length:100%_auto] md:bg-cover lg:bg-cover bg-no-repeat gap-4">
-
-        <div className="w-[50%] lg:h-[65vh] md:h-64 h-[20vh] flex flex-col justify-center items-center lg:gap-5 md:gap-4 gap-2 pt-20 ">
-          <div className='lg:text-5xl md:text-3xl text-[15px] font-bold '>
-            <h1 className='text-green-600 text-center '>One travel app</h1>
-            <h1 className='text-gray-900 text-center'>to replace them all</h1>
-          </div>
-          <p className='lg:text-xl md:text-sm text-[8px] text-black  text-center '>We want to be on each of your journeys seeking the satisfaction of seeing the incorruptible beauty of nature. We can help you on an adventure around the uttrakhand in just one app</p>
+      <section className='w-full'>
+  
+      <Swiper
+        effect={'coverflow'}
+        grabCursor={true}
+        centeredSlides={true}
+        slidesPerView={1}
+        loop={true} // Enable loop to prevent reverse direction
+        coverflowEffect={{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: false,
+        }}
+        modules={[EffectCoverflow, Autoplay]}
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        className="mySwiper w-full h-[90vh]"
+      >
+        {banners.map((data, index) => (
+          <SwiperSlide
+            key={index}
+          >
+           <div  style={{ backgroundImage: `url(${data.image})` }}
+            className="w-full h-[100vh] bg-cover bg-center bg-no-repeat flex justify-center items-center text-white">
+           <div className='w-full h-fit flex flex-col  justify-center items-center text-center pt-5 gap-10'>
+              <h1 className="w-[70%] text-2xl md:text-3xl lg:text-7xl font-extrabold">One travel app</h1>
+              <h1 className="w-[70%] text-2xl md:text-3xl lg:text-7xl font-extrabold text-gray-200"> to replace them all</h1>
+             
+              <p className='lg:text-3xl md:text-xl text-sm text-gray-100  text-center '>We want to be on each of your journeys seeking the satisfaction of seeing the incorruptible beauty of nature. We can help you on an adventure around the uttrakhand in just one app</p>
           <button className=' lg:py-2 lg:px-5 md:py-1 md:px-3 py-1 px-3 lg:text-xl md:text-sm text-[10px] text-white hover:bg-white border-green-600 border-2 rounded-full hover:border-green-600 bg-green-600 hover:text-green-600 font-bold text-center '>Get started. It's FREE</button>
-        </div>
-
-
-
-        <div className=" flex items-center justify-center h-fit w-[100%]">
-          <FloatingDock
-            mobileClassName="translate-y-20" // only for demo, remove for production
-            items={links}
-          />
-        </div>
-
+            </div>
+           </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      
       </section>
+    
 
-      <section className="w-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-100 via-black to-gray-100 dark:bg-white">
+      <section className="w-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-100 via-slate-500 to-gray-100 dark:bg-white">
   <p className="text-orange-400 text-xl text-center py-4">Most Visited Destinations</p>
   <h1 className="text-white dark:text-black text-4xl font-bold text-center pb-5">
     Explore Our Tour Destinations..
@@ -187,3 +224,4 @@ sm:bg-[length:100%_auto] md:bg-cover lg:bg-cover bg-no-repeat gap-4">
 }
 
 export default Herosection;
+
