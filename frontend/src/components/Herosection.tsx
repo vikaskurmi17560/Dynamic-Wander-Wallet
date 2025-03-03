@@ -125,7 +125,7 @@ function Herosection() {
 
 
   return (
-    <main className='flex bg-white  w-full h-auto  flex-col '>
+    <main className='flex bg-white  w-full h-auto  flex-col mt-24'>
       <section className='w-full'>
   
       <Swiper

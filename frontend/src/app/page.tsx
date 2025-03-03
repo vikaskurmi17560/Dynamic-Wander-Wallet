@@ -2,6 +2,8 @@ import BudgetCardSection from "@/components/BudgetCardSection";
 import Destination from "@/components/DEST-GUIDE/Destination";
 import DestinationGuide from "@/components/DEST-GUIDE/DestinationGuide";
 import ExplorePage from "@/components/ExplorePage";
+import Feedback from "@/components/FEEDBACK/Feedback";
+import Footer from "@/components/FOOTER/Footer";
 import Footersection from "@/components/Footersection";
 import HeroSection from "@/components/Herosection"
 import HolidayBudget from "@/components/HolidayBudget";
@@ -21,8 +23,10 @@ export default function Home() {
       <Newspaper />
       <Destination />
       <DestinationGuide />
-      <Reviewsection />
+      <Feedback />
+      {/* <Reviewsection /> */}
       <Footersection />
+      <Footer/>
     </div>
   );
 }

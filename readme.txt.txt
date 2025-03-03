@@ -1,6 +1,7 @@
 #Frontend Side
 install this font icon -> npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
-npm install react-icons
+install icon ->  npm install react-icons
+install icon ->   npm install @fortawesome/react-fontawesome @fortawesome/free-brands-svg-icons @fortawesome/free-solid-svg-icons
 
 install swiper -> npm install swiper
 use for banner slider in herosection
