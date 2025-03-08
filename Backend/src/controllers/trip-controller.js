@@ -14,23 +14,29 @@ exports.createTrip = async (req, res) => {
 // Get all trips for a user
 exports.getTripsByUser = async (req, res) => {
   try {
-    const trips = await Trip.find({ userId: req.params.userId });
+    const { userId } = req.query; // Extract userId from query parameters
+
+    if (!userId) {
+      return res.status(400).json({ error: "User ID is required" });
+    }
+
+    const trips = await Trip.find({ userId }).lean();
+
     res.status(200).json(trips);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 // Get a single trip by ID
 exports.getTripById = async (req, res) => {
   try {
-    const trip = await Trip.findById(req.params.id);
-    if (!trip) {
-      return res.status(404).json({ error: 'Trip not found' });
-    }
+    const trip = await Trip.findById(req.query.id).lean();
+    if (!trip) return res.status(404).json({ error: 'Trip not found' });
     res.status(200).json(trip);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -38,13 +44,13 @@ exports.getTripById = async (req, res) => {
 exports.updateTrip = async (req, res) => {
   try {
     const updatedTrip = await Trip.findByIdAndUpdate(
-      req.params.id,
+      req.query.id,
       req.body,
       { new: true, runValidators: true }
     );
-    if (!updatedTrip) {
-      return res.status(404).json({ error: 'Trip not found' });
-    }
+
+    if (!updatedTrip) return res.status(404).json({ error: 'Trip not found' });
+
     res.status(200).json(updatedTrip);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -55,12 +61,10 @@ exports.updateTrip = async (req, res) => {
 exports.deleteTrip = async (req, res) => {
   try {
     const deletedTrip = await Trip.findByIdAndDelete(req.params.id);
-    if (!deletedTrip) {
-      return res.status(404).json({ error: 'Trip not found' });
-    }
+    if (!deletedTrip) return res.status(404).json({ error: 'Trip not found' });
     res.status(200).json({ message: 'Trip deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -68,19 +72,15 @@ exports.deleteTrip = async (req, res) => {
 exports.updateCheckpointStatus = async (req, res) => {
   try {
     const trip = await Trip.findById(req.params.tripId);
-    if (!trip) {
-      return res.status(404).json({ error: 'Trip not found' });
-    }
+    if (!trip) return res.status(404).json({ error: 'Trip not found' });
 
     const checkpoint = trip.checkpoints.id(req.params.checkpointId);
-    if (!checkpoint) {
-      return res.status(404).json({ error: 'Checkpoint not found' });
-    }
+    if (!checkpoint) return res.status(404).json({ error: 'Checkpoint not found' });
 
     checkpoint.visited = req.body.visited;
     await trip.save();
 
-    res.status(200).json(trip);
+    res.status(200).json({ message: 'Checkpoint updated successfully', trip });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -90,17 +90,34 @@ exports.updateCheckpointStatus = async (req, res) => {
 exports.updateTripBudget = async (req, res) => {
   try {
     const trip = await Trip.findById(req.params.id);
-    if (!trip) {
-      return res.status(404).json({ error: 'Trip not found' });
-    }
+    if (!trip) return res.status(404).json({ error: 'Trip not found' });
 
     if (req.body.spent !== undefined) {
       trip.budget.spent = req.body.spent;
-      trip.budget.remaining = trip.budget.total - trip.budget.spent;
+      trip.budget.remaining = Math.max(trip.budget.total - trip.budget.spent, 0);
     }
 
     await trip.save();
-    res.status(200).json(trip);
+    res.status(200).json({ message: 'Budget updated successfully', trip });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Update trip status
+exports.updateTripStatus = async (req, res) => {
+  try {
+    const trip = await Trip.findById(req.params.id);
+    if (!trip) return res.status(404).json({ error: 'Trip not found' });
+
+    if (!['active', 'completed', 'cancelled'].includes(req.body.status)) {
+      return res.status(400).json({ error: 'Invalid status value' });
+    }
+
+    trip.status = req.body.status;
+    await trip.save();
+
+    res.status(200).json({ message: 'Trip status updated successfully', trip });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

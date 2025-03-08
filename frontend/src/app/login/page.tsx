@@ -4,36 +4,32 @@ import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form'
 import { Signin } from "@/connection/userConnection";
 
-
 export default function page() {
   const router = useRouter();
   const { register, handleSubmit } = useForm();
-  
   async function handleSignin(data: any) {
     try {
 
-        const response = await Signin(data);
-        if (response.success ) {
-          
-          toast.success("Login Successfully");
-          const expiresAt = Date.now() + 60 * 60 * 1000; 
+      const response = await Signin(data);
+      if (response.success) {
 
-         
-          localStorage.setItem("token", JSON.stringify({ value: response.token, expiresAt }));
-          localStorage.setItem("user_id", JSON.stringify({ value: response.user._id, expiresAt }));
-          localStorage.setItem("user_name", JSON.stringify({ value: response.user.name, expiresAt }));
-          localStorage.setItem("user_email", JSON.stringify({ value: response.user.email, expiresAt }));
+        toast.success("Login Successfully");
+        const expiresAt = Date.now() + 60 * 60 * 1000;
 
-          router.replace("/");
-          
+        localStorage.setItem("token", JSON.stringify({ value: response.token, expiresAt }));
+        localStorage.setItem("user_id", JSON.stringify({ value: response.user._id, expiresAt }));
+        localStorage.setItem("user_name", JSON.stringify({ value: response.user.name, expiresAt }));
+        localStorage.setItem("user_email", JSON.stringify({ value: response.user.email, expiresAt }));
+        router.replace("/profile");
+
+      }
     }
-  }
-    catch (error:any) {
+    catch (error: any) {
 
       console.error("Signin Error:", error.message);
       toast.error(error.message || "An unexpected error occurred");
     }
-}
+  }
 
   return (
     <>
@@ -41,7 +37,7 @@ export default function page() {
         <div style={{ minWidth: "30%" }}>
           <div className="flex min-h-full shadow-lg flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-white">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-              
+
               <h2 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 Sign in to your account
               </h2>
@@ -58,7 +54,7 @@ export default function page() {
                   </label>
                   <div className="mt-2">
                     <input
-                        {...register("email")}
+                      {...register("email")}
                       type="email"
                       autoComplete="email"
                       required
@@ -70,7 +66,7 @@ export default function page() {
                 <div>
                   <div className="flex items-center justify-between">
                     <label
-                     
+
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
                       Password
@@ -86,7 +82,7 @@ export default function page() {
                   </div>
                   <div className="mt-2">
                     <input
-                    {...register("password")}
+                      {...register("password")}
                       type="password"
                       autoComplete="current-password"
                       required
@@ -109,7 +105,7 @@ export default function page() {
                 Not a member?{" "}
                 <span
                   className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 cursor-pointer"
-                  onClick={()=>{router.push("/registeruser")}}
+                  onClick={() => { router.push("/registeruser") }}
                 >
                   Start a 14 day free trial
                 </span>
@@ -120,8 +116,4 @@ export default function page() {
       </div>
     </>
   );
-}
-
-function encrypt(arg0: { response: any; expires: Date; }) {
-  throw new Error("Function not implemented.");
 }

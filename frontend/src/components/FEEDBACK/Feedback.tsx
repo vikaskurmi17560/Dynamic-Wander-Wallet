@@ -46,7 +46,7 @@ const Feedback = () => {
     return () => clearInterval(interval);
   }, [wanderWalletFeedback.length]);
 
-  const getClassName = (index) => {
+  const getClassName = (index:any) => {
     if (index === currentIndex) return style.active;
     if (index === (currentIndex - 1 + wanderWalletFeedback.length) % wanderWalletFeedback.length) return style.leftBlur;
     if (index === (currentIndex + 1) % wanderWalletFeedback.length) return style.rightBlur;

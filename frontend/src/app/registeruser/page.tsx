@@ -33,8 +33,8 @@ export default function page() {
 
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form className="space-y-6" onSubmit={handleSubmit(handleRegister)} >
-                          
-                        <div>
+
+                            <div>
                                 <label
                                     className="block text-sm font-medium leading-6 text-gray-900"
                                 >
@@ -42,7 +42,7 @@ export default function page() {
                                 </label>
                                 <div className="mt-2">
                                     <input
-                                       
+
                                         type="name"
                                         required
                                         {...register("name")}
@@ -53,7 +53,7 @@ export default function page() {
 
                             <div>
                                 <label
-                                    
+
                                     className="block text-sm font-medium leading-6 text-gray-900"
                                 >
                                     Number
@@ -79,7 +79,7 @@ export default function page() {
                                 </label>
                                 <div className="mt-2">
                                     <input
-                                       
+
                                         type="email"
                                         autoComplete="email"
                                         required
@@ -100,7 +100,7 @@ export default function page() {
                                 </div>
                                 <div className="mt-2">
                                     <input
-                                        
+
                                         type="password"
                                         autoComplete="current-password"
                                         required
@@ -121,7 +121,7 @@ export default function page() {
                                 </div>
                                 <div className="mt-2">
                                     <input
-                                       
+
                                         type="password"
                                         autoComplete="current-password"
                                         required

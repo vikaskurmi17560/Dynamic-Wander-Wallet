@@ -10,9 +10,12 @@ function page() {
      const router = useRouter();
       const { register, handleSubmit } = useForm();
       
-   const {name,profile,bio,phone_no}=useUserData();
+   const {user}=useUserData();
    
-
+  const name=user.name;
+  const profile=user.profile;
+  const bio=user.bio;
+  const phone_no=user.phone_no;
  
    async function editData(formdata: any) {
      let user_id = localStorage.getItem("user_id");

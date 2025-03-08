@@ -18,8 +18,8 @@ export default function Home() {
     <div className="flex flex-col bg-white" >
       <HeroSection />
       {/* <BudgetCardSection /> */}
-      <Waterfalls/>
-      <HiddenPlaces/>
+      <Waterfalls />
+      <HiddenPlaces />
       <ExplorePage />
       <UniquePlaces />
       <TripPurpose />
@@ -30,7 +30,7 @@ export default function Home() {
       <Feedback />
       {/* <Reviewsection /> */}
       <Footersection />
-      <Footer/>
+      <Footer />
     </div>
   );
 }
