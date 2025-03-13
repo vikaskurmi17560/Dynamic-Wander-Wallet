@@ -1,34 +1,99 @@
 const mongoose = require("mongoose");
 const tripSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    tripName: { type: String, required: true },
-    startDate: { type: Date, required: true },
-    endDate: { type: Date, required: true },
+    userId: { 
+      type: mongoose.Schema.Types.ObjectId,
+       ref: 'User',
+        required: true
+       },
+    tripName: { 
+      type: String,
+       required: true 
+      },
     source: {
-      name: { type: String, required: true },
-      latitude: { type: Number, required: true },
-      longitude: { type: Number, required: true }
+      name: {
+         type: String,
+          required: true
+         },
+      latitude: {
+         type: Number,
+          required: true
+         },
+      longitude: { 
+        type: Number, 
+        required: true
+       }
     },
     destination: {
-      name: { type: String, required: true },
-      latitude: { type: Number, required: true },
-      longitude: { type: Number, required: true }
+      name: { 
+        type: String,
+         required: true
+         },
+      latitude: { 
+        type: Number,
+         required: true 
+        },
+      longitude: {
+         type: Number,
+          required: true 
+        }
     },
     checkpoints: [{
-      name: { type: String, required: true },
-      latitude: { type: Number, required: true },
-      longitude: { type: Number, required: true },
-      visited: { type: Boolean, default: false }
+     type:mongoose.Schema.Types.ObjectId,
+     ref:"Checkpoints"
     }],
-    budget: {
-      total: { type: Number, required: true },
-      spent: { type: Number, default: 0 },
-      remaining: { type: Number, default: function () { return this.budget.total - this.budget.spent; } }
+    Total_budget: {
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'BudgetBreakdown'
     },
-    transportMode: { type: String, enum: ['car', 'bike', 'public'], default: 'car' },
-    status: { type: String, enum: ['active', 'completed', 'cancelled'], default: 'active' },
     createdAt: { type: Date, default: Date.now }
   });
   
   module.exports = mongoose.model('Trip', tripSchema);
   
+
+
+
+
+//   +---------------------+
+//   |        User         |
+//   +---------------------+
+//             |
+//             |
+//             ▼
+//   +---------------------+
+//   |        Trip         |
+//   +---------------------+
+//             |
+// ---------------------------------------------
+// |                                           |
+// ▼                                           ▼
+// +---------------------+                     +--------------------+
+// |    Budget          |                     |  Checkpoints       |
+// +---------------------+                     +--------------------+
+// | transport_budget   |      +-------------->| source, destination|
+// | hotel_budget      |      |               | transport_price    |
+// | food_budget       |      |               | hotels []          |
+// | totalBudget       |      |               | restaurants []     |
+// +---------------------+    |               +--------------------+
+//              |
+//              |
+//              ▼
+// +---------------------+
+// |      Hotels         |
+// +---------------------+
+// | name                |
+// | location            |
+// | type (budget/luxury)|
+// | price               |
+// +---------------------+
+//              |
+//              ▼
+// +---------------------+
+// |    Restaurants      |
+// +---------------------+
+// | name                |
+// | location            |
+// | type (Lunch/Dinner) |
+// | price               |
+// +---------------------+
+

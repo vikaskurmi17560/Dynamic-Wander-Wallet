@@ -1,15 +1,46 @@
 const mongoose = require("mongoose");
-const budgetSchema = new mongoose.Schema({
-    tripId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true },
+
+const budgetBreakdownSchema = new mongoose.Schema({
+    tripId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Trip', 
+        required: true 
+    },
     budgetDetails: [{
-      category: { type: String, enum: ['transport', 'hotel', 'food'], required: true },
-      amount: { type: Number, required: true },
-      description: { type: String }
+        category: { 
+            type: String, 
+            enum: ['transport', 'hotel', 'food'], 
+            required: true 
+        },
+        amount: { 
+            type: Number, 
+            required: true 
+        },
+        description: { 
+            type: String 
+        }
     }],
-    totalBudget: { type: Number, required: true },
-    totalSpent: { type: Number, default: 0 },
-    remainingBudget: { type: Number, default: function () { return this.totalBudget - this.totalSpent; } }
-  });
-  
-  module.exports = mongoose.model('Budget', budgetSchema);
-  
+    hotelBudgets: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Hotel'
+    }],
+    foodBudgets: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Restaurants'
+    }],
+    transportBudgets: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Checkpoints'
+    }],
+    totalBudget: { 
+        type: Number, 
+        required: true
+    }
+});
+
+budgetBreakdownSchema.pre('save', function(next) {
+    this.totalBudget = this.budgetDetails.reduce((sum, item) => sum + item.amount, 0);
+    next();
+});
+
+module.exports = mongoose.model('Budget', budgetBreakdownSchema);
