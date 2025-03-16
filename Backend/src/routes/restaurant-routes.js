@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const restaurantController = require("../controllers/restaurantController");
+const restaurantController = require("../controllers/restaurant-controller");
 
 router.post("/", restaurantController.createRestaurant);
-router.get("/checkpoint/:checkpointId", restaurantController.getRestaurantsByCheckpointId);
+router.get("/getcheckpoint", restaurantController.getRestaurantsByCheckpoint);
 
 module.exports = router;

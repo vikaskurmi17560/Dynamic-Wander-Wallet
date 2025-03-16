@@ -1,7 +1,6 @@
 const express = require('express');
-const commentController = require('../controllers/comment-controller');
-
 const router = express.Router();
+const commentController = require('../controllers/comment-controller');
 
 router.post('/comments', commentController.addComment); // Add a comment
 router.delete('/comments/:commentId', commentController.deleteComment); // Delete a comment

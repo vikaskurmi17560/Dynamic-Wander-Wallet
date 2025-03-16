@@ -1,7 +1,7 @@
 const express = require('express');
+const router = express.Router();
 const likeController = require('../controllers/like-controller');
 
-const router = express.Router();
 
 router.post('/likes', likeController.addLike); // Add a like to a post
 router.delete('/likes', likeController.removeLike); // Remove a like from a post
