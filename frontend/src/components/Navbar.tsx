@@ -39,7 +39,7 @@ function Navbar() {
         <div className={styles.left_section}>
           <Link href={"/"} className={styles.nav_item}>Home</Link>
            <div className={styles.nav_item}>Blogs</div>
-          <div className={styles.nav_item}>Trip</div>
+          <Link href={"/trip"} className={styles.nav_item}>Trip</Link>
           <Link href={"/about"} className={styles.nav_item}>About Us</Link>
           <div className={styles.nav_item}>Daskboard</div>
           <div className={styles.nav_item}>Explore</div>

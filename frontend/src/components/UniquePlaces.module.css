@@ -34,10 +34,10 @@
     scroll-behavior: smooth;
 }
 
-/* Hide the scrollbar */
-::-webkit-scrollbar {
+
+/* ::-webkit-scrollbar {
     display: none; 
-}
+} */
 
 /* Card Styles */
 .card {

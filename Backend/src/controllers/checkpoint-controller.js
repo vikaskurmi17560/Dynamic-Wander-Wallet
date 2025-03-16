@@ -1,4 +1,4 @@
-const Checkpoints = require("../models/Checkpoint");
+const Checkpoints = require("../models/checkpoints");
 
 exports.createCheckpoint = async (req, res) => {
     try {

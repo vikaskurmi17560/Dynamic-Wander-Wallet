@@ -1,0 +1,193 @@
+.main {
+    margin-top: 6.9em;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 84.8vh;
+    background-color: white;
+}
+
+.video {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.data {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+    gap: 1em;
+    text-align: center;
+}
+
+.form {
+    width: 85vh;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+}
+
+.heading_div {
+    margin-bottom: 1em;
+}
+
+.heading {
+    font-size: 2.3em;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: sans-serif;
+    color: #FF4500;
+}
+
+.desp {
+    font-family: cursive;
+    color: #FF6347;
+    font-size: 1.1em;
+}
+
+.inputbox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+    position: relative;
+}
+
+.name {
+    font-size: 1.1em;
+    font-family: monospace;
+    font-weight: 600;
+    color: rgb(46, 45, 45);
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid gray;
+    border-radius: 5px;
+    color: black;
+}
+
+.btn {
+    width: 50%;
+    padding: 12px;
+    background: linear-gradient(135deg, #FF4500, #FF6347);
+    color: white;
+    font-size: 1.2em;
+    font-weight: 600;
+    font-family: sans-serif;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #FF6347, #FF4500);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+@media (max-width:1563px) {
+    
+    .form {
+        width: 75vh;
+    }
+}
+
+@media (max-width:1369px) {
+    .form {
+        width: 65vh;
+    }
+}
+
+@media (max-width:1160px) {
+    .form {
+        width: 50vh;
+    }
+}
+
+@media (max-width: 1024px) {
+    .main {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .video {
+        width: 100%;
+        height: 40vh;
+    }
+
+    .data {
+        width: 100%;
+        height: auto;
+        padding: 1.5em;
+    }
+
+    .form {
+        width: 80%;
+    }
+
+    .heading {
+        font-size: 2em;
+    }
+
+    .desp {
+        font-size: 1em;
+    }
+
+    .btn {
+        font-size: 1em;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .heading {
+        font-size: 1.8em;
+    }
+
+    .desp {
+        font-size: 0.9em;
+    }
+
+    .input {
+        font-size: 0.9em;
+    }
+
+    .btn {
+        font-size: 1em;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .video {
+        height: 30vh;
+    }
+
+    .heading {
+        font-size: 1.5em;
+    }
+
+    .desp {
+        font-size: 0.8em;
+    }
+
+    .input {
+        font-size: 0.85em;
+    }
+
+    .btn {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+}

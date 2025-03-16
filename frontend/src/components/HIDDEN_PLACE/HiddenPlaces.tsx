@@ -56,7 +56,7 @@ const HiddenPlaces = () => {
                             <p className={style.location}>{place.location}</p>
                             <button 
                                 className={style.viewButton} 
-                                onClick={() => router.push(`/places/${place.id}`)}
+                                // onClick={() => router.push(`/places/${place.id}`)}
                             >
                                 View More
                             </button>
