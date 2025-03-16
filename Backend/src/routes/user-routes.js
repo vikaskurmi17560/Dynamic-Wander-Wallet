@@ -1,8 +1,8 @@
 const express = require("express");
+const router = express.Router();
 const upload = require("../services/multer"); // ✅ Ensure correct import
 const { signup, login, forgetPassword, resetPassword, updateUser, getUser } = require("../controllers/user-controller");
 
-const router = express.Router();
 
 router.post("/signup", signup);
 router.post("/login", login);

@@ -3,13 +3,13 @@ const Trip = require('../models/trip');
 // Create a new trip
 exports.createTrip = async (req, res) => {
   try {
-    const trip = new Trip(req.body);
-    const savedTrip = await trip.save();
+    const savedTrip = await Trip.create(req.body); // Using Model.create()
     res.status(201).json(savedTrip);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Get all trips for a user
 exports.getTripsByUser = async (req, res) => {
@@ -28,28 +28,27 @@ exports.getTripsByUser = async (req, res) => {
 };
 
 
-// Get a single trip by ID
-exports.getTripById = async (req, res) => {
-  try {
-    const trip = await Trip.findById(req.query.id).lean();
-    if (!trip) return res.status(404).json({ error: 'Trip not found' });
-    res.status(200).json(trip);
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
-
 // Delete a trip by ID
 exports.deleteTrip = async (req, res) => {
   try {
-    const deletedTrip = await Trip.findByIdAndDelete(req.params.id);
-    if (!deletedTrip) return res.status(404).json({ error: 'Trip not found' });
-    res.status(200).json({ message: 'Trip deleted successfully' });
+    const { trip_id } = req.query; // Extract trip_id correctly
+
+    if (!trip_id) {
+      return res.status(400).json({ error: "Trip ID is required" });
+    }
+
+    const deletedTrip = await Trip.findByIdAndDelete(trip_id); // Pass trip_id directly
+
+    if (!deletedTrip) {
+      return res.status(404).json({ error: "Trip not found" });
+    }
+
+    res.status(200).json({ message: "Trip deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: error.message });
   }
 };
+
 
 // // Update checkpoint status
 // exports.updateCheckpointStatus = async (req, res) => {

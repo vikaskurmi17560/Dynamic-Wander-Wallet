@@ -1,8 +1,8 @@
 const express = require('express');
-const checkpointController = require('../controllers/checkpointController');
 const router = express.Router();
+const checkpointController = require('../controllers/checkpoint-controller');
 
-router.get('/getall', checkpointController.getAllCheckpoints);
+router.get('/getall', checkpointController.getCheckpointsByTrip);
 router.post('/create', checkpointController.createCheckpoint);
 
 module.exports = router;

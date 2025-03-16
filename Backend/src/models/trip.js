@@ -37,14 +37,6 @@ const tripSchema = new mongoose.Schema({
           required: true 
         }
     },
-    checkpoints: [{
-     type:mongoose.Schema.Types.ObjectId,
-     ref:"Checkpoints"
-    }],
-    Total_budget: {
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'BudgetBreakdown'
-    },
     createdAt: { type: Date, default: Date.now }
   });
   

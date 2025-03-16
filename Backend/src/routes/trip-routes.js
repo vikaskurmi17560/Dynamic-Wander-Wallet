@@ -1,8 +1,9 @@
 const express = require('express');
-const tripController = require('../controllers/trip-controller');
 const router = express.Router();
+const tripController = require('../controllers/trip-controller');
 
-router.get('/getall', tripController.getTripsByUser);
 router.post('/create', tripController.createTrip);
+router.get('/getall', tripController.getTripsByUser);
+router.delete('/delete',tripController.deleteTrip);
 
 module.exports = router;
