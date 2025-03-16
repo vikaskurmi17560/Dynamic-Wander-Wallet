@@ -2,8 +2,12 @@ const Checkpoints = require("../models/checkpoints");
 
 exports.createCheckpoint = async (req, res) => {
     try {
-        const checkpoint = Checkpoints.create(req.body);
-        res.status(201).json(checkpoint);
+        const checkpoint = await Checkpoints.create(req.body);
+        res.status(201).json({
+                success:true,
+                message:"Creation on Checkpoint is Done",
+                checkpoint
+              });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -11,15 +15,42 @@ exports.createCheckpoint = async (req, res) => {
 
 exports.getCheckpointsByTrip = async (req, res) => {
     try {
-        const { tripId } = req.params; // Extract tripId from URL params
+        const { tripId } = req.query; 
 
         if (!tripId) {
             return res.status(400).json({ error: "Trip ID is required" });
         }
 
-        const checkpoints = await Checkpoint.find({ trip_id: tripId });
+        const checkpoints = await Checkpoints.find({ trip_id: tripId });
 
-        res.status(200).json(checkpoints);
+        res.status(200).json({
+            success:true,
+            message:"Get Checkpoint data Successfully",
+            checkpoints
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.deleteCheckpointByTrip= async (req,res)=>{
+    try {
+        const { tripId } = req.query; 
+
+        if (!tripId) {
+            return res.status(400).json({ error: "Trip ID is required" });
+        }
+
+        const checkpoints = await Checkpoints.findByIdAndDelete({ trip_id: tripId });
+
+        if (!checkpoints) {
+            return res.status(404).json({ error: "checkpoint not found" });
+          }
+
+        res.status(200).json({
+            success:true,
+            message:"Delete Checkpoint Successfully"
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

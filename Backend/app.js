@@ -20,9 +20,9 @@ const hotel_routes = require("./src/routes/hotel-routes");
 const restaurant_routes = require("./src/routes/restaurant-routes");
 
 app.use('/api/v1/user', user_route);
-app.use('/api/v1/trips', trip_routes);
-app.use('/api/v1/budgets', budget_routes);
-app.use('/api/v1/checkpoints', checkpoint_routes);
+app.use('/api/v1/trip', trip_routes);
+app.use('/api/v1/budget', budget_routes);
+app.use('/api/v1/checkpoint', checkpoint_routes);
 app.use('/api/v1/hotel', hotel_routes);
 app.use('/api/v1/restaurant', restaurant_routes);
 

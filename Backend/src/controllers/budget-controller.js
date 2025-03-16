@@ -2,9 +2,12 @@ const Budget = require("../models/budget");
 
 exports.createBudget = async (req, res) => {
     try {
-        const budget = new Budget(req.body);
-        await budget.save();
-        res.status(201).json(budget);
+        const budget = await Budget.create(req.body);
+        res.status(201).json({
+            success:true,
+            message:"Create Budget successfully",
+            budget
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -12,7 +15,8 @@ exports.createBudget = async (req, res) => {
 
 exports.getBudgetByTrip = async (req, res) => {
     try {
-        const budget = await Budget.findOne({ tripId: req.params.tripId })
+        const tripId=req.query
+        const budget = await Budget.findOne({ tripId:tripId })
             .populate("hotelBudgets foodBudgets transportBudgets");
         if (!budget) return res.status(404).json({ message: "Budget not found" });
         res.status(200).json(budget);

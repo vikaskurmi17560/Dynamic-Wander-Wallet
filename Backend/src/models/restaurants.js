@@ -10,19 +10,26 @@ const RestaurantsSchema = new mongoose.Schema({
         ref: "Checkpoints",
         required: true
     },
-    name: { type: String, required: true },
+    
     location: {
+        name: { type: String, required: true },
         latitude: { type: Number, required: true },
         longitude: { type: Number, required: true }
     },
     rating: { type: Number, default: 3.0 },
-    // meal_type: { type: String, enum: ['BreakFast', 'Brunch', 'Lunch', 'Snacks', 'Dinner', 'Post-Dinner'], required: true },
+    description: {
+        type: String,
+        trim: true,
+        minlength: 10,
+        maxlength: 500,
+        default: "No description provided."
+    },
     prices: [{
         meal_type: { type: String, enum: ['BreakFast', 'Brunch', 'Lunch', 'Snacks', 'Dinner', 'Post-Dinner'], required: true },
         meal_price: { type: Number, required: true }
     }],
     contact: { type: String }
 
-})
+},{timestamps:true})
 
 module.exports = mongoose.model("Restaurants", RestaurantsSchema);

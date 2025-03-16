@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const hotelController = require("../controllers/hotel-controller");
 
-router.post("/", hotelController.createHotel);
-router.get("/checkpoint/:checkpointId", hotelController.getHotelsByCheckpointId);
-router.delete("/:id", hotelController.deleteHotel);
+router.post("/create", hotelController.createHotel);
+router.get("/getbycheckpointid", hotelController.getHotelsByCheckpointId);
+router.delete("/delete", hotelController.deleteHotel);
 
 module.exports = router;

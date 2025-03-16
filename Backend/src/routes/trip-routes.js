@@ -3,7 +3,8 @@ const router = express.Router();
 const tripController = require('../controllers/trip-controller');
 
 router.post('/create', tripController.createTrip);
-router.get('/getall', tripController.getTripsByUser);
+router.get('/getbyuserid', tripController.getTripsByUser);
+router.get('/getbyid',tripController.getTripsByid);
 router.delete('/delete',tripController.deleteTrip);
 
 module.exports = router;

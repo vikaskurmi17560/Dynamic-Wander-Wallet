@@ -16,7 +16,13 @@ const hotelSchema = new mongoose.Schema({
     longitude: { type: Number, required: true }
   },
   rating: { type: Number, default: 3.0 },
-
+  description: {
+    type: String,
+    trim: true,
+    minlength: 10,
+    maxlength: 500,
+    default: "No description provided."
+  },
   pricePerNight: [
     {
       hotel_type: { type: String, enum: ['budget', '3-star', 'luxury'], required: true }
@@ -24,6 +30,6 @@ const hotelSchema = new mongoose.Schema({
     }
   ],
   contact: { type: String }
-});
+},{timestamps:true});
 
 module.exports = mongoose.model('Hotel', hotelSchema);

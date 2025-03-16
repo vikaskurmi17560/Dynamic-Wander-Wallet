@@ -34,22 +34,18 @@ const CheckPointsSchema = new mongoose.Schema({
             required: true
         }
     },
-    Transport_Price: [{
-        type: Number,
-        required: true
-    }],
-    timestamp: {
-        type: Date,
-        default: Date.now,
-        required: true
-    },
-    time: {
+    description: {
         type: String,
-        default: function () {
-            return new Date().toLocaleTimeString("en-US", { hour12: false });
-        },
-        required: true
-    }
-});
+        trim: true,
+        minlength: 10,
+        maxlength: 500,
+        default: "No description provided."
+    },
+
+    transport_budget: [{
+        transport_type: { type: String, enum: ['budget', '3-star', 'luxury'], required: true },
+        transport_price: { type: Number, required: true }
+    }]
+}, { timestamps: true });
 
 module.exports = mongoose.model('Checkpoints', CheckPointsSchema);
