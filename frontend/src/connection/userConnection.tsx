@@ -16,7 +16,7 @@ export async function Register(formdata: any) {
 export async function Signin(formdata:any){
     
     try {
-        const  response =await axios.post(SigninURL,formdata)
+        const  response = await axios.post(SigninURL,formdata)
         return response.data;
     } catch (error) {
         console.error(error);

@@ -1,0 +1,161 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3em;
+    background: linear-gradient(to bottom, #f0f0f0, #d9e4f5);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Center line container */
+.lineContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 6px;
+    transition: height 0.4s ease-in-out;
+}
+
+/* Animated vertical line */
+.line {
+    width: 6px;
+    background: linear-gradient(to bottom, #007bff, #0056b3);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 3px;
+    height: 100%;
+}
+
+/* Each checkpoint (flag & task box) */
+.checkpoint {
+    display: flex;
+    align-items: center;
+    position: absolute;
+}
+
+/* Circular Flag Container */
+.flagContainer {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    border: 3px solid #007bff;
+    z-index: 1;
+}
+
+/* Enlarged Flag */
+.flag {
+    width: 70px !important;
+    height: 70px !important;
+}
+
+/* Task Box */
+.box {
+    width: 300px;
+    background: white;
+    padding: 1.6em;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Connector Line */
+.connector {
+    width: 35px;
+    height: 4px;
+    background: #007bff;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.4s ease-in-out;
+}
+
+/* Alternating Task Box Positions */
+.leftBox {
+    left: -340px;
+    border-left: 4px solid #007bff;
+    animation: fadeInLeft 0.5s ease-in-out;
+}
+
+.leftBox .connector {
+    right: -35px;
+}
+
+.rightBox {
+    right: -340px;
+    border-right: 4px solid #007bff;
+    animation: fadeInRight 0.5s ease-in-out;
+}
+
+.rightBox .connector {
+    left: -35px;
+}
+
+/* ✅ Fixed Add Button Position ✅ */
+.addButton {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(to bottom, #ff4b2b, #ff416c);
+    color: white;
+    font-size: 2em;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    animation: bounce 1s infinite;
+    margin-top: 40px;
+    /* Ensures space below last checkpoint */
+}
+
+.addButton:hover {
+    background: linear-gradient(to bottom, #ff2a00, #ff0057);
+    transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}

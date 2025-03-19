@@ -2,20 +2,28 @@
 
 import { useState, useEffect } from "react";
 import style from "./trippage.module.css";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const Trip = () => {
     const [tripData, setTripData] = useState({
         tripName: "",
         state: "",
         city: "",
-        startPlace: "",
+        source: "",
         destination: "",
+        userId: "",
     });
-
+    const router = useRouter();
     const [states, setStates] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem("user_id") || "{}");
+        if (storedUser?.value) {
+            setTripData((prev) => ({ ...prev, userId: storedUser.value }));
+        }
         fetch("https://countriesnow.space/api/v0.1/countries/states", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -58,9 +66,42 @@ const Trip = () => {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Trip Data Submitted:", tripData);
+
+        // if (!tripData.userId) {
+        //     alert("User not logged in. Please log in first.");
+        //     return;
+        // }
+
+        setLoading(true);
+
+        try {
+            const response = await axios.post(
+                "http://localhost:7050/api/v1/trip/create",
+                tripData,
+                { headers: { "Content-Type": "application/json" } }
+            );
+
+            console.log("Response from server:", response.data); 
+
+            if (!response.data || !response.data._id) {
+                throw new Error("Trip ID is missing in the response");
+            }
+
+            const tripId = response.data._id;
+            localStorage.setItem("tripId", tripId);
+            console.log("Trip ID:", tripId);
+
+            alert("Trip created successfully!");
+            router.push(`/trip/TripCheckpoint?tripName=${tripData.tripName}&destination=${tripData.destination}`);
+
+        } catch (err: any) {
+            console.error("Error creating trip:", err);
+            alert(err.response?.data?.error || "Failed to create trip.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -125,8 +166,8 @@ const Trip = () => {
                         <p className={style.name}>Start Place</p>
                         <input
                             type="text"
-                            name="startPlace"
-                            value={tripData.startPlace}
+                            name="source"
+                            value={tripData.source}
                             onChange={handleData}
                             placeholder="Enter Start Place"
                             className={style.input}
@@ -144,8 +185,8 @@ const Trip = () => {
                         />
                     </div>
                     <div className={style.buttonbox}>
-                        <button type="submit" className={style.btn}>
-                            Start Journey
+                        <button type="submit" className={style.btn} disabled={loading}>
+                            {loading ? "Submitting..." : "Start Journey"}
                         </button>
                     </div>
                 </form>
