@@ -33,6 +33,25 @@ exports.getCheckpointsByTrip = async (req, res) => {
     }
 };
 
+exports.getcheckpointById = async (req, res) => {
+  try {
+    const { _id } = req.body;
+    const checkpoint = await Checkpoints.findById(_id);
+
+    if (!checkpoint) {
+      return res.status(404).json({ error: "Trip not found" });
+    }
+
+    res.status(200).json({
+        success:true,
+        message:"get checkpoint by checkpoint id",
+        checkpoint
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching trip" });
+  }
+}
+
 exports.deleteCheckpointByTrip= async (req,res)=>{
     try {
         const { tripId } = req.query; 
