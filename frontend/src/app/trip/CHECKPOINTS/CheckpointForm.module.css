@@ -1,0 +1,76 @@
+.main {
+    width: 90%;
+    height: 90%;
+    overflow: scroll;
+    background-color: whitesmoke;
+    padding: 1em;
+    scrollbar-width: none;
+}
+
+.source_dest {
+    /* border: 1px solid black; */
+    display: flex;
+    gap: auto;
+    justify-content: space-between;
+}
+
+.name {
+    font-size: 0.9em;
+    font-family: sans-serif;
+    color: rgb(135, 21, 158);
+    margin-bottom: 0.5em;
+}
+
+.heading {
+    font-family: cursive;
+    font-size: 2.5em;
+    text-align: center;
+    font-weight: 600;
+    color: black;
+}
+
+.input {
+    height: 6vh;
+    width: 50vh;
+    color: black;
+    outline: none;
+    border: 1px solid rgb(128, 126, 126);
+    padding-left: 0.6em;
+}
+
+.textarea {
+    overflow: scroll;
+    scrollbar-width: none;
+    width: 100%;
+    height: 20vh;
+    resize: none;
+    outline: none;
+    border: 1px solid rgb(128, 126, 126);
+    padding: 0.7em;
+}
+
+.budget{
+    border: 1px solid rgb(155, 155, 155);
+    border-radius: 0.2em;
+    padding: 0.7em;
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    /* align-items: center; */
+    justify-content: space-between;
+    gap: 1.7em;
+}
+
+.sub_name{
+    font-size: 0.9em;
+    font-family: sans-serif;
+    color: rgb(58, 9, 68);
+    margin-bottom: 0.5em;
+}
+
+.btn{
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em;
+}

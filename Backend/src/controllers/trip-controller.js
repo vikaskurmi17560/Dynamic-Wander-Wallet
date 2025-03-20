@@ -11,7 +11,6 @@ exports.createTrip = async (req, res) => {
 };
 
 
-
 // Get all trips for a user
 exports.getTripsByUser = async (req, res) => {
   try {

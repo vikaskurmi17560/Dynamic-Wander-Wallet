@@ -11,12 +11,13 @@
 }
 
 .container {
-    margin: 2em 1em;
+    padding: 2em 1em;
     width: 100%;
-    height: 55vh;
+    height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: white;
     /* border: 1px solid black; */
 }
 
@@ -154,11 +155,11 @@
 }
 
 .content {
+    height: 100%;
+    width: 100%;
     color: black;
-    padding: 2em;
     display: flex;
     flex-direction: column;
-    gap: 0.8em;
     background-color: aliceblue;
 }
 

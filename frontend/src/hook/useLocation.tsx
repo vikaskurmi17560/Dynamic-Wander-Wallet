@@ -27,6 +27,7 @@ const useLocation = () => {
     const saveLocation = (newLocation: Location) => {
         setLocation(newLocation);
         localStorage.setItem("userLocation", JSON.stringify(newLocation));
+        console.log(location)
     };
 
     const saveTripId = (id: string) => {

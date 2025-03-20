@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -17,18 +17,13 @@ const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";
 const defaultLocation = { lat: 28.7041, lng: 77.1025, name: "Delhi, India" };
 
 const Checkpoint = () => {
-    const { location, saveLocation } = useLocation();
+    const { location , saveLocation } = useLocation();
     const searchParams = useSearchParams();
     const tripName = searchParams.get("tripName") || "";
     const destination = searchParams.get("destination") || "";
     const [loading, setLoading] = useState(false);
-    const [currentLocation, setCurrentLocation] = useState(defaultLocation.name);
+    const [currentLocation, setCurrentLocation] = useState("");
     const [mapLocation, setMapLocation] = useState(defaultLocation);
-
-
-    useEffect(() => {
-        saveLocation(defaultLocation);
-    }, []);
 
     const handleFindLocation = async () => {
         setLoading(true);
@@ -91,7 +86,7 @@ const Checkpoint = () => {
                         </div>
                         <div>
                             <p className={style.name}>Location</p>
-                            <input placeholder="Click 'Find' for location" value={currentLocation || ""} readOnly className={style.input} />
+                            <input placeholder="Click 'Find' for location" value={currentLocation || "Click 'Find' for location"} readOnly className={style.input} />
                         </div>
                         <div>
                             <button className={style.btn} onClick={handleFindLocation} disabled={loading}>

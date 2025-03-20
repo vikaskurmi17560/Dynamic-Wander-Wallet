@@ -2,17 +2,20 @@
 import { useState, useEffect } from "react";
 import style from "./checkpoint.module.css";
 import Image from "next/image";
+import CheckpointForm from "./CheckpointForm";
 
 const CheckpointDetail = () => {
   const [checkpoints, setCheckpoints] = useState<number[]>([]);
-  const [lineHeight, setLineHeight] = useState(120); // Adjusted initial height
-  const [isCheckpoint , setIsCheckpoint] = useState(false);
+  const [lineHeight, setLineHeight] = useState(120);
+  const [isCheckpoint, setIsCheckpoint] = useState(false);
+
   useEffect(() => {
-    setLineHeight(140 + checkpoints.length * 130); 
+    setLineHeight(140 + checkpoints.length * 130);
   }, [checkpoints]);
 
   const handleAddCheckpoint = () => {
     setCheckpoints([...checkpoints, checkpoints.length]);
+    setIsCheckpoint((prev) => !prev);
   };
 
   return (
@@ -36,8 +39,8 @@ const CheckpointDetail = () => {
       <button className={style.addButton} onClick={handleAddCheckpoint} >
         +
       </button>
-      <div>
-
+      <div className={isCheckpoint ? style.form_div : style.form_close}>
+        <CheckpointForm />
       </div>
     </div>
   );
