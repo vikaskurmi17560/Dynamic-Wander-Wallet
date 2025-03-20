@@ -35,7 +35,7 @@ exports.getCheckpointsByTrip = async (req, res) => {
 
 exports.getcheckpointById = async (req, res) => {
   try {
-    const { _id } = req.body;
+    const { _id } = req.query;
     const checkpoint = await Checkpoints.findById(_id);
 
     if (!checkpoint) {
