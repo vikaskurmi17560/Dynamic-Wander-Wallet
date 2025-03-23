@@ -2,193 +2,283 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import useLocation from "@/hook/useLocation";
 import style from "./CheckpointForm.module.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import useLocation from "@/hook/useLocation";
 import { getCurrentLocation } from "./FUNCTION/getLocation";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useRouter } from "next/navigation";
 
-const categoryVehicleMapping: Record<string, string[]> = {
-    Vehicle: [
-        "State Bus",
-        "Electric Scooter",
-        "Motorcycle",
-        "Electric Auto",
-        "Public Bus",
-        "City Bus",
-        "Vikram Auto",
-        "Train",
-        "Ola Auto",
-        "Car",
-        "Rapido",
-        "Public Bus AC",
-        "Red Bus",
-        "Uber",
-        "Booking Car",
-        "Luxury Car"
-    ],
-    Walk: ["By Walk"],
+interface Location {
+    name: string;
+    latitude: number;
+    longitude: number;
+}
+
+interface TransportBudget {
+    category: string;
+    transport_type: string;
+    transport_price: number;
+    extra_info: string;
+}
+
+interface FormData {
+    trip_id: string;
+    source: Location;
+    destination: Location;
+    description: string;
+    transport_budget: TransportBudget[];
+}
+
+const categories = ["Vehicle", "By Walk"];
+const transportTypes = {
+    Vehicle: ["Train", "State Bus", "City Bus", "Metro", "Ola", "Uber", "Car", "Bike", "Auto"],
+    ByWalk: [],
 };
 
-const CheckpointForm = () => {
-    const { tripId, location } = useLocation();
+const CheckpointForm = ({ onCheckpointAdded }) => {
+    const router = useRouter();
+    const { tripId, location, toggleCheckpoint, saveLocation } = useLocation();
 
-    const [formData, setFormData] = useState({
-        trip_id: tripId || "",
-        source: { name: location?.name ?? "", latitude: location?.lat ?? 0, longitude: location?.lng ?? 0 },
+    const [formData, setFormData] = useState<FormData>({
+        trip_id: "",
+        source: { name: "", latitude: 0, longitude: 0 },
         destination: { name: "", latitude: 0, longitude: 0 },
         description: "",
-        transport_budget: [{ category: "Walk", transport: { transport_type: "By Walk", transport_price: 0, extra_info: "" } }],
+        transport_budget: [],
     });
 
     useEffect(() => {
-        if (tripId) {
-            setFormData((prev) => ({ ...prev, trip_id: tripId }));
-        }
-    }, [tripId]);
+        console.log("Location updated:", location);
 
-    useEffect(() => {
         setFormData((prev) => ({
             ...prev,
-            source: { name: location?.name ?? "", latitude: location?.lat ?? 0, longitude: location?.lng ?? 0 },
+            trip_id: tripId || "",
+            source: location?.name
+                ? {
+                    name: location.name,
+                    latitude: Number(location.lat),
+                    longitude: Number(location.lng)
+                }
+                : prev.source,
         }));
-    }, [location]);
+    }, [tripId, location]);
+
+    const [selectedCategory, setSelectedCategory] = useState("Vehicle");
+    const [selectedType, setSelectedType] = useState("");
+    const [transportPrice, setTransportPrice] = useState(0);
+    const [extraInfo, setExtraInfo] = useState("");
+
+    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedCategory(e.target.value);
+        setSelectedType("");
+    };
+
+    const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedType(e.target.value);
+    };
+
+    const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTransportPrice(Number(e.target.value) || 0);
+    };
+
+    const handleExtraInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setExtraInfo(e.target.value);
+    };
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
-        field: string,
-        subfield?: string,
-        index?: number
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+        field: keyof FormData,
+        subfield?: keyof Location
     ) => {
-        setFormData((prev) => {
-            if (field === "transport_budget" && index !== undefined) {
-                const updatedTransport = [...prev.transport_budget];
-
-                if (subfield === "category") {
-                    const selectedCategory = e.target.value;
-                    updatedTransport[index] = {
-                        ...updatedTransport[index],
-                        category: selectedCategory,
-                        transport: {
-                            ...updatedTransport[index].transport,
-                            transport_type: categoryVehicleMapping[selectedCategory]?.[0] || "By Walk", 
-                        },
-                    };
-                } else if (subfield) {
-                    updatedTransport[index] = {
-                        ...updatedTransport[index],
-                        transport: {
-                            ...updatedTransport[index].transport,
-                            [subfield]: subfield === "transport_price" ? Math.max(0, Number(e.target.value)) : e.target.value,
-                        },
-                    };
+        setFormData((prev) => ({
+            ...prev,
+            [field]: subfield
+                ? {
+                    ...(prev[field] as Location),
+                    [subfield]: subfield === "latitude" || subfield === "longitude"
+                        ? Number(e.target.value) || 0
+                        : e.target.value,
                 }
-
-                return { ...prev, transport_budget: updatedTransport };
-            }
-
-            return subfield
-                ? { ...prev, [field]: { ...prev[field as keyof typeof prev], [subfield]: e.target.value } }
-                : { ...prev, [field]: e.target.value };
-        });
-    };
-
-    const addTransportBudget = () => {
-        setFormData((prev) => ({
-            ...prev,
-            transport_budget: [...prev.transport_budget, { category: "Walk", transport: { transport_type: "By Walk", transport_price: 0, extra_info: "" } }],
+                : e.target.value,
         }));
     };
 
-    const removeTransportBudget = (index: number) => {
-        setFormData((prev) => ({
-            ...prev,
-            transport_budget: prev.transport_budget.filter((_, i) => i !== index),
-        }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!formData.trip_id || !formData.source.name || !formData.destination.name) {
-            alert("Trip ID, Source, and Destination are required!");
-            return;
-        }
+        const newCheckpoint = {
+            trip_id: formData.trip_id,
+            source: { ...formData.source },
+            destination: {
+                ...formData.destination,
+                latitude: Number(formData.destination.latitude),
+                longitude: Number(formData.destination.longitude)
+            },
+            description: formData.description,
+            transport_budget: [
+                {
+                    category: selectedCategory,
+                    transport_type: selectedCategory === "Vehicle" ? selectedType : "By Walk",
+                    transport_price: selectedCategory === "Vehicle" ? transportPrice : 0,
+                    extra_info: selectedCategory === "Vehicle" ? extraInfo : "",
+                },
+            ],
+        };
 
         try {
-            await axios.post("http://localhost:7050/api/v1/checkpoint/create", formData);
+            const response = await axios.post(
+                "http://localhost:7050/api/v1/checkpoint/create",
+                newCheckpoint,
+                { headers: { "Content-Type": "application/json" } }
+            );
+
+            console.log("New Checkpoint:", newCheckpoint);
+            console.log("API Response:", response.data);
+
+            saveLocation({
+                name: newCheckpoint.destination.name,
+                lat: Number(newCheckpoint.destination.latitude),
+                lng: Number(newCheckpoint.destination.longitude)
+            });
+
             alert("Checkpoint added successfully!");
+            onCheckpointAdded(response.data.checkpoint);
+            toggleCheckpoint();
+        } catch (error: any) {
+            console.error("Error creating checkpoint:", error.response?.data || error.message);
+            alert("Failed to create checkpoint. Check console for details.");
+        }
+    };
+
+    const handleTripEnd = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            console.log("Saving checkpoint...");
+            await handleSubmit(e);
+            console.log("Checkpoint saved. Redirecting...");
         } catch (error) {
-            console.error("Error creating checkpoint:", error);
-            alert("Failed to create checkpoint.");
+            console.error("Error ending trip:", error);
+            alert("Failed to end the trip. Redirecting anyway...");
+        } finally {
+            router.push(`/trip/CHECKPOINTS/tripend?tripName=${formData.trip_id}`);
         }
     };
 
     return (
         <div className={style.main}>
             <h2 className={style.heading}>Create a Checkpoint</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className={style.form}>
                 <div>
                     <div className={style.name}>Trip Id</div>
-                    <input type="text" className={style.input} value={formData.trip_id} readOnly />
+                    <input type="text" value={formData.trip_id} className={style.input} readOnly required />
                 </div>
-
-                {/* Source Section */}
                 <div className={style.source_dest}>
-                    <input type="text" className={style.input} value={location?.name || ""} readOnly required />
-                    <input type="number" className={style.input} value={location?.lat || 0} readOnly required />
-                    <input type="number" className={style.input} value={location?.lng || 0} readOnly required />
+                    <div>
+                        <div className={style.name}>Source</div>
+                        <input type="text" placeholder="Source Name"
+                            value={formData.source.name}
+                            className={style.input} readOnly required />
+                    </div>
+                    <div>
+                        <div className={style.name}>Latitude</div>
+                        <input type="number" placeholder="Latitude"
+                            value={formData.source.latitude}
+                            className={style.input} readOnly required />
+                    </div>
+                    <div>
+                        <div className={style.name}>Longitude</div>
+                        <input type="number" placeholder="Longitude"
+                            value={formData.source.longitude}
+                            className={style.input} readOnly required />
+                    </div>
                 </div>
-
-                {/* Destination Section */}
                 <div className={style.source_dest}>
-                    <input type="text" className={style.input} placeholder="Enter Destination Name" value={formData.destination.name} onChange={(e) => handleChange(e, "destination", "name")} required />
-                    <input type="number" className={style.input} placeholder="Enter Latitude" value={formData.destination.latitude} onChange={(e) => handleChange(e, "destination", "latitude")} required />
-                    <input type="number" className={style.input} placeholder="Enter Longitude" value={formData.destination.longitude} onChange={(e) => handleChange(e, "destination", "longitude")} required />
+                    <div>
+                        <div className={style.name}>Destination</div>
+                        <input
+                            type="text"
+                            placeholder="Destination Name"
+                            value={formData.destination.name}
+                            // value={"Mallital, Nainital, Uttarakhand 263001"}
+                            onChange={(e) => handleChange(e, "destination", "name")}
+                            required
+                            className={style.input}
+                        />
+                    </div>
+                    <div>
+                        <div>
+                            <div className={style.name}>Latitude</div>
+                            <input
+                                type="number"
+                                placeholder="Latitude"
+                                value={formData.destination.latitude || 0}
+                                // value={29.388170}
+                                onChange={(e) => handleChange(e, "destination", "latitude")}
+                                required
+                                className={style.input}
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <div className={style.name}>Longitude</div>
+                        <input
+                            type="number"
+                            placeholder="Longitude"
+                            value={formData.destination.longitude || 0}
+                            // value={79.460702}
+                            onChange={(e) => handleChange(e, "destination", "longitude")}
+                            required
+                            className={style.input}
+                        />
+                    </div>
                 </div>
-
                 <button type="button" onClick={() => getCurrentLocation(setFormData)} className="mt-2 bg-blue-500 text-white p-2 rounded">
                     Add Stop Point
                 </button>
-
                 <div>
                     <div className={style.name}>Description</div>
-                    <textarea className={style.textarea} value={formData.description} onChange={(e) => handleChange(e, "description")}></textarea>
+                    <textarea
+                        placeholder="Enter Description"
+                        value={formData.description}
+                        onChange={(e) => handleChange(e, "description")}
+                        className={style.textarea}
+                    ></textarea>
                 </div>
-
-                {/* Transport Budget Section */}
-                <div>
-                    <div className={style.name}>Transport Budget</div>
-                    {formData.transport_budget.map((budget, index) => (
-                        <div key={index} className={style.budget}>
-                            <select className={style.input} value={budget.category} onChange={(e) => handleChange(e, "transport_budget", "category", index)}>
-                                {Object.keys(categoryVehicleMapping).map((category) => (
-                                    <option key={category} value={category}>{category}</option>
-                                ))}
-                            </select>
-
-                            <select className={style.input} value={budget.transport.transport_type} onChange={(e) => handleChange(e, "transport_budget", "transport_type", index)}>
-                                {categoryVehicleMapping[budget.category]?.map((type) => (
-                                    <option key={type} value={type}>{type}</option>
-                                ))}
-                            </select>
-
-                            <input type="number" className={style.input} value={budget.transport.transport_price} onChange={(e) => handleChange(e, "transport_budget", "transport_price", index)} />
-
-                            <input type="text" className={style.input} value={budget.transport.extra_info} onChange={(e) => handleChange(e, "transport_budget", "extra_info", index)} />
-
-                            {formData.transport_budget.length > 1 && (
-                                <button type="button" className="btn btn-danger mt-2" onClick={() => removeTransportBudget(index)}>
-                                    Remove
-                                </button>
-                            )}
-                        </div>
-                    ))}
-                    <button type="button" className="btn btn-success mt-2" onClick={addTransportBudget}>+ Add Transport Budget</button>
+                <div className={style.budget}>
+                    <div>
+                        <div className={style.sub_name}>Transport Category:</div>
+                        <select value={selectedCategory} onChange={handleCategoryChange} className={style.input} required>
+                            <option value="">Select Category</option>
+                            {categories.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div>
+                        <div className={style.sub_name}>Transport Type</div>
+                        <select value={selectedType} onChange={handleTypeChange} className={style.input}>
+                            {transportTypes.Vehicle.map((type) => (
+                                <option key={type} value={type}>{type}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div>
+                        <div className={style.sub_name}>Transport Price</div>
+                        <input type="number" placeholder="Price" value={transportPrice} onChange={handlePriceChange} className={style.input} disabled={selectedCategory === "By Walk"} />
+                    </div>
+                    <div>
+                        <div className={style.sub_name}>Extra Info</div>
+                        <input type="text" placeholder="Extra Info" value={extraInfo} onChange={handleExtraInfoChange} className={style.input} />
+                    </div>
                 </div>
-
-                <div className={style.btn}>
-                    <button className="btn btn-primary" type="submit">Submit</button>
-                    <button type="button" className="btn btn-danger">Cancel</button>
+                <div className={style.submit_btn}>
+                    <button type="submit" className=" btn btn-primary btn-lg btn-block h-12">Checkpoint Verified</button>
+                    <button type="button" className="btn btn-danger" onClick={handleTripEnd}>
+                        End Trip
+                    </button>
                 </div>
             </form>
         </div>

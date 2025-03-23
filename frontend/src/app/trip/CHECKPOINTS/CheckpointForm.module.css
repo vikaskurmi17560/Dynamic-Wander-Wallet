@@ -5,6 +5,15 @@
     background-color: whitesmoke;
     padding: 1em;
     scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
 }
 
 .source_dest {
@@ -68,7 +77,15 @@
     margin-bottom: 0.5em;
 }
 
-.btn{
+.submit_btn{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7em 2.2em;
+}
+
+.btn_div{
     /* border: 1px solid black; */
     display: flex;
     justify-content: space-between;

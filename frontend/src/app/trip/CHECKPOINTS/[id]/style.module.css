@@ -1,0 +1,273 @@
+.main {
+    margin-top: 6.9em;
+}
+
+.image_div {
+    width: 100%;
+    height: 55vh;
+    position: relative;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+}
+
+.heading_div {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heading {
+    font-size: 3em;
+    font-family: cursive;
+    font-weight: 500;
+    text-align: center;
+}
+
+.btn_div {
+    border: 0.4em solid white;
+    position: absolute;
+    bottom: -7.5%;
+    left: 42%;
+    width: 30vh;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3em;
+    background-color: #FF4500;
+    text-align: center;
+}
+
+.map_container {
+    margin-top: 3.5em;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.map_div {
+    height: 80%;
+    width: 70%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.map {
+    height: 100%;
+    width: 100%;
+}
+
+.map_heading {
+    font-size: 2em;
+    font-family: sans-serif;
+    font-weight: 700;
+    color: black;
+    text-transform: uppercase;
+    margin-bottom: 0.5em;
+}
+
+.about_container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2em 0em;
+}
+
+.about_box {
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    width: 80%;
+    height: 100%;
+    padding: 1.6em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.about_heading {
+    color: black;
+    font-family: sans-serif;
+    font-size: 2em;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.div {
+    display: flex;
+    gap: 0.7em;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.name {
+    color: #FF4500;
+    font-family: monospace;
+    font-size: 1.3em;
+    font-weight: 200;
+}
+
+.input {
+    min-width: 20vh;
+    margin-top: 0.5em;
+    height: 6vh;
+    width: auto;
+    color: black;
+    padding: 0.6em;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+}
+
+.transport {
+    padding: 0.7em;
+    color: #FF6347;
+    font-family: sans-serif;
+    font-weight: 200;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.transport_div {
+    display: flex;
+    gap: 2.3em;
+    font-size: 0.9em;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.transportvalue {
+    padding: 0.6em;
+    display: flex;
+    color: black;
+    height: 6vh;
+    min-width: 40vh;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+}
+
+.date_div {
+    display: flex;
+    justify-content: space-between;
+    color: black;
+}
+
+
+@media (max-width: 1024px) {
+    .heading {
+        font-size: 2.5em;
+    }
+
+    .btn_div {
+        left: 38%;
+        width: 28vh;
+        height: 7vh;
+    }
+
+    .map_div {
+        width: 85%;
+    }
+
+    .about_box {
+        width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+    .heading {
+        font-size: 2em;
+    }
+
+    .btn_div {
+        left: 35%;
+        width: 25vh;
+        height: 6.5vh;
+    }
+
+    .map_container {
+        height: 55vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 1em;
+    }
+
+    .map_div {
+        width: 90%;
+        height: 60%;
+    }
+
+    .about_container {
+        height: auto;
+    }
+    
+    .input{
+        height: auto;
+    }
+    .about_box {
+        width: 95%;
+        padding: 1.2em;
+    }
+
+    .transport_div {
+        gap: 1.5em;
+    }
+
+    .transportvalue {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .heading {
+        font-size: 1.8em;
+    }
+
+    .btn_div {
+        left: 25%;
+        width: 22vh;
+        height: 6vh;
+    }
+
+    .map_heading {
+        font-size: 1.5em;
+    }
+
+    .map_div {
+        width: 95%;
+        height: 50%;
+    }
+
+    .about_heading {
+        font-size: 1.5em;
+    }
+
+    .transport_div {
+        gap: 1em;
+    }
+
+    .transportvalue {
+        min-width: 100%;
+    }
+
+    .input {
+        width: 100%;
+        height: auto;
+    }
+
+    .date_div {
+        flex-direction: column;
+        gap: 0.5em;
+    }
+}

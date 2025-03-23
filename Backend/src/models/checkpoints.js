@@ -20,8 +20,7 @@ const CheckPointsSchema = new mongoose.Schema(
         description: {
             type: String,
             trim: true,
-            minlength: 10,
-            maxlength: 500,
+            maxlength: 1000,
             default: "No description provided.",
         },
         transport_budget: [

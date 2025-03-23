@@ -2,13 +2,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 3em;
+    padding: 5em;
     background: linear-gradient(to bottom, #f0f0f0, #d9e4f5);
     min-height: 100vh;
     position: relative;
 }
 
-/* Center line container */
 .lineContainer {
     display: flex;
     flex-direction: column;
@@ -18,7 +17,6 @@
     transition: height 0.4s ease-in-out;
 }
 
-/* Animated vertical line */
 .line {
     width: 6px;
     background: linear-gradient(to bottom, #007bff, #0056b3);
@@ -29,14 +27,12 @@
     height: 100%;
 }
 
-/* Each checkpoint (flag & task box) */
 .checkpoint {
     display: flex;
     align-items: center;
     position: absolute;
 }
 
-/* Circular Flag Container */
 .flagContainer {
     width: 90px;
     height: 90px;
@@ -50,26 +46,24 @@
     z-index: 1;
 }
 
-/* Enlarged Flag */
 .flag {
     width: 70px !important;
     height: 70px !important;
 }
 
-/* Task Box */
 .box {
     width: 300px;
     background: white;
-    padding: 1.6em;
+    padding: 0.6em;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease-in-out;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    cursor: pointer;
 }
 
-/* Connector Line */
 .connector {
     width: 35px;
     height: 4px;
@@ -80,10 +74,8 @@
     transition: 0.4s ease-in-out;
 }
 
-/* Alternating Task Box Positions */
 .leftBox {
     left: -340px;
-    border-left: 4px solid #007bff;
     animation: fadeInLeft 0.5s ease-in-out;
 }
 
@@ -93,7 +85,6 @@
 
 .rightBox {
     right: -340px;
-    border-right: 4px solid #007bff;
     animation: fadeInRight 0.5s ease-in-out;
 }
 
@@ -101,7 +92,6 @@
     left: -35px;
 }
 
-/* ✅ Fixed Add Button Position ✅ */
 .addButton {
     width: 70px;
     height: 70px;
@@ -115,7 +105,6 @@
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
     animation: bounce 1s infinite;
     margin-top: 40px;
-    /* Ensures space below last checkpoint */
 }
 
 .addButton:hover {
@@ -123,7 +112,6 @@
     transform: scale(1.1);
 }
 
-/* Animations */
 @keyframes fadeInLeft {
     from {
         opacity: 0;
@@ -160,22 +148,165 @@
     }
 }
 
-.form_div{
+.form_div {
     width: 100%;
     height: 100vh;
-    background: rgb(0, 0, 0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     position: fixed;
-    top: 0%;
-    left: 0%;
+    top: 0;
+    left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    /* display: block; */
 }
 
-.form_close{
-    width: 100%;
-    height: 100vh;
-    z-index: -1;
+.form_close {
+    display: none;
+}
+
+.box_div_location {
+    display: flex;
+    gap: 0.3em;
+}
+
+.name {
+    font-size: 0.9em;
+    font-family: sans-serif;
+    font-weight: 200;
+}
+
+.img {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.checkpoint_number {
+    font-family: sans-serif;
+    font-weight: 500;
+    color: #ff4b2b;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+
+@media (max-width: 1024px) {
+    .container {
+        padding: 3em;
+    }
+
+    .lineContainer {
+        width: 4px;
+    }
+
+    .flagContainer {
+        width: 70px;
+        height: 70px;
+    }
+
+    .flag {
+        width: 50px !important;
+        height: 50px !important;
+    }
+
+    .box {
+        width: 250px;
+        padding: 0.5em;
+    }
+
+    .leftBox {
+        left: -280px;
+    }
+
+    .rightBox {
+        right: -280px;
+    }
+
+    .addButton {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8em;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 2em;
+    }
+
+    .lineContainer {
+        width: 3px;
+    }
+
+    .flagContainer {
+        width: 60px;
+        height: 60px;
+    }
+
+    .flag {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .box {
+        width: 220px;
+        padding: 0.4em;
+        font-size: 0.9em;
+    }
+
+    .leftBox {
+        left: -250px;
+    }
+
+    .rightBox {
+        right: -250px;
+    }
+
+    .addButton {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1em;
+    }
+
+    .lineContainer {
+        width: 2px;
+    }
+
+    .flagContainer {
+        width: 50px;
+        height: 50px;
+    }
+
+    .flag {
+        width: 35px !important;
+        height: 35px !important;
+    }
+
+    .box {
+        width: 200px;
+        padding: 0.3em;
+        font-size: 0.8em;
+    }
+
+    .leftBox,
+    .rightBox {
+        position: static;
+        left: auto;
+        right: auto;
+        transform: translateY(0);
+        margin: 1em 0;
+        text-align: center;
+    }
+
+    .addButton {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+    }
 }

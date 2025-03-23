@@ -30,7 +30,7 @@ export default function Home() {
       <Feedback />
       {/* <Reviewsection /> */}
       <Footersection />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

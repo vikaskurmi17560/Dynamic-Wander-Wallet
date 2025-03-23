@@ -1,12 +1,13 @@
 "use client";
+
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; // Correct router import
+import { useRouter } from "next/navigation"; // ✅ Correct router import
 import { GetUser } from "../connection/userConnection";
 import toast from "react-hot-toast";
 
-const useUserData = () => {
+const useData = () => {
   const router = useRouter();
-  
+  const [userId, setUserId] = useState<string | null>(null);
   const [user, setUser] = useState({
     name: "",
     profile: "",
@@ -14,49 +15,53 @@ const useUserData = () => {
     bio: "",
     phone_no: "",
   });
-
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // ✅ Set isAuthenticated from localStorage
+    // ✅ Get token and user ID from localStorage
     const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token); // Convert token existence to boolean
+    const storedUserId = localStorage.getItem("user_id");
 
-    const fetchUserData = async () => {
-      let user_id = localStorage.getItem("user_id");
+    if (!token || !storedUserId) {
+      setIsAuthenticated(false);
+      return;
+    }
 
-      if (!user_id || !token) {
+    try {
+      // ✅ Extract actual userId from JSON
+      const parsedUserId = JSON.parse(storedUserId)?.value || null;
+      if (!parsedUserId) {
         setIsAuthenticated(false);
         return;
       }
 
-      try {
-        const parsedId = JSON.parse(user_id);
-        if (parsedId?.value) {
-          user_id = parsedId.value;
+      setUserId(parsedUserId);
+      setIsAuthenticated(true);
+
+      const fetchUserData = async () => {
+        try {
+          const response = await GetUser(parsedUserId); // ✅ Use correct userId
+          if (response.success) {
+            setUser({
+              name: response.user.name || "",
+              profile: response.user.profile || "",
+              banner: response.user.banner || "",
+              bio: response.user.bio || "",
+              phone_no: response.user.phone_no || "",
+            });
+          }
+        } catch (error) {
+          toast.error("Some error occurred while fetching user data");
         }
+      };
 
-        setIsAuthenticated(true);
-        const response = await GetUser(user_id);
-
-        if (response.success) {
-          setUser({
-            name: response.user.name || "",
-            profile: response.user.profile || "",
-            banner: response.user.banner || "",
-            bio: response.user.bio || "",
-            phone_no: response.user.phone_no || "",
-          });
-        }
-      } catch (error) {
-        toast.error("Some error occurred");
-      }
-    };
-
-    fetchUserData();
+      fetchUserData();
+    } catch (err) {
+      console.error("Error parsing user_id:", err);
+      setIsAuthenticated(false);
+    }
   }, []);
 
-  // ✅ Define handleLogout outside useEffect
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user_id");
@@ -64,13 +69,13 @@ const useUserData = () => {
     localStorage.removeItem("user_email");
     localStorage.removeItem("user_image");
 
-    setIsAuthenticated(false); // ✅ Update state immediately
+    setIsAuthenticated(false);
     toast.success("Logged out successfully");
 
-    router.replace("/login"); // Redirect to login
+    router.replace("/login");
   };
 
-  return { user, isAuthenticated, handleLogout };
+  return { userId, user, isAuthenticated, handleLogout };
 };
 
-export default useUserData;
+export default useData;

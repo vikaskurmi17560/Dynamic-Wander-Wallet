@@ -70,7 +70,7 @@ const Checkpoint = () => {
         <>
             <div className={style.container}>
                 <div className={style.image_div}>
-                    <Image src="/images/Trip/First.jpg" height={100} width={200} alt="Trip Image" className={style.image} />
+                    <Image src="/images/Trip/First.jpg" height={3000} width={3000} alt="Trip Image" className={style.image} />
                     <div className={style.upper_div}>
                         <p className={style.heading}>Your Trip Details</p>
                         <p className={style.desp}>Plan and explore checkpoints</p>
@@ -106,7 +106,7 @@ const Checkpoint = () => {
                 </div>
                 <div className={style.map}>
                     <LoadScript googleMapsApiKey={GOOGLE_API_KEY}>
-                        <GoogleMap mapContainerStyle={containerStyle} center={{ lat: mapLocation.lat, lng: mapLocation.lng }} zoom={12}>
+                        <GoogleMap mapContainerStyle={containerStyle} center={{ lat: mapLocation.lat, lng: mapLocation.lng }} zoom={14}>
                             <Marker position={{ lat: mapLocation.lat, lng: mapLocation.lng }} />
                         </GoogleMap>
                     </LoadScript>
