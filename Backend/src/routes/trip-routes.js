@@ -7,4 +7,5 @@ router.get('/getbyuserid', tripController.getTripsByUser);
 router.get('/getbyid', tripController.getTripsByid);
 router.delete('/delete', tripController.deleteTrip);
 router.post("/fetch", tripController.getTripId);
+router.get("/alltrip",tripController.getAllTrip);
 module.exports = router;

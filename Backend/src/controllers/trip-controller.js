@@ -55,13 +55,13 @@ exports.getTripsByid = async (req, res) => {
 // Delete a trip by ID
 exports.deleteTrip = async (req, res) => {
   try {
-    const { trip_id } = req.query; // Extract trip_id correctly
+    const { trip_id } = req.query;
 
     if (!trip_id) {
       return res.status(400).json({ error: "Trip ID is required" });
     }
 
-    const deletedTrip = await Trip.findByIdAndDelete(trip_id); // Pass trip_id directly
+    const deletedTrip = await Trip.findByIdAndDelete(trip_id); 
 
     if (!deletedTrip) {
       return res.status(404).json({ error: "Trip not found" });
@@ -90,5 +90,20 @@ exports.getTripId = async (req, res) => {
     res.status(200).json(trip);
   } catch (error) {
     res.status(500).json({ error: "Error fetching trip" });
+  }
+}
+// Get All Trips
+exports.getAllTrip = async (req, res) => {
+  try {
+
+    const trip = await Trip.find();
+
+    if (!trip) {
+      return res.status(404).json({ error: "Trip is not here" });
+    }
+
+    res.status(200).json(trip);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching All trip" });
   }
 }
