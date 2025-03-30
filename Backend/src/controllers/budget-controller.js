@@ -1,4 +1,6 @@
 const Budget = require("../models/budget");
+const Hotel = require("../models/hotel");
+const Restauatant = require("../models/restaurants");
 
 exports.createBudget = async (req, res) => {
     try {
