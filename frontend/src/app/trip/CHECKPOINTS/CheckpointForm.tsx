@@ -38,7 +38,7 @@ const transportTypes = {
 
 const CheckpointForm = ({ onCheckpointAdded }) => {
     const router = useRouter();
-    const { tripId, location, toggleCheckpoint, saveLocation } = useLocation();
+    const { tripId, location, toggleCheckpoint, saveLocation, toggleTripEnd } = useLocation();
 
     const [formData, setFormData] = useState<FormData>({
         trip_id: "",
@@ -158,6 +158,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
             console.log("Saving checkpoint...");
             await handleSubmit(e);
             toggleCheckpoint();
+            toggleTripEnd();
             console.log("Checkpoint saved. Redirecting...");
         } catch (error) {
             console.error("Error ending trip:", error);

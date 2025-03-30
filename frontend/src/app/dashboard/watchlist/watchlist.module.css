@@ -59,12 +59,14 @@
 .description {
     margin: 0.5rem 0;
     color: #a89ec9;
+    padding: 0.5em;
 }
 
 .buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 1rem;
+    padding: 0.7em;
 }
 
 .detailsBtn,
