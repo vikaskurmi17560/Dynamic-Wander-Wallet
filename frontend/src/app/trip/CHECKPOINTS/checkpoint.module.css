@@ -168,12 +168,16 @@
 .box_div_location {
     display: flex;
     gap: 0.3em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .name {
     font-size: 0.9em;
     font-family: sans-serif;
     font-weight: 200;
+    color: black;
 }
 
 .img {

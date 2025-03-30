@@ -9,8 +9,8 @@ function Navbar() {
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   let lastScrollY = 0;
-  const {isAuthenticated,handleLogout}=useData();
- 
+  const { isAuthenticated, handleLogout } = useData();
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > lastScrollY && window.scrollY > 100) {
@@ -25,7 +25,7 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
- 
+
 
   return (
     <nav className={`${styles.navbar} ${visible ? styles.visible : styles.hidden}`}>
@@ -38,23 +38,23 @@ function Navbar() {
       <div className={`${styles.nav_links} ${menuOpen ? styles.open : ""}`}>
         <div className={styles.left_section}>
           <Link href={"/"} className={styles.nav_item}>Home</Link>
-           <div className={styles.nav_item}>Blogs</div>
+          <div className={styles.nav_item}>Blogs</div>
           <Link href={"/trip"} className={styles.nav_item}>Trip</Link>
           <Link href={"/about"} className={styles.nav_item}>About Us</Link>
           <Link href={"/dashboard"} className={styles.nav_item}>Dashboard</Link>
-          <div className={styles.nav_item}>Explore</div>
+          <Link href={"/explore"} className={styles.nav_item}>Explore</Link>
         </div>
         <div className={styles.right_section}>
-         
+
           {
-            isAuthenticated  ? (<>
-             <Link href="/profile" className={styles.btn}>Profile</Link>
-             <div className={styles.line}></div>
-            <div className={styles.btn} onClick={handleLogout}>Log out</div>
-             
+            isAuthenticated ? (<>
+              <Link href="/profile" className={styles.btn}>Profile</Link>
+              <div className={styles.line}></div>
+              <div className={styles.btn} onClick={handleLogout}>Log out</div>
+
             </>
 
-            ) :(
+            ) : (
               <Link className={styles.btn} href="/login">Log In</Link>
             )
           }

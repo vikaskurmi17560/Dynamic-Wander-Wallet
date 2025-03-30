@@ -28,7 +28,7 @@ const Dashboard = () => {
                         <div className={style.btn_box}>
                             <button className={style.btn} onClick={handleTrip}>See My Trips</button>
                             <p className={style.line}></p>
-                            <button className={style.btn} onClick={handleWatchlist}>Watchlist</button>
+                            <button className={style.btn} onClick={handleWatchlist}>Cart</button>
                         </div>
                     </div>
                 </div>

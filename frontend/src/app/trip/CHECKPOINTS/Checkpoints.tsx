@@ -55,12 +55,12 @@ const Checkpoints = () => {
                     <div className={styles.data_div}>
                         <h2 className={styles.tripheading}>Trip Details</h2>
                         <div className={styles.content}>
-                            <p className={styles.about}><span className={styles.strong}>Trip Name</span> <span>{tripData?.tripName}</span></p>
-                            <p className={styles.about}><span className={styles.strong}>State</span> <span>{tripData?.state}</span></p>
-                            <p className={styles.about}><span className={styles.strong}>City</span> <span>{tripData?.city}</span></p>
-                            <p className={styles.about}><span className={styles.strong}>From</span> <span>{tripData?.source}</span></p>
-                            <p className={styles.about}><span className={styles.strong}>To</span> <span>{tripData?.destination}</span></p>
-                            <p className={styles.about}><span className={styles.strong}>Location</span> <span>{location?.name}</span></p>
+                            <div className={styles.about}><span className={styles.strong}>State</span> <span>{tripData?.state}</span></div>
+                            <div className={styles.about}><span className={styles.strong}>City</span> <span>{tripData?.city}</span></div>
+                            <div className={styles.about}><span className={styles.strong}>From</span> <span>{tripData?.source}</span></div>
+                            <div className={styles.about}><span className={styles.strong}>To</span> <span>{tripData?.destination}</span></div>
+                            <div className={styles.about}><span className={styles.strong}>Location</span> <span>{location?.name}</span></div>
+                            <div className={styles.about}><span className={styles.strong}>Trip Name</span> <span>{tripData?.tripName}</span></div>
                         </div>
                     </div>
                 </div>

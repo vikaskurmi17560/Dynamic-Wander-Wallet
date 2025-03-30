@@ -130,7 +130,7 @@ const Trip = () => {
                         />
                     </div>
                     <div className={style.inputbox}>
-                        <p className={style.name}>State</p>
+                        <p className={style.name}>Destination State</p>
                         <select
                             name="state"
                             value={tripData.state}
@@ -146,7 +146,7 @@ const Trip = () => {
                         </select>
                     </div>
                     <div className={style.inputbox}>
-                        <p className={style.name}>City</p>
+                        <p className={style.name}>Destination City</p>
                         <select
                             name="city"
                             value={tripData.city}
@@ -174,7 +174,7 @@ const Trip = () => {
                         />
                     </div>
                     <div className={style.inputbox}>
-                        <p className={style.name}>Destination</p>
+                        <p className={style.name}>Destination Place</p>
                         <input
                             type="text"
                             name="destination"

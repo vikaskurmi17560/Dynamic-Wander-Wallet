@@ -22,7 +22,6 @@
     gap: 0.5em;
 }
 
-/* Scrollable container for cards */
 .gridContainer {
     display: flex;
     gap: 1.5em;
@@ -32,14 +31,9 @@
     padding: 10px;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+    scrollbar-width: none;
 }
 
-
-/* ::-webkit-scrollbar {
-    display: none; 
-} */
-
-/* Card Styles */
 .card {
     background: #f9f9f9;
     border-radius: 1.2em;
@@ -47,7 +41,7 @@
     position: relative;
     width: 15em; 
     height: 12em;
-    flex: 0 0 auto; /* Ensures the cards don’t shrink */
+    flex: 0 0 auto; 
     scroll-snap-align: center;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;

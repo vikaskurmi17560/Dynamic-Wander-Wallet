@@ -5,8 +5,9 @@ import axios from "axios";
 import style from "./CheckpointForm.module.css";
 import useLocation from "@/hook/useLocation";
 import { getCurrentLocation } from "./FUNCTION/getLocation";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface Location {
     name: string;
@@ -248,7 +249,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                 </div>
                 <div className={style.budget}>
                     <div>
-                        <div className={style.sub_name}>Transport Category:</div>
+                        <div className={style.sub_name}>Transport Category</div>
                         <select value={selectedCategory} onChange={handleCategoryChange} className={style.input} required>
                             <option value="">Select Category</option>
                             {categories.map((category) => (
@@ -261,6 +262,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                     <div>
                         <div className={style.sub_name}>Transport Type</div>
                         <select value={selectedType} onChange={handleTypeChange} className={style.input} disabled={selectedCategory === "By Walk"}>
+                            <option value="">Select Transport Type</option>
                             {transportTypes.Vehicle.map((type) => (
                                 <option key={type} value={type}>{type}</option>
                             ))}
@@ -276,12 +278,21 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                     </div>
                 </div>
                 <div className={style.submit_btn}>
-                    <button type="submit" className=" btn btn-primary btn-lg btn-block h-12">Checkpoint Verified</button>
-                    <button type="button" className="btn btn-danger" onClick={handleTripEnd}>
+                    <button
+                        type="submit"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300">
+                        Checkpoint Verified
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={handleTripEnd}
+                        className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300">
                         End Trip
                     </button>
                 </div>
             </form>
+            <FontAwesomeIcon icon={faTimes} className={style.cross_btn} onClick={() => toggleCheckpoint()} />
         </div>
     );
 };
