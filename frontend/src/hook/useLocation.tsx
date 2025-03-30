@@ -11,67 +11,46 @@ interface Location {
 const useLocation = () => {
     const [location, setLocation] = useState<Location | null>(null);
     const [tripId, setTripId] = useState<string | null>(null);
-    const [isCheckpoint, setIsCheckpoint] = useState<boolean>(() => {
-        if (typeof window !== "undefined") {
-            return JSON.parse(localStorage.getItem("isCheckpoint") || "false");
-        }
-        return false;
-    });
+    const [isCheckpoint, setIsCheckpoint] = useState<boolean>(false);
 
-    useEffect(() => {
+    // Function to update state from local storage
+    const updateFromLocalStorage = () => {
         const storedLocation = localStorage.getItem("userLocation");
-        if (storedLocation) {
-            try {
-                const parsedLocation = JSON.parse(storedLocation);
-                setLocation({
-                    name: parsedLocation.name,
-                    lat: Number(parsedLocation.lat), // Ensure it's a number
-                    lng: Number(parsedLocation.lng), // Ensure it's a number
-                });
-            } catch (error) {
-                console.error("Error parsing stored location:", error);
-            }
-        }
-
         const storedTripId = localStorage.getItem("tripId");
-        if (storedTripId) setTripId(storedTripId);
-    }, []);
+        const storedCheckpoint = localStorage.getItem("isCheckpoint");
 
+        setLocation(storedLocation ? JSON.parse(storedLocation) : null);
+        setTripId(storedTripId || null);
+        setIsCheckpoint(storedCheckpoint === "true");
+    };
+
+    // Load from local storage on mount & listen for changes
     useEffect(() => {
-        const handleStorageChange = () => {
-            setTimeout(() => {
-                const newState = JSON.parse(localStorage.getItem("isCheckpoint") || "false");
-                setIsCheckpoint(newState);
-            }, 0);
-        };
+        updateFromLocalStorage();
+
+        const handleStorageChange = () => updateFromLocalStorage();
 
         window.addEventListener("storage", handleStorageChange);
         return () => window.removeEventListener("storage", handleStorageChange);
     }, []);
 
     const saveLocation = (newLocation: Location) => {
-        const formattedLocation = {
-            name: newLocation.name,
-            lat: Number(newLocation.lat), // Ensure number format
-            lng: Number(newLocation.lng), // Ensure number format
-        };
-
-        setLocation(formattedLocation);
-        localStorage.setItem("userLocation", JSON.stringify(formattedLocation));
+        localStorage.setItem("userLocation", JSON.stringify(newLocation));
+        setLocation(newLocation);
+        window.dispatchEvent(new Event("storage")); 
     };
 
     const saveTripId = (id: string) => {
-        setTripId(id);
         localStorage.setItem("tripId", id);
+        setTripId(id);
+        window.dispatchEvent(new Event("storage"));
     };
 
     const toggleCheckpoint = () => {
-        setIsCheckpoint((prev) => {
-            const newState = !prev;
-            localStorage.setItem("isCheckpoint", JSON.stringify(newState));
-            window.dispatchEvent(new Event("storage"));
-            return newState;
-        });
+        const newState = !isCheckpoint;
+        localStorage.setItem("isCheckpoint", newState.toString());
+        setIsCheckpoint(newState);
+        window.dispatchEvent(new Event("storage"));
     };
 
     return { location, saveLocation, tripId, saveTripId, isCheckpoint, toggleCheckpoint };

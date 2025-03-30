@@ -156,6 +156,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
         try {
             console.log("Saving checkpoint...");
             await handleSubmit(e);
+            toggleCheckpoint();
             console.log("Checkpoint saved. Redirecting...");
         } catch (error) {
             console.error("Error ending trip:", error);
@@ -259,7 +260,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                     </div>
                     <div>
                         <div className={style.sub_name}>Transport Type</div>
-                        <select value={selectedType} onChange={handleTypeChange} className={style.input}>
+                        <select value={selectedType} onChange={handleTypeChange} className={style.input} disabled={selectedCategory === "By Walk"}>
                             {transportTypes.Vehicle.map((type) => (
                                 <option key={type} value={type}>{type}</option>
                             ))}
