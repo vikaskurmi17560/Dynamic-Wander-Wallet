@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
+
 interface Location {
     name: string;
     latitude: number;
@@ -64,7 +65,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
         }));
     }, [tripId, location]);
 
-    const [selectedCategory, setSelectedCategory] = useState("Vehicle");
+    const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedType, setSelectedType] = useState("");
     const [transportPrice, setTransportPrice] = useState(0);
     const [extraInfo, setExtraInfo] = useState("");

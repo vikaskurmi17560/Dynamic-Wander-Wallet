@@ -9,7 +9,6 @@ const Cart: React.FC = () => {
   const { cart, removeFromCart } = useCartStore();
   const router = useRouter();
 
-  // Remove duplicate trips based on _id
   const uniqueCart = Array.from(new Map(cart.map((trip) => [trip._id, trip])).values());
 
   return (

@@ -66,8 +66,6 @@ const CheckpointDetail = () => {
             </div>
             <div
               className={`${style.box} ${index % 2 === 0 ? style.leftBox : style.rightBox}`}
-              title="Click to View Full Details"
-              onClick={() => handleViewCheckpointDetails(checkpoint._id)}
             >
               <p className={style.checkpoint_number}>Checkpoint {index + 1}</p>
               <div className={style.box_div_location}>
@@ -89,6 +87,22 @@ const CheckpointDetail = () => {
                   className={style.img}
                 />
                 <div className={style.name}>{checkpoint.destination?.name || "N/A"}</div>
+              </div>
+              <div className={style.btn_box}>
+                <button className={style.button}
+                  title="Click to View Full Details"
+                  onClick={() => handleViewCheckpointDetails(checkpoint._id)}
+                >
+                  Detail
+                </button>
+                <button
+                  className={style.btn2}
+                  onClick={() => router.push(`/hotels?tripId=${tripId}&checkpointId=${checkpoint._id}`)}
+                >
+                  Hotel
+                </button>
+
+                <button className={style.btn3}>Restaurant</button>
               </div>
             </div>
           </div>

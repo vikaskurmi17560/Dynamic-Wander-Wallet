@@ -19,7 +19,6 @@ const hotelSchema = new mongoose.Schema({
   description: {
     type: String,
     trim: true,
-    minlength: 10,
     maxlength: 500,
     default: "No description provided."
   },

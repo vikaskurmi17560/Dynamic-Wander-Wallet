@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import style from "./trippage.module.css";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import useLocation from "@/hook/useLocation";
 
 const Trip = () => {
+    const { toggleTripEnd } = useLocation();
     const [tripData, setTripData] = useState({
         tripName: "",
         state: "",
@@ -75,15 +77,13 @@ const Trip = () => {
         // }
 
         setLoading(true);
-
         try {
             const response = await axios.post(
                 "http://localhost:7050/api/v1/trip/create",
                 tripData,
                 { headers: { "Content-Type": "application/json" } }
             );
-
-            console.log("Response from server:", response.data); 
+            console.log("Response from server:", response.data);
 
             if (!response.data || !response.data._id) {
                 throw new Error("Trip ID is missing in the response");
@@ -92,7 +92,7 @@ const Trip = () => {
             const tripId = response.data._id;
             localStorage.setItem("tripId", tripId);
             console.log("Trip ID:", tripId);
-
+            toggleTripEnd();
             alert("Trip created successfully!");
             router.push(`/trip/TripCheckpoint?tripName=${tripData.tripName}&destination=${tripData.destination}`);
 
