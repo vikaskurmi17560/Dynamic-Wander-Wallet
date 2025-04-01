@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { useSearchParams } from "next/navigation";
 import style from "./hotels.module.css";
+import Link from "next/link";
+import axios from "axios";
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 const libraries: ("places")[] = ["places"];
@@ -17,13 +19,24 @@ export default function Hotels() {
     const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
     const [hotels, setHotels] = useState<any[]>([]);
     const [showForm, setShowForm] = useState(false);
+    const [selectedHotel, setSelectedHotel] = useState<any>(null);
+    const [formData, setFormData] = useState({
+        trip_id: tripId,
+        checkpoint_id: checkpointId,
+        name: selectedHotel,
+        location: { latitude: 0, longitude: 0 },
+        rating: 3.0,
+        description: "",
+        pricePerNight: [{ hotel_type: "", price: 0 }],
+        contact: "",
+    });
+
     const [searchQuery, setSearchQuery] = useState("");
     const [ratingFilter, setRatingFilter] = useState(0);
     const [distanceFilter, setDistanceFilter] = useState(3000);
 
     const { isLoaded } = useJsApiLoader({ googleMapsApiKey: API_KEY || "", libraries });
 
-    // Effect to get user's location
     useEffect(() => {
         if (!navigator.geolocation) {
             console.error("Geolocation is not supported by your browser.");
@@ -39,7 +52,6 @@ export default function Hotels() {
         );
     }, []);
 
-    // Effect to fetch hotels when location changes
     useEffect(() => {
         if (!isLoaded || !location) return;
         fetchHotels(location.lat, location.lng, distanceFilter);
@@ -63,6 +75,63 @@ export default function Hotels() {
             hotel.name?.toLowerCase().includes(searchQuery.toLowerCase()) &&
             hotel.rating >= ratingFilter
     );
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const updatedFormData = {
+            ...formData,
+            trip_id: tripId,
+            checkpoint_id: checkpointId,
+            name: selectedHotel,
+            location: location ? { latitude: location.lat, longitude: location.lng } : { latitude: 0, longitude: 0 },
+        };
+
+        console.log("Submitting Form Data:", updatedFormData);
+
+        try {
+            const response = await axios.post(
+                "http://localhost:7050/api/v1/hotel/create",
+                updatedFormData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            if (response.status === 200 || response.status === 201) {
+                console.log("Hotel saved successfully:", response.data);
+            } else {
+                console.error("Unexpected response status:", response.status, response.data);
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error.response?.data || error.message);
+        }
+
+        setShowForm(false);
+    };
+
+    useEffect(() => {
+        setFormData((prev) => ({
+            ...prev,
+            trip_id: tripId,
+            checkpoint_id: checkpointId,
+            name: selectedHotel,
+        }));
+    }, [tripId, checkpointId, selectedHotel]);
+
+
 
     if (!isLoaded) return <p>Loading map...</p>;
 
@@ -128,59 +197,140 @@ export default function Hotels() {
 
             {/* Hotel List */}
             <div className={style.hotels_div}>
-                {filteredHotels.map((hotel) => (
-                    <div key={hotel.place_id} className="border rounded-lg shadow-lg p-4">
-                        <h2 className="text-lg font-semibold">{hotel.name}</h2>
-                        <p>📍 {hotel.vicinity}</p>
-                        <p className="text-yellow-500">⭐ {hotel.rating || "No Rating"}</p>
-                        <div className="mt-3 flex justify-between">
-                            <a
-                                href={`https://www.google.com/maps/dir/?api=1&destination=${hotel.geometry.location.lat()},${hotel.geometry.location.lng()}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="bg-blue-500 text-white px-4 py-2 rounded"
+                <div className={style.hotels_boxes}>
+                    {filteredHotels.map((hotel) => (
+                        <div key={hotel.place_id} className={style.hotel_box}>
+                            <h2 className={style.hotel_name}>{hotel.name}</h2>
+                            <p className={style.hotel_map}>🗺️ {hotel.vicinity}</p>
+                            <p className={style.hotel_rating}>⭐ {hotel.rating || "No Rating"}</p>
+                            <div className={style.hotel_button}>
+                                <Link
+                                    href={`https://www.google.com/maps/dir/?api=1&destination=${hotel.geometry.location.lat()},${hotel.geometry.location.lng()}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                                >
+                                    Get Directions
+                                </Link>
+                                <Link
+                                    href={`https://www.google.com/maps/place/?q=place_id:${hotel.place_id}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-gray-500 text-white px-4 py-2 rounded"
+                                >
+                                    View Website
+                                </Link>
+                            </div>
+                            <button
+                                onClick={() => {
+                                    setShowForm(true);
+                                    setSelectedHotel(hotel.name)
+                                }}
+                                className="mt-3 w-full bg-green-500 text-white px-4 py-2 rounded"
                             >
-                                Get Directions
-                            </a>
-                            <a
-                                href={`https://www.google.com/maps/place/?q=place_id:${hotel.place_id}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="bg-gray-500 text-white px-4 py-2 rounded"
-                            >
-                                View Website
-                            </a>
+                                Open Form
+                            </button>
                         </div>
-                        <button
-                            onClick={() => setShowForm(true)}
-                            className="mt-3 w-full bg-green-500 text-white px-4 py-2 rounded"
-                        >
-                            Open Form
-                        </button>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
-            {/* Form Modal */}
             {showForm && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-                        <h2 className="text-xl font-semibold mb-4">Fill the Form</h2>
-                        <form>
-                            <label className="block mb-2">
-                                Name:
-                                <input type="text" className="w-full border p-2 rounded mt-1" />
+                    <div className={style.form_div}>
+                        <h2 className={style.form_heading}>Create Hotel Point</h2>
+                        <form onSubmit={handleSubmit} className={style.form}>
+                            <label>
+                                <p className={style.content}>Hotel Name</p>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={selectedHotel}
+                                    onChange={handleChange}
+                                    className={style.input}
+                                    readOnly
+                                />
                             </label>
-                            <label className="block mb-2">
-                                Email:
-                                <input type="email" className="w-full border p-2 rounded mt-1" />
+
+                            <label >
+                                <p className={style.content}>Rating</p>
+                                <input
+                                    type="number"
+                                    name="rating"
+                                    value={formData.rating}
+                                    onChange={handleChange}
+                                    className={style.input}
+                                    min="1"
+                                    max="5"
+                                    step="0.1"
+                                />
                             </label>
-                            <label className="block mb-2">
-                                Phone:
-                                <input type="tel" className="w-full border p-2 rounded mt-1" />
+
+                            <label >
+                                <p className={style.content}>Description</p>
+                                <textarea
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={handleChange}
+                                    className={style.textarea}
+                                ></textarea>
                             </label>
+
+                            <label >
+                                <p className={style.content}>Hotel Type</p>
+                                <select
+                                    name="hotel_type"
+                                    value={formData.pricePerNight[0]?.hotel_type || ""}
+                                    onChange={(e) =>
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            pricePerNight: [{ ...prev.pricePerNight[0], hotel_type: e.target.value }],
+                                        }))
+                                    }
+                                    className={style.input}
+                                >
+                                    <option value="">Select the type</option>
+                                    <option value="luxury">Luxury</option>
+                                    <option value="3-star">3-star</option>
+                                    <option value="1-star">1-star</option>
+                                    <option value="dormitory">Dormitory</option>
+                                </select>
+                            </label>
+
+                            <label >
+                                <p className={style.content}>Price (per night)</p>
+                                <input
+                                    type="number"
+                                    name="price"
+                                    value={formData.pricePerNight[0]?.price || ""}
+                                    onChange={(e) =>
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            pricePerNight: [{ ...prev.pricePerNight[0], price: Number(e.target.value) }],
+                                        }))
+                                    }
+                                    className={style.input}
+                                    min="0"
+                                />
+                            </label>
+
+                            <label >
+                                <p className={style.content}>Contact</p>
+                                <input
+                                    type="text"
+                                    name="contact"
+                                    value={formData.contact}
+                                    onChange={handleChange}
+                                    className={style.input}
+                                />
+                            </label>
+
                             <div className="flex justify-end mt-4">
-                                <button type="button" className="bg-gray-400 text-white px-4 py-2 rounded mr-2" onClick={() => setShowForm(false)}>
+                                <button
+                                    type="button"
+                                    className="bg-gray-400 text-white px-4 py-2 rounded mr-2"
+                                    onClick={() => setShowForm(false)}
+                                >
                                     Cancel
                                 </button>
                                 <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
@@ -191,6 +341,7 @@ export default function Hotels() {
                     </div>
                 </div>
             )}
+
         </div>
     );
 }

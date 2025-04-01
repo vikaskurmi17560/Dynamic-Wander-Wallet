@@ -24,11 +24,11 @@ const hotelSchema = new mongoose.Schema({
   },
   pricePerNight: [
     {
-      hotel_type: { type: String, enum: ['budget', '3-star', 'luxury'], required: true }
+      hotel_type: { type: String, required: true }
       , price: { type: Number, required: true }
     }
   ],
   contact: { type: String }
-},{timestamps:true});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Hotel', hotelSchema);

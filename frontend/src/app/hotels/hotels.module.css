@@ -62,10 +62,109 @@
 }
 
 .hotels_div{
-    height: auto;
     min-height: 40vh;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: whitesmoke;
+    padding-bottom: 2em;
+}
+
+.hotels_boxes{
+    /* border: 1px solid black; */
+    width: 94%;
+    display: flex;
+    gap: 2em;
+    padding: 0.4em;
+    height: auto;
     flex-wrap: wrap;
-    gap: 1em;
+}
+
+.hotel_box{
+    width: 45vh;
+    min-height: 35vh;
+    background-color: white;
+    border-radius: 0.6em;
+    padding: 0.3em;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid black; */
+}
+
+.hotel_name{
+    color: #9370DB;
+    font-size: 1.4em;
+    text-align: center;
+    text-transform: capitalize;
+    padding: 0.3em;
+    height: 9vh;
+    overflow: hidden;
+}
+
+.hotel_map{
+    height: 7vh;
+    overflow: hidden;
+    /* border: 1px solid red; */
+    display: flex;
+    /* align-items: center; */
+    color: #8A2BE2;
+}
+
+.hotel_rating{
+    height: 4vh;
+    padding: 0.5em 0em;
+    color: #8A2BE2;
+}
+
+.hotel_button{
+    /* border: 1px solid black; */
+    height: 8vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
     justify-content: space-around;
+}
+
+.form_div{
+    width: 60%;
+    padding: 1em;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+}
+
+.form_heading{
+    color: #8A2BE2;
+    font-family: cursive;
+    text-align: center;
+    font-size: 1.5em;
+}
+.content{
+    color: #9400D3;
+    font-size: 0.9em;
+}
+
+.input{
+    height: 6vh;
+    outline: none;
+    color: black;
+}
+
+.textarea {
+    overflow: scroll;
+    scrollbar-width: none;
+    width: 100%;
+    height: 20vh;
+    resize: none;
+    outline: none;
+    border: 1px solid rgb(128, 126, 126);
+    padding: 0.7em;
+    color: black;
 }
