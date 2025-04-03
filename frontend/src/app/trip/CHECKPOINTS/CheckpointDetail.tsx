@@ -101,8 +101,12 @@ const CheckpointDetail = () => {
                 >
                   Hotel
                 </button>
-
-                <button className={style.btn3}>Restaurant</button>
+                <button
+                  className={style.btn3}
+                  onClick={() => router.push(`/restaurant?tripId=${tripId}&checkpointId=${checkpoint._id}`)}
+                >
+                  Restaurant
+                </button>
               </div>
             </div>
           </div>
@@ -112,7 +116,6 @@ const CheckpointDetail = () => {
       <button className={style.addButton} onClick={handleAddCheckpoint} title="Click to add a new checkpoint">
         +
       </button>
-
       <div className={isCheckpoint ? style.form_div : style.form_close}>
         {isCheckpoint && <CheckpointForm onCheckpointAdded={handleCheckpointAdded} />}
       </div>

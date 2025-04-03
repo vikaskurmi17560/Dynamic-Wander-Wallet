@@ -47,13 +47,12 @@
     font-size: 0.9em;
 }
 
-.label {
+.label{
     width: 40%;
     display: flex;
     flex-direction: column;
     gap: 0.2em;
 }
-
 .input {
     height: 6vh;
     min-width: 90%;
@@ -64,20 +63,18 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
-.textarea_div {
+.textarea_div{
     width: 100%;
     display: flex;
     gap: 2em;
 }
-
-.labels {
+.labels{
     width: 50%;
     display: flex;
     flex-direction: column;
     gap: 0.2em;
     /* border: 1px solid red; */
 }
-
 .textarea {
     overflow: scroll;
     scrollbar-width: none;
