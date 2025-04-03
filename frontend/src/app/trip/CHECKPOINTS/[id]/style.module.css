@@ -93,6 +93,7 @@
     display: flex;
     flex-direction: column;
     gap: 1em;
+    position: relative;
 }
 
 .about_heading {
@@ -125,6 +126,9 @@
     width: auto;
     color: black;
     padding: 0.6em;
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
 }
 
@@ -149,6 +153,8 @@
 .transportvalue {
     padding: 0.6em;
     display: flex;
+    align-items: center;
+    text-transform: capitalize;
     color: black;
     height: 6vh;
     min-width: 40vh;
@@ -161,6 +167,135 @@
     color: black;
 }
 
+.uiverse {
+    position: relative;
+    background: #ffffff;
+    color: #000;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+    width: 150px;
+    height: 50px;
+    font-size: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.tooltip {
+    position: absolute;
+    top: 0;
+    font-size: 14px;
+    background: #ffffff;
+    color: #ffffff;
+    padding: 5px 8px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.tooltip::before {
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 8px;
+    background: #ffffff;
+    bottom: -3px;
+    left: 50%;
+    transform: translate(-50%) rotate(45deg);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.uiverse:hover .tooltip {
+    top: -45px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.uiverse:hover,
+.uiverse:hover .tooltip,
+.uiverse:hover .tooltip::before {
+    background: linear-gradient(320deg, rgb(3, 77, 146), rgb(0, 60, 255));
+    color: #ffffff;
+}
+
+.hotel_div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    /* margin-top: 0.7em; */
+    height: auto;
+}
+
+.hotel_details {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.hotel_box {
+    /* border: 1px solid black; */
+    min-width: 60vh;
+    min-height: 50vh;
+    background-color: whitesmoke;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    position: relative;
+}
+
+.hotel_heading {
+    color: black;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+}
+
+.hotel_name {
+    color: #FF4500;
+    font-family: sans-serif;
+    font-size: 0.9em;
+}
+
+.hotel_value {
+    color: black;
+    text-transform: capitalize;
+    font-family: sans-serif;
+    font-size: 1em;
+    padding-left: 0.5em;
+    min-height: 2em;
+    display: flex;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.cross {
+    position: absolute;
+    top: 2.3%;
+    right: 2.5%;
+    color: black;
+    font-size: 1.8em;
+}
 
 @media (max-width: 1024px) {
     .heading {
@@ -211,10 +346,11 @@
     .about_container {
         height: auto;
     }
-    
-    .input{
+
+    .input {
         height: auto;
     }
+
     .about_box {
         width: 95%;
         padding: 1.2em;

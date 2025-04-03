@@ -147,7 +147,7 @@ const Hotels = () => {
           <div className={style.box}>
             <label className={style.label}>
               <p className={style.content}>Rating</p>
-              <input type="number" name="rating" value={formData.rating === 0 ? "" : formData.rating } onChange={handleChange} placeholder='Enter the rating' className={style.input} />
+              <input type="number" name="rating" value={formData.rating === 3.0 ? "" : formData.rating } onChange={handleChange} placeholder='Enter the rating' className={style.input} />
             </label>
             <label className={style.label}>
               <p className={style.content}>Hotel Type*</p>

@@ -87,6 +87,7 @@
     max-width: 250px;
     outline: none;
     color: black;
+    text-transform: capitalize;
 }
 
 .btn {

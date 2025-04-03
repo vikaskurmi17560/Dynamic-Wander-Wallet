@@ -36,6 +36,7 @@ function Navbar() {
           width={100}
           alt="Brand Logo"
           className={styles.image}
+          priority
         />
       </Link>
 

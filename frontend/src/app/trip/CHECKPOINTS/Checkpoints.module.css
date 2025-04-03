@@ -20,7 +20,7 @@
 
 .Direction {
     width: 85%;
-    min-height: 50vh;
+    min-height: 58vh;
     background-color: whitesmoke;
     display: flex;
     flex-wrap: wrap;
@@ -40,10 +40,11 @@
 
 .data_div {
     /* border: 1px solid black; */
+    height: 100%;
     width: 60%;
-    padding: 0.4em;
+    padding-bottom: 0.4em;
     background-color: aliceblue;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -69,7 +70,7 @@
     align-items: center;
     min-width: 60%;
     gap: 0.5em;
-    min-height: 4vh;
+    height: 7vh;
     color : black;
     border-radius: 5px;
     background-color: white;
@@ -88,9 +89,19 @@
     color: white;
     padding: 0.5em;
     height: 100%;
-    text-align: center;
+    display: flex;
+    align-items: center;
 }
 
+.strong_value{
+    width: calc(100% - 21%);
+    overflow: scroll;
+    scrollbar-width: none;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    /* border: 2px solid black; */
+}
 
 @media (max-width: 1024px) {
     .container {
@@ -127,8 +138,9 @@
     .about {
         font-size: 0.9em;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        /* align-items: center; */
+        /* text-align: center; */
+        height: auto;
     }
 
     .strong {

@@ -17,8 +17,11 @@
     width: 80%;
     height: 79vh;
     padding: 1em;
-    background-color: white;
+    background-color: rgba(206, 205, 205, 0.3); 
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    backdrop-filter: blur(7px); 
+   
+    border-radius: 10px; 
 }
 
 .form {
@@ -36,16 +39,18 @@
 }
 
 .form_heading {
-    color: #8A2BE2;
+    color: #FFD700;
     font-family: cursive;
     text-align: center;
     font-size: 1.5em;
 }
 
+
 .content {
-    color: #9400D3;
+    color: #FFDAB9; 
     font-size: 0.9em;
 }
+
 
 .label{
     width: 40%;

@@ -17,6 +17,7 @@ const Checkpoints = () => {
     const [tripData, setTripData] = useState<Trip | null>(null);
     const [tripId, setTripId] = useState<string>("");
     const { location } = useLocation();
+    
     useEffect(() => {
         const storedTripId = localStorage.getItem("tripId");
         if (storedTripId) {
@@ -55,12 +56,12 @@ const Checkpoints = () => {
                     <div className={styles.data_div}>
                         <h2 className={styles.tripheading}>Trip Details</h2>
                         <div className={styles.content}>
-                            <div className={styles.about}><span className={styles.strong}>State</span> <span>{tripData?.state}</span></div>
-                            <div className={styles.about}><span className={styles.strong}>City</span> <span>{tripData?.city}</span></div>
-                            <div className={styles.about}><span className={styles.strong}>From</span> <span>{tripData?.source}</span></div>
-                            <div className={styles.about}><span className={styles.strong}>To</span> <span>{tripData?.destination}</span></div>
-                            <div className={styles.about}><span className={styles.strong}>Location</span> <span>{location?.name}</span></div>
-                            <div className={styles.about}><span className={styles.strong}>Trip Name</span> <span>{tripData?.tripName}</span></div>
+                            <div className={styles.about}><span className={styles.strong}>State</span> <span className={styles.strong_value}>{tripData?.state}</span></div>
+                            <div className={styles.about}><span className={styles.strong}>City</span> <span className={styles.strong_value}>{tripData?.city}</span></div>
+                            <div className={styles.about}><span className={styles.strong}>From</span> <span className={styles.strong_value}>{tripData?.source}</span></div>
+                            <div className={styles.about}><span className={styles.strong}>To</span> <span className={styles.strong_value}>{tripData?.destination}</span></div>
+                            <div className={styles.about}><span className={styles.strong}>Location</span > <span className={styles.strong_value}>{location?.name}</span></div>
+                            <div className={styles.about}><span className={styles.strong}>Trip Name</span > <span className={styles.strong_value}>{tripData?.tripName}</span></div>
                         </div>
                     </div>
                 </div>

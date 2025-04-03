@@ -1,26 +1,25 @@
 "use client";
 
-import { useState } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { useEffect, useState } from "react";
+import { GoogleMap, Marker } from "@react-google-maps/api"; 
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import style from "./Checkpoint.module.css";
 import useLocation from "../../../hook/useLocation";
 import Checkpoints from "../CHECKPOINTS/Checkpoints";
+import axios from "axios";
 
 const containerStyle = {
     width: "100%",
     height: "100%",
 };
-
-const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";
 const defaultLocation = { lat: 28.7041, lng: 77.1025, name: "Delhi, India" };
 
 const Checkpoint = () => {
-    const { location , saveLocation } = useLocation();
+    const { location, saveLocation } = useLocation();
+    const [tripId, setTripId] = useState<string>("");
+    const [tripData, setTripData] = useState<any>(null);
     const searchParams = useSearchParams();
-    const tripName = searchParams.get("tripName") || "";
-    const destination = searchParams.get("destination") || "";
     const [loading, setLoading] = useState(false);
     const [currentLocation, setCurrentLocation] = useState("");
     const [mapLocation, setMapLocation] = useState(defaultLocation);
@@ -41,7 +40,7 @@ const Checkpoint = () => {
                 let locationName = "Live Location";
                 try {
                     const response = await fetch(
-                        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`
+                        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`
                     );
                     const data = await response.json();
 
@@ -66,11 +65,34 @@ const Checkpoint = () => {
         );
     };
 
+    useEffect(() => {
+        const storedTripId = localStorage.getItem("tripId");
+        if (storedTripId) {
+            setTripId(storedTripId);
+            fetchTripDetails(storedTripId);
+        } else {
+            console.log("No Trip ID Found");
+        }
+    }, []);
+
+    const fetchTripDetails = async (id: string) => {
+        try {
+            const response = await axios.post("http://localhost:7050/api/v1/trip/fetch", { _id: id });
+            if (response.data) {
+                setTripData(response.data);
+            } else {
+                console.log("No trip details found.");
+            }
+        } catch (error) {
+            console.error("Error fetching trip:", error);
+        }
+    };
+
     return (
         <>
             <div className={style.container}>
                 <div className={style.image_div}>
-                    <Image src="/images/Trip/First.jpg" height={3000} width={3000} alt="Trip Image" className={style.image} />
+                    <Image src="/images/Trip/First.jpg" height={3000} width={3000} alt="Trip Image" className={style.image} priority/>
                     <div className={style.upper_div}>
                         <p className={style.heading}>Your Trip Details</p>
                         <p className={style.desp}>Plan and explore checkpoints</p>
@@ -78,11 +100,11 @@ const Checkpoint = () => {
                     <div className={style.box}>
                         <div>
                             <p className={style.name}>Trip Name</p>
-                            <input name="tripname" value={tripName} readOnly className={style.input} />
+                            <input name="tripname" value={tripData?.tripName || ""} readOnly className={style.input} />
                         </div>
                         <div>
-                            <p className={style.name}>Source</p>
-                            <input name="destination" value={destination} readOnly className={style.input} />
+                            <p className={style.name}>City</p>
+                            <input name="destination" value={tripData?.city || ""} readOnly className={style.input} />
                         </div>
                         <div>
                             <p className={style.name}>Location</p>
@@ -105,11 +127,9 @@ const Checkpoint = () => {
                     </div>
                 </div>
                 <div className={style.map}>
-                    <LoadScript googleMapsApiKey={GOOGLE_API_KEY}>
-                        <GoogleMap mapContainerStyle={containerStyle} center={{ lat: mapLocation.lat, lng: mapLocation.lng }} zoom={14}>
-                            <Marker position={{ lat: mapLocation.lat, lng: mapLocation.lng }} />
-                        </GoogleMap>
-                    </LoadScript>
+                    <GoogleMap mapContainerStyle={containerStyle} center={{ lat: mapLocation.lat, lng: mapLocation.lng }} zoom={14}>
+                        <Marker position={{ lat: mapLocation.lat, lng: mapLocation.lng }} />
+                    </GoogleMap>
                 </div>
             </div>
             <Checkpoints />

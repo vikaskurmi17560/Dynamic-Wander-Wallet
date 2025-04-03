@@ -9,6 +9,8 @@ import L from "leaflet";
 import style from "./style.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const sourceIcon = new L.Icon({
     iconUrl: "/images/Trip/start_location.png",
@@ -31,6 +33,11 @@ const CheckpointDetailsPage = () => {
     const [route, setRoute] = useState<[number, number][]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [isHotel, setIsHotel] = useState<any>(null);
+    const [isHotelDetail, setIsHotelDetail] = useState<any>(null);
+    const [isRestaurant, setIsRestaurant] = useState<any>(null);
+    const [isRestaurantDetail, setIsRestaurantDetail] = useState<any>(null);
+
 
     useEffect(() => {
         if (!params || !params.id) return;
@@ -40,6 +47,17 @@ const CheckpointDetailsPage = () => {
                 const response = await axios.get("http://localhost:7050/api/v1/checkpoint/getbyid", {
                     params: { _id: params.id },
                 });
+
+                const hotel_res = await axios.get("http://localhost:7050/api/v1/hotel/getbycheckpointid", {
+                    params: { checkpointId: params.id },
+                });
+                const restaurant_res = await axios.get("http://localhost:7050/api/v1/restaurant/getcheckpoint", {
+                    params: { checkpoint_id: params.id },
+                });
+                setIsHotel(hotel_res.data.hotels);
+                setIsRestaurant(restaurant_res.data.restaurants)
+                console.log(restaurant_res.data.restaurants);
+                console.log("Hotels Array:", hotel_res.data.hotels);
 
                 if (response.data?.checkpoint) {
                     setCheckpoint(response.data.checkpoint);
@@ -98,7 +116,7 @@ const CheckpointDetailsPage = () => {
     return (
         <div className={style.main}>
             <div className={style.image_div}>
-                <Image src="/images/Trip/CheckpointData.jpg" alt="Loading..." height={3000} width={3000} className={style.image} />
+                <Image src="/images/Trip/CheckpointData.jpg" alt="Loading..." height={3000} width={3000} className={style.image} priority />
                 <div className={style.heading_div}>
                     <p className={style.heading}>Checkpoint Details</p>
                 </div>
@@ -154,6 +172,98 @@ const CheckpointDetailsPage = () => {
                             <p className={style.input}> {checkpoint.destination?.longitude || "N/A"}</p>
                         </div>
                     </div>
+                    <div>
+                        <strong className={style.name}>Description</strong>
+                        <p className={style.input}> {checkpoint.description || "N/A"}</p>
+                    </div>
+                    <div>
+                        <strong className={style.name}>Hotel Details</strong>
+                        <div className={style.hotel_div}>
+                            {isHotel?.map((hotel, id) => (
+                                <div
+                                    className={style.uiverse}
+                                    key={id}
+                                    onClick={() => setIsHotelDetail(hotel)}
+                                >
+                                    <span className={style.tooltip}>Click for details</span>
+                                    <span>Hotel</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+
+                    {isHotelDetail && (
+                        <div className={style.hotel_details}>
+                            <div className={style.hotel_box}>
+                                <h3 className={style.hotel_heading}>Hotel Detail</h3>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Hotel Name</span><span className={style.hotel_value}>{isHotelDetail.name}</span>
+                                </div>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Hotel Rating ⭐</span><span className={style.hotel_value}>{isHotelDetail.rating}</span>
+                                </div>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Hotel Type</span><span className={style.hotel_value}>{isHotelDetail.pricePerNight[0].hotel_type || "N/A"}</span>
+                                </div>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Hotel (one night price)</span><span className={style.hotel_value}>₹{isHotelDetail.pricePerNight[0].price || "N/A"}</span>
+                                </div>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Description</span><span className={style.hotel_value}>{isHotelDetail.description || "N/A"}</span>
+                                </div>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Contact</span><span className={style.hotel_value}>{isHotelDetail.contact || "N/A"}</span>
+                                </div>
+                                <FontAwesomeIcon icon={faTimes} className={style.cross} onClick={() => setIsHotelDetail(null)} />
+                            </div>
+                        </div>
+                    )}
+
+                    <div>
+                        <strong className={style.name}>Restaurant Details</strong>
+                        <div className={style.hotel_div}>
+                            {isRestaurant?.map((restaurant, id) => (
+                                <div
+                                    className={style.uiverse}
+                                    key={id}
+                                    onClick={() => setIsRestaurantDetail(restaurant)}
+                                >
+                                    <span className={style.tooltip}>Click for details</span>
+                                    <span>Restaurant</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    {isRestaurantDetail && (
+                        <div className={style.hotel_details}>
+                            <div className={style.hotel_box}>
+                                <h3 className={style.hotel_heading}>Restaurant Detail</h3>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Restaurant Name</span><span className={style.hotel_value}>{isRestaurantDetail.restaurant_name}</span>
+                                </div>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Restaurant Rating ⭐</span><span className={style.hotel_value}>{isRestaurantDetail.rating}</span>
+                                </div>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Location</span><span className={style.hotel_value}>{isRestaurantDetail.location.name}</span>
+                                </div>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Meal Type</span><span className={style.hotel_value}>{isRestaurantDetail.prices[0].meal_type || "N/A"}</span>
+                                </div>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Meal</span><span className={style.hotel_value}>₹{isRestaurantDetail.prices[0].meal_price || "N/A"}</span>
+                                </div>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Description</span><span className={style.hotel_value}>{isRestaurantDetail.description || "N/A"}</span>
+                                </div>
+                                <div className={style.box}>
+                                    <span className={style.hotel_name}>Contact</span><span className={style.hotel_value}>{isRestaurantDetail.contact || "N/A"}</span>
+                                </div>
+                                <FontAwesomeIcon icon={faTimes} className={style.cross} onClick={() => setIsRestaurantDetail(null)} />
+                            </div>
+                        </div>
+                    )}
                     <div className={style.transport}>
                         <p className={style.name}>Transport</p>
                         <div className={style.transport_div}>
