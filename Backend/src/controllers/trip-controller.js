@@ -1,4 +1,6 @@
 const Trip = require('../models/trip');
+const { uploadSingleImage ,uploadMultipleImages } = require("../services/cloudinary");
+
 
 // Create a new trip
 exports.createTrip = async (req, res) => {
@@ -106,4 +108,45 @@ exports.getAllTrip = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Error fetching All trip" });
   }
+}
+
+exports.uploadImagesByTripId = async(req,res)=>{
+   try {
+         
+         const { trip_id } = req.query; // Ensure user_id is sent as a query parameter
+         let updated_object = {};
+ 
+ 
+         // Handle multiple file uploads
+         if (req.files) {
+             if (req.files.cover_image) {
+                 const uploadedCoverImage = await uploadSingleImage(req.files.cover_image[0].path);
+                 if (uploadedCoverImage) {
+                     updated_object.cover_image = uploadedCoverImage.secure_url;
+                 }
+             }
+             if (req.files && req.files.image && req.files.image.length > 0) {
+              const uploadedImages = await uploadMultipleImages(req.files.image.map(file => file.path));
+              if (uploadedImages && uploadedImages.length > 0) {
+                  updated_object.image = uploadedImages.map(img => img.secure_url); // Storing all URLs
+              }
+          }
+          
+         }
+ 
+         // Update user in database
+         const update_trip = await Trip.findByIdAndUpdate(trip_id, updated_object, { 
+             new: true, 
+             runValidators: true 
+         });
+ 
+         if (!update_trip) {
+             return res.status(404).json({ message: "Trip not found!" });
+         }
+ 
+         return res.status(200).json({ message: "Trip updated successfully!", update_trip});
+ 
+     } catch (error) {
+         return res.status(500).json({ message: error.message });
+     }
 }

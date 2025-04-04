@@ -26,9 +26,10 @@ exports.uploadSingleImage = async (path) => {
 
 }
 
+
 exports.uploadMultipleImages = async (paths) => {
     
-    console.log("paths are : ",paths);
+  
     if (!paths) {
         return null;
     }
@@ -46,7 +47,6 @@ exports.uploadMultipleImages = async (paths) => {
         }
     });
     const response=await Promise.all(uploadedImages)
-    console.log(response);
     return response;
 
 }

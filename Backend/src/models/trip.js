@@ -6,6 +6,14 @@ const tripSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  cover_image:{
+    type:String,
+    required:false
+  },
+  image:[{
+     type: String,
+     required:false
+  }],
   tripName: {
     type: String,
     required: true
