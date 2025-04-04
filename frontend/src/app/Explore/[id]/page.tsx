@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import style from "./style.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface Checkpoint {
     _id: string;
@@ -13,6 +15,29 @@ interface Checkpoint {
     description: string;
     transport_budget: { category: string; transport_type: string; transport_price: number }[];
 }
+interface Hotel {
+    name: string;
+    rating: number;
+    description: string;
+    contact: string;
+    pricePerNight: { hotel_type: string; price: number }[];
+}
+
+interface Restaurant {
+    restaurant_name: string;
+    rating: number;
+    location: {
+        name: string;
+    };
+    prices: {
+        meal_type: string;
+        meal_price: number;
+    }[];
+    description?: string;
+    contact?: string;
+}
+
+
 
 const page = () => {
     const params = useParams();
@@ -23,6 +48,11 @@ const page = () => {
     const [error, setError] = useState<string | null>(null);
     const [completedCheckpoints, setCompletedCheckpoints] = useState<string[]>([]);
     const [activeCheckpoint, setActiveCheckpoint] = useState<Checkpoint | null>(null);
+
+    const [isHotel, setIsHotel] = useState<Hotel[] | null>(null);
+    const [isHotelDetail, setIsHotelDetail] = useState<Hotel | null>(null);
+    const [isRestaurant, setIsRestaurant] = useState<Restaurant[] | null>(null);
+    const [isRestaurantDetail, setIsRestaurantDetail] = useState<Restaurant | null>(null);
 
     useEffect(() => {
         if (!tripId) {
@@ -48,6 +78,32 @@ const page = () => {
 
         fetchCheckpoints();
     }, [tripId]);
+
+    useEffect(() => {
+        if (!activeCheckpoint?._id) return;
+
+        const fetchHotelsAndRestaurants = async () => {
+            try {
+                const [hotelRes, restaurantRes] = await Promise.all([
+                    axios.get("http://localhost:7050/api/v1/hotel/getbycheckpointid", {
+                        params: { checkpointId: activeCheckpoint._id },
+                    }),
+                    axios.get("http://localhost:7050/api/v1/restaurant/getcheckpoint", {
+                        params: { checkpoint_id: activeCheckpoint._id },
+                    }),
+                ]);
+
+                setIsHotel(hotelRes.data.hotels || []);
+                setIsRestaurant(restaurantRes.data.restaurants || []);
+                console.log("Hotels:", hotelRes.data.hotels);
+                console.log("Restaurants:", restaurantRes.data.restaurants);
+            } catch (err: any) {
+                console.error("Error fetching hotel/restaurant data:", err);
+            }
+        };
+
+        fetchHotelsAndRestaurants();
+    }, [activeCheckpoint]);
 
     const handleNavigate = (checkpoint: Checkpoint) => {
         if (!checkpoint.source || !checkpoint.destination) {
@@ -134,6 +190,87 @@ const page = () => {
                             <strong className={style.modal_name}>Description:</strong>
                             <p className={style.modal_value}>{activeCheckpoint.description || "No description available"}</p>
                         </div>
+                        <strong className={style.modal_name}>Hotel</strong>
+                        <div className={style.hotel_buttons}>
+                            {isHotel?.length ? (
+                                isHotel.map((hotel, idx) => (
+                                    <p key={idx} className={style.hotel_btn} onClick={() => setIsHotelDetail(hotel)}>
+                                        {idx + 1}
+                                    </p>
+                                ))
+                            ) : (
+                                <p className={style.modal_value}>No hotels found</p>
+                            )}
+                        </div>
+                        <div>
+                            {isHotelDetail && (
+                                <div className={style.hotel_details}>
+                                    <div className={style.hotel_box}>
+                                        <h3 className={style.hotel_heading}>Hotel Detail</h3>
+                                        <div className={style.box}>
+                                            <span className={style.hotel_name}>Hotel Name</span><span className={style.hotel_value}>{isHotelDetail.name}</span>
+                                        </div>
+                                        <div className={style.box}>
+                                            <span className={style.hotel_name}>Hotel Rating ⭐</span><span className={style.hotel_value}>{isHotelDetail.rating}</span>
+                                        </div>
+                                        <div className={style.box}>
+                                            <span className={style.hotel_name}>Hotel Type</span><span className={style.hotel_value}>{isHotelDetail.pricePerNight[0].hotel_type || "N/A"}</span>
+                                        </div>
+                                        <div className={style.box}>
+                                            <span className={style.hotel_name}>Hotel (one night price)</span><span className={style.hotel_value}>₹{isHotelDetail.pricePerNight[0].price || "N/A"}</span>
+                                        </div>
+                                        <div className={style.box}>
+                                            <span className={style.hotel_name}>Description</span><span className={style.hotel_value}>{isHotelDetail.description || "N/A"}</span>
+                                        </div>
+                                        <div className={style.box}>
+                                            <span className={style.hotel_name}>Contact</span><span className={style.hotel_value}>{isHotelDetail.contact || "N/A"}</span>
+                                        </div>
+                                        <FontAwesomeIcon icon={faTimes} className={style.cross} onClick={() => setIsHotelDetail(null)} />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <strong className={style.modal_name}>Restaurant</strong>
+                        <div className={style.hotel_buttons}>
+                            {isRestaurant?.length ? (
+                                isRestaurant.map((restaurant, idx) => (
+                                    <p key={idx} className={style.hotel_btn} onClick={() => setIsRestaurantDetail(restaurant)}>
+                                        {idx + 1}
+                                    </p>
+                                ))
+                            ) : (
+                                <p className={style.modal_value}>No Restaurant found</p>
+                            )}
+                        </div>
+                        {isRestaurantDetail && (
+                            <div className={style.hotel_details}>
+                                <div className={style.hotel_box}>
+                                    <h3 className={style.hotel_heading}>Restaurant Detail</h3>
+                                    <div className={style.box}>
+                                        <span className={style.hotel_name}>Restaurant Name</span><span className={style.hotel_value}>{isRestaurantDetail.restaurant_name}</span>
+                                    </div>
+                                    <div className={style.box}>
+                                        <span className={style.hotel_name}>Restaurant Rating ⭐</span><span className={style.hotel_value}>{isRestaurantDetail.rating}</span>
+                                    </div>
+                                    <div className={style.box}>
+                                        <span className={style.hotel_name}>Location</span><span className={style.hotel_value}>{isRestaurantDetail.location.name}</span>
+                                    </div>
+                                    <div className={style.box}>
+                                        <span className={style.hotel_name}>Meal Type</span><span className={style.hotel_value}>{isRestaurantDetail.prices[0].meal_type || "N/A"}</span>
+                                    </div>
+                                    <div className={style.box}>
+                                        <span className={style.hotel_name}>Meal</span><span className={style.hotel_value}>₹{isRestaurantDetail.prices[0].meal_price || "N/A"}</span>
+                                    </div>
+                                    <div className={style.box}>
+                                        <span className={style.hotel_name}>Description</span><span className={style.hotel_value}>{isRestaurantDetail.description || "N/A"}</span>
+                                    </div>
+                                    <div className={style.box}>
+                                        <span className={style.hotel_name}>Contact</span><span className={style.hotel_value}>{isRestaurantDetail.contact || "N/A"}</span>
+                                    </div>
+                                    <FontAwesomeIcon icon={faTimes} className={style.cross} onClick={() => setIsRestaurantDetail(null)} />
+                                </div>
+                            </div>
+                        )}
                         <p className={style.modal_name}>Transport Budget</p>
                         <ul>
                             {activeCheckpoint.transport_budget.map((transport, idx) => (

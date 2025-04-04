@@ -51,6 +51,7 @@ const CheckpointDetailsPage = () => {
                 const hotel_res = await axios.get("http://localhost:7050/api/v1/hotel/getbycheckpointid", {
                     params: { checkpointId: params.id },
                 });
+
                 const restaurant_res = await axios.get("http://localhost:7050/api/v1/restaurant/getcheckpoint", {
                     params: { checkpoint_id: params.id },
                 });
@@ -179,7 +180,7 @@ const CheckpointDetailsPage = () => {
                     <div>
                         <strong className={style.name}>Hotel Details</strong>
                         <div className={style.hotel_div}>
-                            {isHotel?.map((hotel, id) => (
+                            {isHotel?.map((hotel, id : number) => (
                                 <div
                                     className={style.uiverse}
                                     key={id}
@@ -223,7 +224,7 @@ const CheckpointDetailsPage = () => {
                     <div>
                         <strong className={style.name}>Restaurant Details</strong>
                         <div className={style.hotel_div}>
-                            {isRestaurant?.map((restaurant, id) => (
+                            {isRestaurant?.map((restaurant, id : number) => (
                                 <div
                                     className={style.uiverse}
                                     key={id}
