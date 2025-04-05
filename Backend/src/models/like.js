@@ -4,12 +4,13 @@ const LikeSchema = new mongoose.Schema(
     {
         likedBy: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User", // Reference to the user who liked the post
+            ref: "User", 
             required: true,
+            unique: true
         },
         post: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Post", // Reference to the post that was liked
+            ref: "Post", 
             required: true,
         },
         createdAt: {

@@ -2,28 +2,33 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
-// Load environment variables early
+
 dotenv.config();
 
 const app = express();
 
-// Middleware
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// Routes
+
 const user_route = require("./src/routes/user-routes");
 const trip_routes = require("./src/routes/trip-routes");
 const budget_routes = require("./src/routes/budget-routes");
 const checkpoint_routes = require("./src/routes/checkpoint-routes");
 const hotel_routes = require("./src/routes/hotel-routes");
 const restaurant_routes = require("./src/routes/restaurant-routes");
-
+const post_routes= require("./src/routes/post-routes");
+const like_routes= require("./src/routes/like-routes");
+const comment_routes = require("./src/routes/comment-routes");
 app.use('/api/v1/user', user_route);
 app.use('/api/v1/trip', trip_routes);
 app.use('/api/v1/budget', budget_routes);
 app.use('/api/v1/checkpoint', checkpoint_routes);
 app.use('/api/v1/hotel', hotel_routes);
 app.use('/api/v1/restaurant', restaurant_routes);
+app.use('/api/v1/post', post_routes);
+app.use('/api/v1/post/like',like_routes);
+app.use('/api/v1/post/comment',comment_routes);
 
 module.exports = app;

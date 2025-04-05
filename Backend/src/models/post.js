@@ -8,8 +8,8 @@ const PostSchema = new mongoose.Schema(
             maxlength: 100,
         },
         image: {
-            url: { type: String, required: [true, "Image URL is required"] },
-            public_id: { type: String },
+            type: String,
+            required:true
         },
         description: {
             type: String,
@@ -32,6 +32,7 @@ const PostSchema = new mongoose.Schema(
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User", // Array of user IDs who liked the post
+                unique: true
             },
         ],
         comments: [

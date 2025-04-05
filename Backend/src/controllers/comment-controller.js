@@ -1,48 +1,154 @@
-// const Comment = require('./models/comment');
-// const Post = require('./models/post');
+const Comment = require("../models/comment");
+const Post = require("../models/post");
+const User = require("../models/user");
 
-// // Add a comment to a post
-// exports.addComment = async (req, res) => {
-//   try {
-//     const { text, commentedBy, post } = req.body;
 
-//     // Create a new comment
-//     const newComment = new Comment({ text, commentedBy, post });
-//     await newComment.save();
+exports.addComment = async (req, res) => {
+  try {
+    const { user_id } = req.query;
+    const { text , post_id } = req.body;
 
-//     res.status(201).json({ message: 'Comment added successfully', comment: newComment });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
+    if (!user_id || !text || !post_id) {
+      return res.status(400).json({
+        success: false,
+        message: "user_id, post_id and comment text are required",
+      });
+    }
 
-// // Delete a comment
-// exports.deleteComment = async (req, res) => {
-//   try {
-//     const { commentId } = req.params;
+    const userExists = await User.findById(user_id);
+    const postExists = await Post.findById(post_id);
 
-//     // Find and delete the comment
-//     const comment = await Comment.findByIdAndDelete(commentId);
-//     if (!comment) {
-//       return res.status(404).json({ error: 'Comment not found' });
-//     }
+    if (!userExists || !postExists) {
+      return res.status(404).json({
+        success: false,
+        message: "User or Post not found",
+      });
+    }
 
-//     res.status(200).json({ message: 'Comment deleted successfully' });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
+    const newComment = await Comment.create({
+      text: text,
+      commentedBy: user_id,
+      post: post_id,
+    });
 
-// // Get all comments for a specific post
-// exports.getCommentsForPost = async (req, res) => {
-//   try {
-//     const { postId } = req.params;
+    if (!newComment) {
+      return res.status(400).json({
+        success: false,
+        message: "Comment not created",
+      });
+    }
 
-//     // Retrieve all comments for the post
-//     const comments = await Comment.find({ post: postId }).populate('commentedBy', 'name');
+  
+    await Post.findByIdAndUpdate(post_id, {
+      $push: {
+        comments: {
+          text: text,
+          commentedBy: user_id,
+          createdAt: newComment.createdAt,
+        },
+      },
+    });
 
-//     res.status(200).json(comments);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
+    return res.status(200).json({
+      success: true,
+      message: "Comment added successfully",
+      comment: newComment,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+exports.getCommentsByPostId = async (req, res) => {
+    try {
+      const { post_id } = req.query;
+  
+      const comments = await Comment.find({ post: post_id }).populate("commentedBy", "name");
+  
+      if (!comments || comments.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "No comments found for this post",
+        });
+      }
+  
+      return res.status(200).json({
+        success: true,
+        message: "Comments fetched successfully",
+        comments,
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+
+
+
+
+
+
+
+  exports.getCommentsByUserId = async (req, res) => {
+    try {
+      const { user_id } = req.query;
+  
+      const comments = await Comment.find({ commentedBy: user_id }).populate("post", "title");
+  
+      if (!comments || comments.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "No comments found by this user",
+        });
+      }
+  
+      return res.status(200).json({
+        success: true,
+        message: "Comments fetched successfully",
+        comments,
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+
+
+
+
+
+    
+  exports.deleteCommentById = async (req, res) => {
+    try {
+      const {comment_id} = req.query;
+  
+      const deletedComment = await Comment.findByIdAndDelete(comment_id);
+  
+      if (!deletedComment) {
+        return res.status(404).json({
+          success: false,
+          message: "Comment not found",
+        });
+      }
+  
+      
+      await Post.findByIdAndUpdate(deletedComment.post, {
+        $pull: {
+          comments: {
+            text: deletedComment.text,
+            commentedBy: deletedComment.commentedBy,
+          },
+        },
+      });
+  
+      return res.status(200).json({
+        success: true,
+        message: "Comment deleted successfully",
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+  
