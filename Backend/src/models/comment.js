@@ -9,12 +9,12 @@ const CommentSchema = new mongoose.Schema(
         },
         commentedBy: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User", // Reference to the user who made the comment
+            ref: "User",
             required: true,
         },
         post: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Post", // Reference to the post being commented on
+            ref: "Post", 
             required: true,
         },
         createdAt: {

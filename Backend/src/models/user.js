@@ -10,6 +10,7 @@ const User_Schema = new mongoose.Schema(
         phone_no: {
             type: String,
             required: true,
+            unique: true,
             validate: {
                 validator: function (v) {
                     return /^\d{10,15}$/.test(v);
