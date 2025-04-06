@@ -23,7 +23,6 @@ const like_routes= require("./src/routes/like-routes");
 const comment_routes = require("./src/routes/comment-routes");
 app.use('/api/v1/user', user_route);
 app.use('/api/v1/trip', trip_routes);
-app.use('/api/v1/budget', budget_routes);
 app.use('/api/v1/checkpoint', checkpoint_routes);
 app.use('/api/v1/hotel', hotel_routes);
 app.use('/api/v1/restaurant', restaurant_routes);

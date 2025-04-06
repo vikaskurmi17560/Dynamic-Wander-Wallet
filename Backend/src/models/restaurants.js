@@ -34,4 +34,5 @@ const RestaurantsSchema = new mongoose.Schema({
     contact: { type: String }
 }, { timestamps: true })
 
+
 module.exports = mongoose.model("Restaurants", RestaurantsSchema);

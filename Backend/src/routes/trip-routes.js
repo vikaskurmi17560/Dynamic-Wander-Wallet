@@ -10,5 +10,5 @@ router.delete('/delete', tripController.deleteTrip);
 router.post("/fetch", tripController.getTripId);
 router.get("/alltrip", tripController.getAllTrip);
 router.post("/update-trip",upload.fields([{ name: "cover_image", maxCount: 1 }, { name: "image", maxCount: 10 }]),tripController.uploadImagesByTripId);
-
+router.post("/createBudget",tripController.tripBudget);
 module.exports = router;

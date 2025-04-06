@@ -22,12 +22,11 @@ const hotelSchema = new mongoose.Schema({
     maxlength: 500,
     default: "No description provided."
   },
-  pricePerNight: [
-    {
-      hotel_type: { type: String, required: true }
-      , price: { type: Number, required: true }
-    }
-  ],
+  pricePerNight:
+  [{
+    hotel_type: { type: String, required: true },
+    price: { type: Number, required: true }
+  }],
   contact: { type: String }
 }, { timestamps: true });
 
