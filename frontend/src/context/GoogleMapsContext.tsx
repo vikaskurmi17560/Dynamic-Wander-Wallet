@@ -12,7 +12,11 @@ export function GoogleMapsProvider({ children }: { children: React.ReactNode }) 
 
     return (
         <GoogleMapsContext.Provider value={{ loaded }}>
-            <LoadScript googleMapsApiKey={GOOGLE_API_KEY} onLoad={() => setLoaded(true)}>
+            <LoadScript
+                googleMapsApiKey={GOOGLE_API_KEY}
+                libraries={['places']}
+                onLoad={() => setLoaded(true)}
+            >
                 {children}
             </LoadScript>
         </GoogleMapsContext.Provider>

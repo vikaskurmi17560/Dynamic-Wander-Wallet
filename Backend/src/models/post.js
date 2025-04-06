@@ -6,14 +6,16 @@ const PostSchema = new mongoose.Schema(
             type: String,
             required: [true, "Title is required"],
             maxlength: 100,
+            trim: true,
         },
         image: {
             type: String,
-            required:true
+            required: true,
         },
         description: {
             type: String,
             maxlength: 500,
+            trim: true,
         },
         tags: {
             type: [String],
@@ -22,22 +24,26 @@ const PostSchema = new mongoose.Schema(
         location: {
             type: String,
             required: [true, "Location is required"],
+            trim: true,
         },
         postedBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true,
         },
+        visibility: {
+            type: String,
+            default: "public",
+        },
         likes: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "User", // Array of user IDs who liked the post
-                unique: true
+                ref: "User",
             },
         ],
         comments: [
             {
-                text: { type: String, required: true },
+                text: { type: String, required: true, trim: true },
                 commentedBy: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: "User",

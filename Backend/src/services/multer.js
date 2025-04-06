@@ -12,11 +12,9 @@ const storage = multer.diskStorage({
     },
 });
 
-<<<<<<< HEAD
 
-=======
 // File filter to allow only images and videos
->>>>>>> ebd01496a55bd35d9e1fbc45935ab4083e8042e3
+
 const fileFilter = (req, file, cb) => {
     const allowedExtensions = /jpeg|jpg|png|mp4|mov|avi|mkv/;
     const allowedMimeTypes = [
@@ -39,14 +37,10 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-// Initialize multer
+
 const upload = multer({
     storage: storage,
-<<<<<<< HEAD
-    limits: { fileSize: 100 * 1024 * 1024 }, // 5MB file size limit
-=======
-    limits: { fileSize: 100 * 1024 * 1024 }, // You can increase this if videos are large
->>>>>>> ebd01496a55bd35d9e1fbc45935ab4083e8042e3
+    limits: { fileSize: 100 * 1024 * 1024 }, 
     fileFilter: fileFilter
 });
 

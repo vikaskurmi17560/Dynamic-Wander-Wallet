@@ -13,19 +13,19 @@ function Navbar() {
   const lastScrollY = useRef(0);
   const { isAuthenticated, handleLogout } = useData();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > lastScrollY.current && window.scrollY > 100) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
-      lastScrollY.current = window.scrollY;
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.scrollY > lastScrollY.current && window.scrollY > 100) {
+  //       setVisible(false);
+  //     } else {
+  //       setVisible(true);
+  //     }
+  //     lastScrollY.current = window.scrollY;
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   return (
     <nav className={`${styles.navbar} ${visible ? styles.visible : styles.hidden}`}>
@@ -53,8 +53,8 @@ function Navbar() {
           <Link href={!isTripEnd ? "/trip" : "/trip/TripCheckpoint"} className={styles.nav_item}>
             Trip
           </Link>
-          <Link href="/about" className={styles.nav_item}>
-            About Us
+          <Link href="/create" className={styles.nav_item}>
+            Create
           </Link>
           <Link href="/dashboard" className={styles.nav_item}>
             Dashboard
