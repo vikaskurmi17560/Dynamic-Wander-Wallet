@@ -1,3 +1,4 @@
+const Checkpoints = require('../models/checkpoints');
 const Trip = require('../models/trip');
 const { uploadSingleImage ,uploadMultipleImages } = require("../services/cloudinary");
 
@@ -150,3 +151,30 @@ exports.uploadImagesByTripId = async(req,res)=>{
          return res.status(500).json({ message: error.message });
      }
 }
+
+exports.tripBudget = async (req, res) => {
+  try {
+    const { trip_id } = req.query;
+
+    const TripCheckpointData = await Checkpoints.find({ trip_id });
+
+    const trip_budget = TripCheckpointData.reduce(
+      (sum, item) => sum + (item.Total_checkpointBudget || 0),
+      0
+    );
+
+    const update_tripdata = await Trip.findByIdAndUpdate(
+      trip_id,
+      { TripBudget: trip_budget },
+      { new: true } 
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Total trip budget created successfully",
+      data: update_tripdata
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
