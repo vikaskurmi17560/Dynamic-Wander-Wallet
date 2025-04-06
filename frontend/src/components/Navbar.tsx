@@ -49,7 +49,7 @@ function Navbar() {
           <Link href="/" className={styles.nav_item}>
             Home
           </Link>
-          <div className={styles.nav_item}>Blogs</div>
+          <Link href="/blog" className={styles.nav_item}>Blogs</Link>
           <Link href={!isTripEnd ? "/trip" : "/trip/TripCheckpoint"} className={styles.nav_item}>
             Trip
           </Link>

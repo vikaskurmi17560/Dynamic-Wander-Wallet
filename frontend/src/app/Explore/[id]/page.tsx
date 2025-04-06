@@ -53,6 +53,12 @@ const page = () => {
     const [isHotelDetail, setIsHotelDetail] = useState<Hotel | null>(null);
     const [isRestaurant, setIsRestaurant] = useState<Restaurant[] | null>(null);
     const [isRestaurantDetail, setIsRestaurantDetail] = useState<Restaurant | null>(null);
+    const [uploadedData, setUploadedData] = useState<{
+        cover_image?: string;
+        image?: string[];
+    }>({});
+    const [isGallery, setIsGallery] = useState<boolean>(false);
+    const [isUrl, setIsUrl] = useState<string>("");
 
     useEffect(() => {
         if (!tripId) {
@@ -126,6 +132,66 @@ const page = () => {
         setActiveCheckpoint(null);
     };
 
+
+    useEffect(() => {
+        if (tripId) fetchTripData();
+    }, [tripId]);
+    useEffect(() => {
+        // Freeze scroll on modal open
+        if (isGallery) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [isGallery]);
+    const fetchTripData = async () => {
+        try {
+            const response = await axios.post("http://localhost:7050/api/v1/trip/fetch", {
+                _id: tripId,
+            });
+
+            const trip = response.data;
+            if (!trip) return alert("Trip data not found!");
+
+            setUploadedData({
+                cover_image: trip.cover_image || "",
+                image: trip.image || [],
+            });
+
+            // Set default selected image for modal preview
+            if (trip.image && trip.image.length > 0) {
+                setIsUrl(trip.image[0]);
+            }
+
+        } catch (error: any) {
+            console.error("Failed to fetch trip data:", error.message);
+            alert("Failed to fetch trip data.");
+        }
+    };
+
+    const handleGallery = () => {
+        if (!uploadedData.image || uploadedData.image.length === 0) {
+            alert("No photos available.");
+            return;
+        }
+
+        // Optional: filter out any falsy strings just in case
+        const validImages = uploadedData.image.filter(img => img && img.trim() !== "");
+
+        if (validImages.length === 0) {
+            alert("No valid photos found.");
+            return;
+        }
+
+        setIsUrl(validImages[0]);
+        setIsGallery((prev) => !prev);
+    };
+
+
     return (
         <div className={style.container}>
             <div className={style.img_div}>
@@ -141,6 +207,54 @@ const page = () => {
             {loading && <p className={style.loading}>Loading checkpoints...</p>}
             {error && <p className={style.error}>{error}</p>}
 
+            <div className={style.btn_container}>
+                <div className={style.box}>
+                    <button className={style.button} onClick={handleGallery}>
+                        🖼️ <span>Gallery</span>
+                    </button>
+                </div>
+            </div>
+
+            {isGallery && (
+                <div className={style.watch_div}>
+                    <div className={style.photo_div}>
+                        <img
+                            src={isUrl}
+                            alt="Selected"
+                            className={style.image_show}
+                        />
+                        <div className={style.small_image_div}>
+                            {uploadedData.image && uploadedData.image.length > 0 && (
+                                <div className={style.thumbnail_wrapper}>
+                                    {uploadedData.image.map((url, idx) => (
+                                        <img
+                                            key={idx}
+                                            src={url}
+                                            alt={`Gallery ${idx + 1}`}
+                                            style={{
+                                                width: 150,
+                                                height: 100,
+                                                objectFit: "cover",
+                                                borderRadius: 6,
+                                                flexShrink: 0,
+                                                cursor: "pointer",
+                                                border: url === isUrl ? "4px solid white" : "none",
+                                                boxShadow: url === isUrl ? "0 0 8px rgba(255,255,255,0.8)" : "none",
+                                            }}
+                                            onClick={() => setIsUrl(url)}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <FontAwesomeIcon
+                        icon={faTimes}
+                        className={style.cross_icon}
+                        onClick={handleGallery}
+                    />
+                </div>
+            )}
             <div className={style.timeline}>
                 {checkpoints.map((checkpoint, index) => {
                     const isCompleted = completedCheckpoints.includes(checkpoint._id);
@@ -148,31 +262,46 @@ const page = () => {
 
                     return (
                         <div key={checkpoint._id} className={style.timelineItem}>
-                            {index > 0 && <div className={`${style.progressLine} ${showLine ? style.activeLine : ""}`}></div>}
+                            {index > 0 && (
+                                <div
+                                    className={`${style.progressLine} ${showLine ? style.activeLine : ""}`}
+                                ></div>
+                            )}
                             <div className={`${style.card} ${isCompleted ? style.completed : ""}`}>
                                 <div className={style.checkpoint}>Checkpoint {index + 1}</div>
                                 <div className={style.locationbox}>
-                                    <Image src="/images/Daskboard/checkpoint.png" alt="Checkpoint" height={1000} width={1000} className={style.logo} />
+                                    <Image
+                                        src="/images/Daskboard/checkpoint.png"
+                                        alt="Checkpoint"
+                                        width={30}
+                                        height={30}
+                                        className={style.logo}
+                                    />
                                     <p className={style.data}>{checkpoint.source.name}</p>
                                 </div>
                                 <div className={style.locationbox}>
-                                    <Image src="/images/Daskboard/start_location.png" alt="Start Location" height={1000} width={1000} className={style.logo} />
+                                    <Image
+                                        src="/images/Daskboard/start_location.png"
+                                        alt="Start Location"
+                                        width={30}
+                                        height={30}
+                                        className={style.logo}
+                                    />
                                     <p className={style.data}>{checkpoint.destination.name}</p>
                                 </div>
-                                <div>
-                                    <button
-                                        type="button"
-                                        onClick={() => setActiveCheckpoint(checkpoint)}
-                                        title="Click to view full details"
-                                        className={style.btn_checkpoint}>
-                                        About
-                                    </button>
-                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setActiveCheckpoint(checkpoint)}
+                                    className={style.btn_checkpoint}
+                                >
+                                    About
+                                </button>
                             </div>
                         </div>
                     );
                 })}
             </div>
+
 
             {activeCheckpoint && (
                 <div className={style.modalOverlay}>

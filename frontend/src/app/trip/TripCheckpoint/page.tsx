@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { GoogleMap, Marker } from "@react-google-maps/api"; 
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import style from "./Checkpoint.module.css";
@@ -23,6 +23,7 @@ const Checkpoint = () => {
     const [loading, setLoading] = useState(false);
     const [currentLocation, setCurrentLocation] = useState("");
     const [mapLocation, setMapLocation] = useState(defaultLocation);
+
 
     const handleFindLocation = async () => {
         setLoading(true);
@@ -92,7 +93,7 @@ const Checkpoint = () => {
         <>
             <div className={style.container}>
                 <div className={style.image_div}>
-                    <Image src="/images/Trip/First.jpg" height={3000} width={3000} alt="Trip Image" className={style.image} priority/>
+                    <Image src="/images/Trip/First.jpg" height={3000} width={3000} alt="Trip Image" className={style.image} priority />
                     <div className={style.upper_div}>
                         <p className={style.heading}>Your Trip Details</p>
                         <p className={style.desp}>Plan and explore checkpoints</p>

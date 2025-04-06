@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import style from "./mytrip.module.css";
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';  
+import { useRouter } from 'next/navigation';
 
 interface Trip {
     _id: string;
@@ -12,11 +12,12 @@ interface Trip {
     tripName: string;
     source: string;
     city: string;
+    cover_image?: string; 
 }
 
 const MyTrip = () => {
     const { userId } = useUserData();
-    const router = useRouter(); 
+    const router = useRouter();
 
     const [trips, setTrips] = useState<Trip[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -54,11 +55,12 @@ const MyTrip = () => {
                         <div key={trip._id} className={style.box}>
                             <div className={style.img_div}>
                                 <Image
-                                    src={"/images/Daskboard/Mytrip.jpg"}
+                                    src={trip.cover_image || "/images/Daskboard/Mytrip.jpg"} // fallback to default
                                     className={style.img}
-                                    alt='Loading...'
-                                    height={2000}
-                                    width={2000}
+                                    alt={trip.tripName}
+                                    height={500}
+                                    width={500}
+                                    style={{ objectFit: 'cover' }}
                                     priority
                                 />
                             </div>
