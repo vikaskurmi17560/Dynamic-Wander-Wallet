@@ -21,7 +21,7 @@
     height: 8.7vh;
 }
 
-/* Input Field */
+
 .input {
     padding-left: 0.8em;
     width: 100%;
@@ -34,7 +34,7 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-/* Search Button */
+
 .search_div {
     width: 3em;
     background-color: #007bff;

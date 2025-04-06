@@ -272,7 +272,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                     </div>
                     <div>
                         <div className={style.sub_name}>Transport Price</div>
-                        <input type="number" placeholder="Price" value={transportPrice} onChange={handlePriceChange} className={style.input} disabled={selectedCategory === "By Walk"} />
+                        <input type="number" placeholder="Price" value={transportPrice === 0 ? "" : transportPrice} onChange={handlePriceChange} className={style.input} disabled={selectedCategory === "By Walk"} />
                     </div>
                     <div>
                         <div className={style.sub_name}>Extra Info</div>

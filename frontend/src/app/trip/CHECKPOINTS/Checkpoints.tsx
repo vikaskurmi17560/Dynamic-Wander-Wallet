@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./Checkpoints.module.css";
 import CheckpointDetail from "./CheckpointDetail";
 import useLocation from "@/hook/useLocation";
+import UploadTripImages from "../UploadTripImages";
 
 interface Trip {
     tripName: string;
@@ -66,6 +67,7 @@ const Checkpoints = () => {
                     </div>
                 </div>
             </div>
+            <UploadTripImages/>
             <CheckpointDetail />
         </>
     );

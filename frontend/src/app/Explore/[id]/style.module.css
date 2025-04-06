@@ -62,49 +62,115 @@
 }
 
 .timeline {
-    padding: 0.7em;
+    padding: 2rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 3em;
-    justify-content: space-between;
+    gap: 2rem;
+    justify-content: center;
     align-items: flex-start;
     position: relative;
-    margin-top: 20px;
-    /* border: 1px solid red; */
 }
 
 .timelineItem {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 280px;
+    min-height: 340px;
     position: relative;
-    width: 44vh;
-    height: 35vh;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+.card {
+    height: auto;
+    /* instead of fixed height */
+    min-height: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9em;
+    /* if you want to limit height with scroll */
 }
 
 .progressLine {
-    width: 5px;
-    height: 50px;
-    background: gray;
-    transition: background 0.3s ease-in-out;
+    width: 4px;
+    height: 40px;
+    background-color: #ccc;
+    transition: background-color 0.3s ease;
     position: absolute;
-    top: -50%;
+    top: -40px;
     left: 50%;
     transform: translateX(-50%);
     display: none;
+    z-index: 0;
 }
 
 .activeLine {
     display: block;
-    background: blue;
+    background-color: #3b82f6;
 }
 
-.btn_checkpoint {
-    border: 1px solid blue;
-    padding: 0.4em 1em;
-    border-radius: 0.3em;
-    color: blue;
+
+.completed {
+    border-left: 5px solid #10b981;
 }
+
+.checkpoint {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #1f2937;
+}
+
+.locationbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin: 0.5rem 0;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+}
+
+.data {
+    font-size: 0.95rem;
+    color: #374151;
+    margin: 0;
+    word-break: break-word;
+    /* 🔑 Break long words */
+    white-space: normal;
+    /* 🔑 Allow multiple lines */
+    flex: 1;
+    line-height: 1.4;
+}
+
+
+.btn_checkpoint {
+    margin-top: 1rem;
+    background-color: white;
+    border: 2px solid #3b82f6;
+    color: #3b82f6;
+    padding: 0.4rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn_checkpoint:hover {
+    background-color: #3b82f6;
+    color: white;
+}
+
 
 .card {
     background: white;
@@ -308,7 +374,7 @@
     background: darkred;
 }
 
-.hotel_buttons{
+.hotel_buttons {
     display: flex;
     gap: 0.5em;
 }
@@ -394,6 +460,98 @@
     color: black;
     font-size: 1.8em;
 }
+
+.watch_div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow: auto;
+}
+
+.photo_div {
+    display: flex;
+    flex-direction: column;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 12px;
+    position: relative;
+    width: 85%;
+    height: 85%;
+    /* border: 1px solid red; */
+}
+
+.image_show {
+    margin-bottom: 20px;
+    width: 100%;
+    height: 80%;
+    /* border: 1px solid white; */
+    border-radius: 10px;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+.thumbnail_wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    /* scrollbar-width: thin; */
+    /* padding-bottom: 8px; */
+    scrollbar-width: none;
+    border-radius: 6;
+}
+
+.cross_icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+.btn_container {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.box {
+    background: linear-gradient(to right, #6366f1, #8b5cf6);
+    padding: 8px;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 10px 24px;
+    font-weight: 600;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
 
 @media (max-width: 1024px) {
     .timeline {

@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import UploadImages from "../../UploadImages";
 
 interface TransportBudget {
     category: string;
@@ -144,7 +145,9 @@ const Trips = () => {
                     </div>
                 </div>
             </div>
-
+            <div className={style.images_div}>
+                <UploadImages tripId = {tripId} />
+            </div>
             {loading && <p className={style.loading}>Loading checkpoints...</p>}
             {error && <p className={style.error}>{error}</p>}
 

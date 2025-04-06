@@ -1,0 +1,21 @@
+.main{
+    margin-top: 6.9em;
+    background-color:whitesmoke;
+    height: 7vh;
+    width: 100%;
+    border: 1px solid black;
+    display: flex;
+
+}
+
+.btn{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+
+}
+.btn:hover{
+    background-color: bisque;
+}
