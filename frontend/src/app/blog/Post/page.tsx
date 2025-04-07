@@ -6,7 +6,7 @@ import style from './post.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import useData from '@/hook/useData';
-import IndividualPost from './IndividualPost'; 
+import IndividualPost from './IndividualPost';
 
 interface User {
     _id: string;
@@ -14,7 +14,7 @@ interface User {
     profile?: string;
 }
 
-interface Post {
+export interface Post {
     _id: string;
     image: string;
     description: string;
@@ -35,7 +35,7 @@ const PostCard: React.FC = () => {
             try {
                 const response = await axios.get('http://localhost:7050/api/v1/post/getallpost');
                 const postsData: Post[] = response.data;
-                
+
                 const postsWithUsers = await Promise.all(
                     postsData.map(async (post) => {
                         try {
@@ -83,14 +83,12 @@ const PostCard: React.FC = () => {
                 ))}
             </div>
 
-            {activeIndex !== null && (
+            {activeIndex !== null && posts[activeIndex] && (
                 <IndividualPost
-                    data={{
-                        post: posts[activeIndex],
-                        onClose: () => setActiveIndex(null),
-                        onNext: nextPost,
-                        onPrev: prevPost,
-                    }}
+                    post={posts[activeIndex]}
+                    onClose={() => setActiveIndex(null)}
+                    onNext={nextPost}
+                    onPrev={prevPost}
                 />
             )}
         </div>

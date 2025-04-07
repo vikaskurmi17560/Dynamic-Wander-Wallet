@@ -5,8 +5,8 @@ const User = require("../models/user");
 
 exports.addComment = async (req, res) => {
   try {
-    const { user_id } = req.query;
-    const { text , post_id } = req.body;
+    const { user_id, text, post_id } = req.body;
+
 
     if (!user_id || !text || !post_id) {
       return res.status(400).json({
@@ -38,7 +38,7 @@ exports.addComment = async (req, res) => {
       });
     }
 
-  
+
     await Post.findByIdAndUpdate(post_id, {
       $push: {
         comments: {
@@ -60,95 +60,91 @@ exports.addComment = async (req, res) => {
 };
 
 
-
 exports.getCommentsByPostId = async (req, res) => {
     try {
-      const { post_id } = req.query;
-  
-      const comments = await Comment.find({ post: post_id }).populate("commentedBy", "name");
-  
-      if (!comments || comments.length === 0) {
-        return res.status(404).json({
-          success: false,
-          message: "No comments found for this post",
+        const { post_id } = req.query;
+
+        const comments = await Comment.find({ post: post_id })
+            .populate('commentedBy', 'name profile') 
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({
+            success: true,
+            comments: comments.map(comment => ({
+                _id: comment._id,
+                text: comment.text,
+                createdAt: comment.createdAt,
+                user: {
+                    _id: comment.commentedBy._id,
+                    name: comment.commentedBy.name,
+                    profile: comment.commentedBy.profile || '',
+                },
+            })),
         });
-      }
-  
-      return res.status(200).json({
-        success: true,
-        message: "Comments fetched successfully",
-        comments,
-      });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        console.error('Error fetching comments:', error);
+        res.status(500).json({ success: false, message: 'Server error while fetching comments' });
     }
-  };
+};
 
 
+exports.getCommentsByUserId = async (req, res) => {
+  try {
+    const { user_id } = req.query;
 
+    const comments = await Comment.find({ commentedBy: user_id }).populate("post", "title");
 
-
-
-
-
-  exports.getCommentsByUserId = async (req, res) => {
-    try {
-      const { user_id } = req.query;
-  
-      const comments = await Comment.find({ commentedBy: user_id }).populate("post", "title");
-  
-      if (!comments || comments.length === 0) {
-        return res.status(404).json({
-          success: false,
-          message: "No comments found by this user",
-        });
-      }
-  
-      return res.status(200).json({
-        success: true,
-        message: "Comments fetched successfully",
-        comments,
+    if (!comments || comments.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No comments found by this user",
       });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
     }
-  };
+
+    return res.status(200).json({
+      success: true,
+      message: "Comments fetched successfully",
+      comments,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 
 
 
 
 
-    
-  exports.deleteCommentById = async (req, res) => {
-    try {
-      const {comment_id} = req.query;
-  
-      const deletedComment = await Comment.findByIdAndDelete(comment_id);
-  
-      if (!deletedComment) {
-        return res.status(404).json({
-          success: false,
-          message: "Comment not found",
-        });
-      }
-  
-      
-      await Post.findByIdAndUpdate(deletedComment.post, {
-        $pull: {
-          comments: {
-            text: deletedComment.text,
-            commentedBy: deletedComment.commentedBy,
-          },
+exports.deleteCommentById = async (req, res) => {
+  try {
+    const { comment_id } = req.query;
+
+    const deletedComment = await Comment.findByIdAndDelete(comment_id);
+
+    if (!deletedComment) {
+      return res.status(404).json({
+        success: false,
+        message: "Comment not found",
+      });
+    }
+
+
+    await Post.findByIdAndUpdate(deletedComment.post, {
+      $pull: {
+        comments: {
+          text: deletedComment.text,
+          commentedBy: deletedComment.commentedBy,
         },
-      });
-  
-      return res.status(200).json({
-        success: true,
-        message: "Comment deleted successfully",
-      });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  };
-  
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Comment deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
