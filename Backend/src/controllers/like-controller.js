@@ -24,7 +24,6 @@ exports.addLike = async (req, res) => {
     const existingLike = await Like.findOne({ likedBy: user_id, post: post_id });
 
     if (existingLike) {
-      // Unlike
       await Like.findByIdAndDelete(existingLike._id);
       await Post.findByIdAndUpdate(post_id, { $pull: { likes: user_id } });
 
@@ -33,7 +32,7 @@ exports.addLike = async (req, res) => {
         message: "Like removed successfully"
       });
     } else {
-      // Like
+    
       const newLike = new Like({ likedBy: user_id, post: post_id });
       await newLike.save();
       await Post.findByIdAndUpdate(post_id, { $addToSet: { likes: user_id } });
@@ -45,7 +44,7 @@ exports.addLike = async (req, res) => {
       });
     }
   } catch (error) {
-    // Handle duplicate key error manually
+    
     if (error.code === 11000) {
       return res.status(409).json({
         success: false,
