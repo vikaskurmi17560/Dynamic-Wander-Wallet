@@ -2,12 +2,6 @@ const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema(
     {
-        title: {
-            type: String,
-            required: [true, "Title is required"],
-            maxlength: 100,
-            trim: true,
-        },
         image: {
             type: String,
             required: true,

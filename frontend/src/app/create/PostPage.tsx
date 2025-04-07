@@ -6,16 +6,16 @@ import axios from 'axios';
 import useData from '@/hook/useData';
 import Image from 'next/image';
 import { Autocomplete } from '@react-google-maps/api';
+import { useRouter } from 'next/navigation';
 
 const CreatePost = () => {
   const { user, userId } = useData();
-
+  const router = useRouter();
   const [formData, setFormData] = useState({
-    title: '',
     description: '',
     tags: '',
     location: '',
-    visibility: 'public',
+    visibility: '',
     postedBy: '',
   });
 
@@ -23,7 +23,6 @@ const CreatePost = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
-  // Set postedBy when userId becomes available
   useEffect(() => {
     if (userId) {
       setFormData((prev) => ({ ...prev, postedBy: userId }));
@@ -52,6 +51,10 @@ const CreatePost = () => {
       setImage(file);
       setPreview(URL.createObjectURL(file));
     }
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Please upload an image less than 10 MB.');
+      return;
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -61,7 +64,6 @@ const CreatePost = () => {
     if (!formData.postedBy) return alert('User ID is missing. Please try again.');
 
     const data = new FormData();
-    data.append('title', formData.title);
     data.append('description', formData.description);
     data.append('location', formData.location);
     data.append('postedBy', formData.postedBy);
@@ -74,24 +76,22 @@ const CreatePost = () => {
       .filter(Boolean);
     tagsArray.forEach((tag) => data.append('tags[]', tag));
 
+    console.log(image.name, image.type, image.size);
+
     try {
       const res = await axios.post(
         `http://localhost:7050/api/v1/post/create?user_id=${formData.postedBy}`,
         data,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
-
-      alert('Post created successfully');
-
+      router.push('/');
       setFormData({
-        title: '',
         description: '',
         tags: '',
         location: '',
         visibility: 'public',
         postedBy: userId || '',
       });
-
       setImage(null);
       setPreview(null);
     } catch (err: any) {
@@ -136,7 +136,7 @@ const CreatePost = () => {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder="Description"
+              placeholder="Caption"
               className={styles.textarea}
             />
 
@@ -161,28 +161,17 @@ const CreatePost = () => {
               className={styles.location}
             />
 
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              placeholder="Title"
-              required
-              className={styles.location}
-            />
-
             <select
               name="visibility"
               value={formData.visibility}
               onChange={handleChange}
-              className={styles.location}
+              className={styles.select}
             >
               <option value="">Accessibility</option>
               <option value="public">Public</option>
               <option value="private">Private</option>
               <option value="friends-only">Friends-only</option>
             </select>
-
             <button type="submit" className={styles.button}>Post</button>
           </div>
         </form>

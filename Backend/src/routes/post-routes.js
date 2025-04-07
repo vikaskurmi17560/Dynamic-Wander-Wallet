@@ -12,5 +12,5 @@ router.delete('/delete', postController.deletePostById);
 // router.post('/posts/:id/unlike', postController.unlikePost);
 // router.post('/posts/:id/comment', postController.addComment);
 // router.delete('/posts/:postId/comment/:commentId', postController.removeComment);
-
+router.get("/getallpost", postController.getAllPosts);
 module.exports = router;

@@ -29,7 +29,6 @@ const Blog: React.FC = () => {
                     <span>Reels</span>
                 </div>
             </div>
-
             <div className={styles.content}>
                 {activeTab === "post" ? <Post /> : <Reels />}
             </div>
