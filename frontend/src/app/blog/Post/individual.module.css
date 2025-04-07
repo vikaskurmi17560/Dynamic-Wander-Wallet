@@ -1,0 +1,207 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    z-index: 9999;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContainer {
+    /* border: 1px solid white; */
+    height: 97%;
+    width: 90%;
+    display: flex;
+}
+
+.modalImage {
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    object-fit: contain;
+    border: none;
+    /* border: 1px solid white; */
+}
+
+.modalContent {
+    width: 50%;
+    height: 100%;
+    background-color: black;
+    /* padding: 1.5em; */
+}
+
+.modalClose {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    color: white;
+    background-color: transparent;
+    font-size: 2em;
+}
+
+.modalNavLeft {
+    position: fixed;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    background-color: white;
+    color: black;
+    padding: 0.7em;
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalNavRight {
+    position: fixed;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    background-color: white;
+    color: black;
+    padding: 0.7em;
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile_div {
+    border-bottom: 1px solid rgb(72, 70, 70);
+    width: 100%;
+    padding-left: 1.5em;
+    display: flex;
+    gap: 0.7em;
+    align-items: center;
+    height: 11%;
+    position: relative;
+}
+
+.profile_name {
+    font-family: sans-serif;
+    color: white;
+}
+
+.profile_dot_icon {
+    position: absolute;
+    top: 1em;
+    right: 0.9em;
+    font-size: 1.3em;
+    cursor: pointer;
+}
+
+.profile_location {
+    font-size: 0.8em;
+    font-weight: 100;
+}
+
+.profile_comment {
+    /* border: 1px solid red; */
+    width: 100%;
+    height: 64%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.comment_div {
+    width: 100%;
+    display: flex;
+    gap: 0.7em;
+    padding-left: 1.5em;
+    /* align-items: center; */
+    height: auto;
+    /* border: 1px solid white; */
+}
+
+.comment_name {
+    margin-top: 0.9em;
+    font-weight: bold;
+    font-size: 0.9em;
+    /* border: 1px solid red; */
+    height: auto;
+    width: 90%;
+    line-height: 2em;
+}
+
+.display_comment {
+    padding-left: 1.5em;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9em;
+    height: auto;
+}
+
+.display_comment_box{
+    /* border: 1px solid white; */
+    /* min-height: 8vh; */
+    height: auto;
+    display: flex;
+    gap: 1em;
+}
+
+.third_main_div {
+    /* border: 1px solid orange; */
+    background-color: black;
+    border-top: 1px solid rgb(72, 70, 70);
+    height: 25%;
+}
+
+.icon_div {
+    display: flex;
+    padding-left: 1.5em;
+    gap: 1.9em;
+    padding-top: 0.5em;
+}
+
+.icon {
+    font-size: 1.4em;
+    border: white;
+    color: white;
+}
+
+.date{
+    font-size: 0.7em;
+}
+
+
+.result{
+    height: 11.4vh;
+    padding-left: 1.5em;
+    /* border: 1px solid white; */
+    padding-top: 0.5em;
+}
+
+.comment{
+    border-top: 1px solid rgb(72, 70, 70);
+    display: flex;
+    gap: 0.4em;
+    padding-left: 1.5em;
+    height: 6vh;
+}
+.input{
+    width: 91%;
+    height: 100%;
+    outline: none;
+    background-color: transparent;
+}
+
+.comment_btn{
+    background-color: transparent;
+    border: none;
+}

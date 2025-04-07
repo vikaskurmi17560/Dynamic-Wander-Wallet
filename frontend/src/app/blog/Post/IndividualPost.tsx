@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import style from './post.module.css';
+import style from './individual.module.css';
+import { faComment, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faTimes,
@@ -90,6 +91,10 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
 
     const handleLikeToggle = async () => {
         try {
+            console.log("Sending like request with:", {
+                post_id: post._id,
+                user_id: userId,
+            });
             const response = await axios.post(`http://localhost:7050/api/v1/post/like/create`, {
                 post_id: post._id,
                 user_id: userId,
@@ -103,9 +108,10 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                 setLikeCount((prev) => prev - 1);
             }
         } catch (error) {
-            console.error('Failed to toggle like', error);
+            console.error('❌ Failed to toggle like:', error);
         }
     };
+
 
     const fetchComments = async () => {
         try {
@@ -174,31 +180,14 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div className={style.display_comment}>
 
-                    <div className="flex gap-4 mt-3 items-center">
-                        <FontAwesomeIcon
-                            icon={liked ? solidHeart : regularHeart}
-                            className={`cursor-pointer text-xl ${liked ? 'text-red-500' : 'text-gray-400 hover:text-red-400'}`}
-                            onClick={handleLikeToggle}
-                        />
-                        <span>{likeCount} likes</span>
-                    </div>
-
-                    <div className="text-sm mt-1">Tags: {post.tags.join(', ')}</div>
-                    <div className="text-xs text-gray-400">
-                        Posted: {new Date(post.createdAt).toLocaleString()}
-                    </div>
-
-                    <div className="mt-3">
-                        <h4 className="font-semibold text-md mb-1">Comments</h4>
-                        <div className="max-h-40 overflow-y-auto space-y-2 text-sm">
                             {comments.map((comment) => (
-                                <div key={comment._id} className="flex items-start gap-2">
+                                <div key={comment._id} className={style.display_comment_box}>
                                     {comment.user?.profile && (
                                         <img
                                             src={comment.user.profile}
-                                            className="w-6 h-6 rounded-full object-cover"
+                                            className="w-8 h-8 rounded-full object-cover"
                                             alt="user"
                                         />
                                     )}
@@ -212,18 +201,35 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                                     </div>
                                 </div>
                             ))}
-                        </div>
 
-                        <div className="flex gap-2 mt-3">
+                        </div>
+                    </div>
+                    <div className={style.third_main_div}>
+                        <div className={style.icon_div}>
+                            <FontAwesomeIcon
+                                icon={liked ? solidHeart : regularHeart}
+                                className={`${style.icon} cursor-pointer text-xl ${liked ? 'text-red-500' : 'text-gray-400 hover:text-red-400'}`}
+                                onClick={handleLikeToggle}
+                            />
+                            <FontAwesomeIcon icon={faComment} className={style.icon} />
+                        </div>
+                        <div className={style.result}>
+                            <span>{likeCount} likes</span>
+                            <div className="text-sm mt-1">Tags {post.tags.join(', ')}</div>
+                            <div className={`${style.date}  text-gray-400`}>
+                                {new Date(post.createdAt).toLocaleString()}
+                            </div>
+                        </div>
+                        <div className={style.comment}>
                             <input
                                 value={newComment}
                                 onChange={(e) => setNewComment(e.target.value)}
                                 placeholder="Add a comment..."
-                                className="w-full px-3 py-1 rounded border border-gray-300 text-sm"
+                                className={style.input}
                             />
                             <button
                                 onClick={handleAddComment}
-                                className="bg-blue-500 text-white text-sm px-3 rounded"
+                                className={style.comment_btn}
                             >
                                 Post
                             </button>
@@ -232,10 +238,10 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                 </div>
 
                 <button onClick={onPrev} className={style.modalNavLeft}>
-                    ⬅
+                    <FontAwesomeIcon icon={faChevronLeft} />
                 </button>
                 <button onClick={onNext} className={style.modalNavRight}>
-                    ➡
+                    <FontAwesomeIcon icon={faChevronRight} />
                 </button>
                 <FontAwesomeIcon icon={faTimes} onClick={onClose} className={style.modalClose} />
             </div>
