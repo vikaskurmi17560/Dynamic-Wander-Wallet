@@ -14,7 +14,10 @@ app.use(express.urlencoded({ extended: true }));
 
 const user_route = require("./src/routes/user-routes");
 const trip_routes = require("./src/routes/trip-routes");
+<<<<<<< HEAD
 // const budget_routes = require("./src/routes/budget-routes");
+=======
+>>>>>>> 80d71cf83f29d90014f658ebf13ca5f1f3d5eb7a
 const checkpoint_routes = require("./src/routes/checkpoint-routes");
 const hotel_routes = require("./src/routes/hotel-routes");
 const restaurant_routes = require("./src/routes/restaurant-routes");
