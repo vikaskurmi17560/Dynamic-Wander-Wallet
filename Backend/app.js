@@ -19,15 +19,13 @@ const checkpoint_routes = require("./src/routes/checkpoint-routes");
 const hotel_routes = require("./src/routes/hotel-routes");
 const restaurant_routes = require("./src/routes/restaurant-routes");
 const post_routes = require("./src/routes/post-routes");
-const like_routes = require("./src/routes/like-routes");
-const comment_routes = require("./src/routes/comment-routes");
+
+
 app.use('/api/v1/user', user_route);
 app.use('/api/v1/trip', trip_routes);
 app.use('/api/v1/checkpoint', checkpoint_routes);
 app.use('/api/v1/hotel', hotel_routes);
 app.use('/api/v1/restaurant', restaurant_routes);
 app.use('/api/v1/post', post_routes);
-app.use('/api/v1/post/like', like_routes);
-app.use('/api/v1/post/comment', comment_routes);
 
 module.exports = app;
