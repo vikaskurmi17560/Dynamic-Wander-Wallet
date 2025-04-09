@@ -39,19 +39,39 @@ const User_Schema = new mongoose.Schema(
         bio: {
             type: String,
             required: false,
-            maxlength: 150, // Optional field for user bio
+            maxlength: 150, 
         },
         posts: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Post", // Reference to posts created by the user
+                ref: "Post", 
             },
         ],
+        followers: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User", 
+            },
+        ],
+        following: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User", 
+            },
+        ],
+        badge_point: {
+            type: Number,
+            default: 0,
+        },
+        total_trip: {
+            type: Number,
+            default: 0,
+        },
     },
-    { timestamps: true } // ✅ Fixed timestamps
+    { timestamps: true } 
 );
 
-// Pre-save hook for password hashing
+
 User_Schema.pre("save", async function (next) {
     if (!this.isModified("password")) {
         return next();
@@ -61,7 +81,6 @@ User_Schema.pre("save", async function (next) {
     next();
 });
 
-// Method to compare passwords
 User_Schema.methods.comparePassword = async function (candidatePassword) {
     return bcrypt.compare(candidatePassword, this.password);
 };

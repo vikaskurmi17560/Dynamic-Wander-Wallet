@@ -1,17 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const upload = require("../services/multer"); // ✅ Ensure correct import
-const { signup, login, forgetPassword, resetPassword, updateUser, getUser } = require("../controllers/user-controller");
+const upload = require("../services/multer"); 
+const userController = require("../controllers/user-controller");
 
 
-router.post("/signup", signup);
-router.post("/login", login);
-router.post("/forget", forgetPassword);
-router.post("/reset-password", resetPassword);
+router.post("/signup",userController.signup);
+router.post("/login", userController.login);
+router.post("/forget", userController.forgetPassword);
+router.post("/reset-password", userController.resetPassword);
 
-// Correct usage of upload.fields
-router.post("/update-user", upload.fields([{ name: "profile", maxCount: 1 }, { name: "banner", maxCount: 1 }]), updateUser);
+router.post("/update-user", upload.fields([{ name: "profile", maxCount: 1 }, { name: "banner", maxCount: 1 }]), userController.updateUser);
 
-router.get("/get-user", getUser);
+router.get("/get-user", userController.getUser);
+router.post("/follow",userController.followUser);
+router.post("/unfollow",userController.unfollowUser);
+router.get("/getalluser",userController.getAllUser);
 
 module.exports = router;

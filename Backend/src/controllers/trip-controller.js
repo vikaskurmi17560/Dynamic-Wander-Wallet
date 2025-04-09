@@ -3,7 +3,6 @@ const Trip = require('../models/trip');
 const { uploadSingleImage ,uploadMultipleImages } = require("../services/cloudinary");
 
 
-// Create a new trip
 exports.createTrip = async (req, res) => {
   try {
     const savedTrip = await Trip.create(req.body);
@@ -14,7 +13,6 @@ exports.createTrip = async (req, res) => {
 };
 
 
-// Get all trips for a user
 exports.getTripsByUser = async (req, res) => {
   try {
     const { userId } = req.query;
@@ -34,7 +32,7 @@ exports.getTripsByUser = async (req, res) => {
   }
 };
 
-// Get all trips for a user
+
 exports.getTripsByid = async (req, res) => {
   try {
     const { trip_id } = req.query;
@@ -55,17 +53,17 @@ exports.getTripsByid = async (req, res) => {
 };
 
 
-// Delete a trip by ID
+
 exports.deleteTrip = async (req, res) => {
   try {
     const { trip_id } = req.query;
-
+    const {userid} = req.body; 
     if (!trip_id) {
       return res.status(400).json({ error: "Trip ID is required" });
     }
-
+    
     const deletedTrip = await Trip.findByIdAndDelete(trip_id); 
-
+    await User.findByIdAndUpdate(userId, { $inc: { total_trip: -1 } });
     if (!deletedTrip) {
       return res.status(404).json({ error: "Trip not found" });
     }
@@ -79,7 +77,7 @@ exports.deleteTrip = async (req, res) => {
   }
 };
 
-// Fetch the TripData Through Id
+
 
 exports.getTripId = async (req, res) => {
   try {
@@ -89,13 +87,13 @@ exports.getTripId = async (req, res) => {
     if (!trip) {
       return res.status(404).json({ error: "Trip not found" });
     }
-
+    
     res.status(200).json(trip);
   } catch (error) {
     res.status(500).json({ error: "Error fetching trip" });
   }
 }
-// Get All Trips
+
 exports.getAllTrip = async (req, res) => {
   try {
 
@@ -114,11 +112,10 @@ exports.getAllTrip = async (req, res) => {
 exports.uploadImagesByTripId = async(req,res)=>{
    try {
          
-         const { trip_id } = req.query; // Ensure user_id is sent as a query parameter
+         const { trip_id } = req.query;
          let updated_object = {};
  
  
-         // Handle multiple file uploads
          if (req.files) {
              if (req.files.cover_image) {
                  const uploadedCoverImage = await uploadSingleImage(req.files.cover_image[0].path);
@@ -135,7 +132,7 @@ exports.uploadImagesByTripId = async(req,res)=>{
           
          }
  
-         // Update user in database
+         
          const update_trip = await Trip.findByIdAndUpdate(trip_id, updated_object, { 
              new: true, 
              runValidators: true 
@@ -155,9 +152,9 @@ exports.uploadImagesByTripId = async(req,res)=>{
 exports.tripBudget = async (req, res) => {
   try {
     const { trip_id } = req.query;
-
+    const {userId}=req.body;
     const TripCheckpointData = await Checkpoints.find({ trip_id });
-
+    await User.findByIdAndUpdate(userId, { $inc: { total_trip: 1 } });
     const trip_budget = TripCheckpointData.reduce(
       (sum, item) => sum + (item.Total_checkpointBudget || 0),
       0

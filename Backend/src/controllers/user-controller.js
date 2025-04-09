@@ -200,17 +200,17 @@ exports.resetPassword = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     try {
-        let { name, phone_no, email, bio } = req.body; // Added `email`
-        const { user_id } = req.query; // Ensure user_id is sent as a query parameter
+        let { name, phone_no, email, bio} = req.body; 
+        const { user_id } = req.query;
         let updated_object = {};
 
-        // Check and add text fields
+        
         if (name) updated_object.name = name;
         if (email) updated_object.email = email;
         if (bio) updated_object.bio = bio;
         if (phone_no) updated_object.phone_no = phone_no;
 
-        // Handle multiple file uploads
+        
         if (req.files) {
             if (req.files.profile) {
                 const uploadedProfile = await uploadSingleImage(req.files.profile[0].path);
@@ -226,7 +226,7 @@ exports.updateUser = async (req, res) => {
             }
         }
 
-        // Update user in database
+      
         const update_user = await Users.findByIdAndUpdate(user_id, updated_object, { 
             new: true, 
             runValidators: true 
@@ -245,7 +245,7 @@ exports.updateUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
     try {
-        const { user_id } = req.query; // Extract user ID from query parameters
+        const { user_id } = req.query; 
 
         if (!user_id) {
             return res.status(400).json({
@@ -254,7 +254,7 @@ exports.getUser = async (req, res) => {
             });
         }
 
-        // Fetch user by ID correctly
+       
         const userExists = await Users.findOne({ _id: user_id });
 
         if (!userExists) {
@@ -275,7 +275,88 @@ exports.getUser = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Server error",
-            error: error.message, // Include error details for debugging
+            error: error.message, 
         });
     }
 };
+
+
+
+exports.followUser = async (req, res) => {
+    try {
+        const { id } = req.query;
+        const { currentUserId } = req.body;
+
+        if (id === currentUserId) {
+            return res.status(400).json({ message: "You can't follow yourself!" });
+        }
+
+        const userToFollow = await Users.findById(id);
+        const currentUser = await Users.findById(currentUserId);
+
+        if (!userToFollow || !currentUser) {
+            return res.status(404).json({ message: "User not found!" });
+        }
+
+        if (!userToFollow.followers.includes(currentUserId)) {
+            userToFollow.followers.push(currentUserId);
+            await userToFollow.save();
+        }
+
+        if (!currentUser.following.includes(id)) {
+            currentUser.following.push(id);
+            await currentUser.save();
+        }
+
+        return res.status(200).json({ message: "Successfully followed the user." });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+exports.unfollowUser = async (req, res) => {
+    try {
+        const { id } = req.query;
+        const { currentUserId } = req.body;
+
+        if (id === currentUserId) {
+            return res.status(400).json({ message: "You can't unfollow yourself!" });
+        }
+
+        const userToUnfollow = await Users.findById(id);
+        const currentUser = await Users.findById(currentUserId);
+
+        if (!userToUnfollow || !currentUser) {
+            return res.status(404).json({ message: "User not found!" });
+        }
+
+        userToUnfollow.followers = userToUnfollow.followers.filter(
+            (userId) => userId.toString() !== currentUserId
+        );
+        await userToUnfollow.save();
+
+        currentUser.following = currentUser.following.filter(
+            (userId) => userId.toString() !== id
+        );
+        await currentUser.save();
+
+        return res.status(200).json({ message: "Successfully unfollowed the user." });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+exports.getAllUser = async (req, res) => {
+  try {
+
+    const alluser = await Users.find();
+
+    if (!alluser) {
+      return res.status(404).json({ error: "users is not here" });
+    }
+
+    res.status(200).json(alluser);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching All user" });
+  }
+}
