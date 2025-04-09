@@ -152,7 +152,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                             <img
                                 src={post.postedUser.profile}
                                 alt="Profile"
-                                className="w-10 h-10 rounded-full object-contain"
+                                className="w-10 h-10 rounded-full object-cover"
                             />
                         )}
                         <span className={style.profile_name}>
@@ -168,7 +168,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                                 <img
                                     src={post.postedUser.profile}
                                     alt="Profile"
-                                    className="w-8 h-8 rounded-full object-contain mt-4"
+                                    className="w-8 h-8 rounded-full object-cover mt-4"
                                 />
                             )}
                             <div>
@@ -181,7 +181,6 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                             </div>
                         </div>
                         <div className={style.display_comment}>
-
                             {comments.map((comment) => (
                                 <div key={comment._id} className={style.display_comment_box}>
                                     {comment.user?.profile && (
@@ -201,7 +200,6 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                                     </div>
                                 </div>
                             ))}
-
                         </div>
                     </div>
                     <div className={style.third_main_div}>

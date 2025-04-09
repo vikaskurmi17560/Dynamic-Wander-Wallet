@@ -1,54 +1,59 @@
 .wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.2rem;
-    margin-top: 6.9em;
 }
 
 .buttonContainer {
+    background-color: #1f2937;
+    padding: 0.5rem 0;
+    gap: 1rem;
+    width: 7%;
+    height: 100vh;
+    position: fixed;
     display: flex;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
-    width: 90%;
-}
-
-.btn {
-    flex: 1;
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 1rem 2rem;
-    background-color: #f5f5f5;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: 500;
-    font-size: 1rem;
-    color: #333;
-    gap: 0.5rem;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 }
 
-/* .btn:hover {
-    background-color: #e2e8f0;
-} */
+.logo {
+    margin-bottom: 0.5rem;
+}
+
+.image{
+    color : white;
+}
+.btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0.7rem 0.5rem;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #374151;
+    color: #ffffff;
+}
 
 .active {
     background-color: #3b82f6;
-    /* Nice blue */
-    color: white;
+    color: #ffffff;
 }
 
 .icon {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
 }
 
 .content {
-    margin-top: 2rem;
-    font-size: 1.2rem;
-    color: #222;
-    min-height: 70vh;
+    margin-left: 7%;
+    width: 99%;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* border: 10px solid black; */
 }
