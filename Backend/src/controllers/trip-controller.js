@@ -221,23 +221,3 @@ exports.followTrip = async (req, res) => {
   }
 };
 
-
-exports.unfollowTrip = async (req, res) => {
-  try {
-    const { tripId, userId } = req.body;
-
-    const trip = await Trip.findByIdAndUpdate(
-      tripId,
-      { $pull: { followedby: userId } },
-      { new: true }
-    );
-
-    if (!trip) {
-      return res.status(404).json({ error: "Trip not found" });
-    }
-
-    return res.status(200).json({ success: true, message: "Unfollowed the trip successfully" });
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-};
