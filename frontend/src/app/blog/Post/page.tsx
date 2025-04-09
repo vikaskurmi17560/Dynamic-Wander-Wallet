@@ -3,9 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import style from './post.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
-import useData from '@/hook/useData';
 import IndividualPost from './IndividualPost';
 
 interface User {
@@ -25,8 +22,11 @@ export interface Post {
     postedUser?: User;
 }
 
+const isImage = (url: string): boolean => {
+    return /\.(jpeg|jpg|png|gif|webp|avif)$/i.test(url);
+};
+
 const PostCard: React.FC = () => {
-    const { userId } = useData();
     const [posts, setPosts] = useState<Post[]>([]);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -36,8 +36,12 @@ const PostCard: React.FC = () => {
                 const response = await axios.get('http://localhost:7050/api/v1/post/getallpost');
                 const postsData: Post[] = response.data;
 
+                // Filter only image posts
+                const imagePosts = postsData.filter(post => isImage(post.image));
+
+                // Attach user data to each image post
                 const postsWithUsers = await Promise.all(
-                    postsData.map(async (post) => {
+                    imagePosts.map(async (post) => {
                         try {
                             const userRes = await axios.get('http://localhost:7050/api/v1/user/get-user', {
                                 params: { user_id: post.postedBy },

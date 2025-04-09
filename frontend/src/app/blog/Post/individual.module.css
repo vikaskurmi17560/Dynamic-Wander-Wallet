@@ -128,12 +128,10 @@
 }
 
 .comment_name {
-    margin-top: 0.9em;
+    margin: 0.9em 0.2em;
     font-weight: bold;
-    font-size: 0.9em;
-    /* border: 1px solid red; */
     height: auto;
-    width: 90%;
+    width: auto;
     line-height: 2em;
 }
 
@@ -143,20 +141,20 @@
     scrollbar-width: none;
     display: flex;
     flex-direction: column;
-    gap: 0.9em;
+    gap: 1em;
     height: auto;
+    margin-top: 0.9em;
+    /* border: 1px solid white; */
 }
 
 .display_comment_box{
-    /* border: 1px solid white; */
-    /* min-height: 8vh; */
     height: auto;
+    width:auto;
     display: flex;
     gap: 1em;
 }
 
 .third_main_div {
-    /* border: 1px solid orange; */
     background-color: black;
     border-top: 1px solid rgb(72, 70, 70);
     height: 25%;
