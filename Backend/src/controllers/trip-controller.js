@@ -1,8 +1,9 @@
 const Checkpoints = require('../models/checkpoints');
 const Trip = require('../models/trip');
-const { uploadSingleImage ,uploadMultipleImages } = require("../services/cloudinary");
+const User = require('../models/user');
+const { uploadSingleImage, uploadMultipleImages } = require("../services/cloudinary");
 
-
+// CREATE TRIP
 exports.createTrip = async (req, res) => {
   try {
     const savedTrip = await Trip.create(req.body);
@@ -12,7 +13,7 @@ exports.createTrip = async (req, res) => {
   }
 };
 
-
+// GET TRIPS BY USER
 exports.getTripsByUser = async (req, res) => {
   try {
     const { userId } = req.query;
@@ -21,10 +22,9 @@ exports.getTripsByUser = async (req, res) => {
     }
 
     const trips = await Trip.find({ userId }).lean();
-
     res.status(200).json({
       success: true,
-      message: "Get Trip by trip_id successfully",
+      message: "Trips fetched successfully",
       trips
     });
   } catch (error) {
@@ -32,38 +32,38 @@ exports.getTripsByUser = async (req, res) => {
   }
 };
 
-
+// GET TRIP BY ID
 exports.getTripsByid = async (req, res) => {
   try {
     const { trip_id } = req.query;
     if (!trip_id) {
-      return res.status(400).json({ error: "User ID is required" });
+      return res.status(400).json({ error: "Trip ID is required" });
     }
 
-    const trips = await Trip.findOne({ _id: trip_id });
-
+    const trip = await Trip.findOne({ _id: trip_id });
     res.status(200).json({
       success: true,
-      message: "Get Trip by trip_id successfully",
-      trips
+      message: "Trip fetched successfully",
+      trip
     });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
-
-
+// DELETE TRIP
 exports.deleteTrip = async (req, res) => {
   try {
     const { trip_id } = req.query;
-    const {userid} = req.body; 
-    if (!trip_id) {
-      return res.status(400).json({ error: "Trip ID is required" });
+    const { userId } = req.body;
+
+    if (!trip_id || !userId) {
+      return res.status(400).json({ error: "Trip ID and User ID are required" });
     }
-    
-    const deletedTrip = await Trip.findByIdAndDelete(trip_id); 
+
+    const deletedTrip = await Trip.findByIdAndDelete(trip_id);
     await User.findByIdAndUpdate(userId, { $inc: { total_trip: -1 } });
+
     if (!deletedTrip) {
       return res.status(404).json({ error: "Trip not found" });
     }
@@ -77,8 +77,7 @@ exports.deleteTrip = async (req, res) => {
   }
 };
 
-
-
+// GET TRIP BY _id IN BODY
 exports.getTripId = async (req, res) => {
   try {
     const { _id } = req.body;
@@ -87,91 +86,113 @@ exports.getTripId = async (req, res) => {
     if (!trip) {
       return res.status(404).json({ error: "Trip not found" });
     }
-    
+
     res.status(200).json(trip);
   } catch (error) {
     res.status(500).json({ error: "Error fetching trip" });
   }
-}
+};
 
+// GET ALL TRIPS
 exports.getAllTrip = async (req, res) => {
   try {
+    const trips = await Trip.find();
 
-    const trip = await Trip.find();
-
-    if (!trip) {
-      return res.status(404).json({ error: "Trip is not here" });
+    if (!trips || trips.length === 0) {
+      return res.status(404).json({ error: "No trips found" });
     }
 
-    res.status(200).json(trip);
+    res.status(200).json(trips);
   } catch (error) {
-    res.status(500).json({ error: "Error fetching All trip" });
+    res.status(500).json({ error: "Error fetching all trips" });
   }
-}
+};
 
-exports.uploadImagesByTripId = async(req,res)=>{
-   try {
-         
-         const { trip_id } = req.query;
-         let updated_object = {};
- 
- 
-         if (req.files) {
-             if (req.files.cover_image) {
-                 const uploadedCoverImage = await uploadSingleImage(req.files.cover_image[0].path);
-                 if (uploadedCoverImage) {
-                     updated_object.cover_image = uploadedCoverImage.secure_url;
-                 }
-             }
-             if (req.files && req.files.image && req.files.image.length > 0) {
-              const uploadedImages = await uploadMultipleImages(req.files.image.map(file => file.path));
-              if (uploadedImages && uploadedImages.length > 0) {
-                  updated_object.image = uploadedImages.map(img => img.secure_url); // Storing all URLs
-              }
-          }
-          
-         }
- 
-         
-         const update_trip = await Trip.findByIdAndUpdate(trip_id, updated_object, { 
-             new: true, 
-             runValidators: true 
-         });
- 
-         if (!update_trip) {
-             return res.status(404).json({ message: "Trip not found!" });
-         }
- 
-         return res.status(200).json({ message: "Trip updated successfully!", update_trip});
- 
-     } catch (error) {
-         return res.status(500).json({ message: error.message });
-     }
-}
+// UPLOAD IMAGES FOR A TRIP
+exports.uploadImagesByTripId = async (req, res) => {
+  try {
+    const { trip_id } = req.query;
+    let updated_object = {};
 
+    if (req.files) {
+      if (req.files.cover_image) {
+        const uploadedCoverImage = await uploadSingleImage(req.files.cover_image[0].path);
+        if (uploadedCoverImage) {
+          updated_object.cover_image = uploadedCoverImage.secure_url;
+        }
+      }
+
+      if (req.files.image && req.files.image.length > 0) {
+        const uploadedImages = await uploadMultipleImages(
+          req.files.image.map(file => file.path)
+        );
+        if (uploadedImages.length > 0) {
+          updated_object.image = uploadedImages.map(img => img.secure_url);
+        }
+      }
+    }
+
+    const updatedTrip = await Trip.findByIdAndUpdate(trip_id, updated_object, {
+      new: true,
+      runValidators: true
+    });
+
+    if (!updatedTrip) {
+      return res.status(404).json({ message: "Trip not found" });
+    }
+
+    return res.status(200).json({
+      message: "Trip updated successfully!",
+      updatedTrip
+    });
+
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// CALCULATE & UPDATE TRIP BUDGET
 exports.tripBudget = async (req, res) => {
   try {
     const { trip_id } = req.query;
-    const {userId}=req.body;
+    const { userId } = req.body;
+
+    console.log("Trip ID:", trip_id);
+    console.log("User ID:", userId);
+
+    if (!trip_id || !userId) {
+      return res.status(400).json({ message: "trip_id or userId is missing" });
+    }
+
     const TripCheckpointData = await Checkpoints.find({ trip_id });
-    await User.findByIdAndUpdate(userId, { $inc: { total_trip: 1 } });
+    console.log("Checkpoints found:", TripCheckpointData.length);
+
     const trip_budget = TripCheckpointData.reduce(
       (sum, item) => sum + (item.Total_checkpointBudget || 0),
       0
     );
 
-    const update_tripdata = await Trip.findByIdAndUpdate(
+    console.log("Calculated Budget:", trip_budget);
+
+    const updatedTrip = await Trip.findByIdAndUpdate(
       trip_id,
-      { TripBudget: trip_budget },
-      { new: true } 
+      { TotalBudget: trip_budget },
+      { new: true }
     );
+
+    if (!updatedTrip) {
+      return res.status(404).json({ message: "Trip not found" });
+    }
+
+    await User.findByIdAndUpdate(userId, { $inc: { total_trip: 1 } });
 
     return res.status(200).json({
       success: true,
       message: "Total trip budget created successfully",
-      data: update_tripdata
+      data: updatedTrip
     });
   } catch (error) {
+    console.error("🔥 tripBudget error:", error);
     return res.status(500).json({ message: error.message });
   }
 };

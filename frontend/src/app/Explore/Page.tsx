@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./Explore.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faSackDollar } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import useCartStore from "@/app/store/useStore";
@@ -17,6 +17,7 @@ interface Trip {
   city: string;
   destination: string;
   cover_image?: string;
+  TotalBudget?: number;
 }
 
 const normalizeText = (text: string) =>
@@ -96,6 +97,7 @@ const Explore: React.FC = () => {
               />
               <div className={style.trip_details}>
                 <h3 className={style.trip_name}>{trip.tripName}</h3>
+
                 <div className={style.trip_location}>
                   <p className={style.name}>State</p>
                   <span className={style.value}>{trip.state}</span>
@@ -108,8 +110,11 @@ const Explore: React.FC = () => {
                   <p className={style.name}>Place</p>
                   <span className={style.value}>{trip.destination}</span>
                 </div>
+                <div className={style.trip_location}>
+                  <p className={style.name}>Budget</p>
+                  <span className={style.value}>₹{trip.TotalBudget}</span>
+                </div>
               </div>
-
               <div className={style.card_buttons}>
                 <button
                   className={style.quick_book}

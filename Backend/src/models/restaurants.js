@@ -23,15 +23,15 @@ const RestaurantsSchema = new mongoose.Schema({
     description: {
         type: String,
         trim: true,
-        minlength: 10,
         maxlength: 500,
-        default: "No description provided."
+        default: "No description provided.",
+        required: false,
     },
     prices: [{
         meal_type: { type: String, required: true },
         meal_price: { type: Number, required: true }
     }],
-    contact: { type: String }
+    contact: { type: String, required: false }
 }, { timestamps: true })
 
 

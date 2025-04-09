@@ -112,7 +112,6 @@ exports.CreateBudgetOnCheckpoint = async (req, res) => {
 
     const total_budget = hotel_budget + restaurant_budget + checkpoint_budget;
 
-    
     const updateObject = {
       hotel_Budget: hotel_budget,
       restaurant_Budget: restaurant_budget,

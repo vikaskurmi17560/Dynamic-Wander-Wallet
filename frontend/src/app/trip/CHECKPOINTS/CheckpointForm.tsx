@@ -8,6 +8,8 @@ import { getCurrentLocation } from "./FUNCTION/getLocation";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { updateCheckpointBudgets } from "./updateCheckpointBudgets";
+import useData from "@/hook/useData";
 
 
 interface Location {
@@ -38,6 +40,7 @@ const transportTypes = {
 };
 
 const CheckpointForm = ({ onCheckpointAdded }) => {
+    const { userId } = useData();
     const router = useRouter();
     const { tripId, location, toggleCheckpoint, saveLocation, toggleTripEnd } = useLocation();
 
@@ -152,12 +155,20 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
         }
     };
 
+
     const handleTripEnd = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
             console.log("Saving checkpoint...");
             await handleSubmit(e);
+
+            const result = await updateCheckpointBudgets(tripId , userId);
+            if (result.success) {
+                console.log("Trip budget updated:", result.tripBudget);
+            } else {
+                alert("Failed to update budgets: " + result.error);
+            }
             toggleCheckpoint();
             toggleTripEnd();
             console.log("Checkpoint saved. Redirecting...");
@@ -168,6 +179,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
             router.push(`/trip/CHECKPOINTS/tripend?tripName=${formData.trip_id}`);
         }
     };
+
 
     return (
         <div className={style.main}>
@@ -284,6 +296,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                         type="submit"
                         className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300">
                         Checkpoint Verified
+
                     </button>
 
                     <button

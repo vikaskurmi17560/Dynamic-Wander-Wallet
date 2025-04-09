@@ -42,7 +42,7 @@ const UploadTripImages = () => {
             });
 
             setCoverImage(null);
-            formRef.current?.reset(); 
+            formRef.current?.reset();
 
         } catch (error: any) {
             console.error("Error uploading cover image:", error.response?.data || error.message);
@@ -67,7 +67,7 @@ const UploadTripImages = () => {
                     Upload
                 </button>
             </form>
-            {uploadedData.cover_image && (
+            {/* {uploadedData.cover_image && (
                 <div style={{ marginTop: 30 }}>
                     <h3>Uploaded Cover Image Preview</h3>
                     <img
@@ -76,7 +76,7 @@ const UploadTripImages = () => {
                         style={{ width: "100%", maxWidth: 400, borderRadius: 10 }}
                     />
                 </div>
-            )}
+            )} */}
         </div>
     );
 };

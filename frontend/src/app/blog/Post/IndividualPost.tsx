@@ -7,9 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faTimes,
     faEllipsisV,
-    faHeart as solidHeart,
 } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
+import {
+    FaHeart,
+    FaRegHeart,
+} from "react-icons/fa";
 import axios from 'axios';
 import useData from '@/hook/useData';
 
@@ -71,23 +73,32 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
     };
 
     useEffect(() => {
-        fetchLikes();
-        fetchComments();
-    }, [post._id]);
+        if (userId) {
+            fetchLikes();
+            fetchComments();
+        }
+    }, [post._id, userId]);
 
     const fetchLikes = async () => {
         try {
-            const res = await axios.get(
-                `http://localhost:7050/api/v1/post/like/getalldata`,
-                { params: { post_id: post._id } }
-            );
-            const allLikes = res.data.likes;
+            const res = await axios.get(`http://localhost:7050/api/v1/post/like/getalldata`, {
+                params: { post_id: post._id },
+            });
+            const allLikes = res.data.likes || [];
+
             setLikeCount(allLikes.length);
-            setLiked(allLikes.some((like: any) => like.user === userId));
+
+            const isLikedByUser = allLikes.some((like: any) => {
+                const likedById = like.likedBy?._id || like.likedBy;
+                return likedById === userId;
+            });
+
+            setLiked(isLikedByUser);
         } catch (error) {
-            console.error('Failed to fetch likes', error);
+            console.error("Failed to fetch likes", error);
         }
     };
+
 
     const handleLikeToggle = async () => {
         try {
@@ -204,11 +215,14 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                     </div>
                     <div className={style.third_main_div}>
                         <div className={style.icon_div}>
-                            <FontAwesomeIcon
+                            {/* <FontAwesomeIcon
                                 icon={liked ? solidHeart : regularHeart}
                                 className={`${style.icon} cursor-pointer text-xl ${liked ? 'text-red-500' : 'text-gray-400 hover:text-red-400'}`}
                                 onClick={handleLikeToggle}
-                            />
+                            /> */}
+                            <div onClick={handleLikeToggle}>
+                                {liked ? <FaHeart color="red" style={{ fontSize: "1.6em" }} /> : <FaRegHeart style={{ fontSize: "1.6em" }} />}
+                            </div>
                             <FontAwesomeIcon icon={faComment} className={style.icon} />
                         </div>
                         <div className={style.result}>

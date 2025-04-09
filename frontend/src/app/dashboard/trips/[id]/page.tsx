@@ -28,6 +28,7 @@ interface Checkpoint {
     destination: Location;
     description: string;
     transport_budget: TransportBudget[];
+    Total_checkpointBudget: number,
 }
 
 interface Hotel {
@@ -146,7 +147,7 @@ const Trips = () => {
                 </div>
             </div>
             <div className={style.images_div}>
-                <UploadImages tripId = {tripId} />
+                <UploadImages tripId={tripId} />
             </div>
             {loading && <p className={style.loading}>Loading checkpoints...</p>}
             {error && <p className={style.error}>{error}</p>}
@@ -158,24 +159,59 @@ const Trips = () => {
 
                     return (
                         <div key={checkpoint._id} className={style.timelineItem}>
-                            {index > 0 && <div className={`${style.progressLine} ${showLine ? style.activeLine : ""}`}></div>}
-                            <div className={`${style.card} ${isCompleted ? style.completed : ""}`}>
-                                <div className={style.checkpoint}>Checkpoint {index + 1}</div>
-                                <div className={style.locationbox}>
-                                    <Image src="/images/Daskboard/checkpoint.png" alt="Checkpoint" height={1000} width={1000} className={style.logo} />
-                                    <p className={style.data}>{checkpoint.source.name}</p>
+                            {index > 0 && (
+                                <div
+                                    className={`${style.progressLine} ${showLine ? style.activeLine : ""
+                                        }`}
+                                ></div>
+                            )}
+                            <div
+                                className={`${style.card} ${isCompleted ? style.completed : ""}`}
+                            >
+                                <div className={style.header}>
+                                    <h3 className={style.h3}>Checkpoint {index + 1}</h3>
                                 </div>
+
                                 <div className={style.locationbox}>
-                                    <Image src="/images/Daskboard/start_location.png" alt="Start Location" height={1000} width={1000} className={style.logo} />
-                                    <p className={style.data}>{checkpoint.destination.name}</p>
+                                    <Image
+                                        src="/images/Daskboard/checkpoint.png"
+                                        alt="Checkpoint"
+                                        height={24}
+                                        width={24}
+                                        className={style.logo}
+                                    />
+                                    <p className={style.locationbox_name}>{checkpoint.source.name}</p>
                                 </div>
-                                <div>
+
+                                <div className={style.locationbox}>
+                                    <Image
+                                        src="/images/Daskboard/start_location.png"
+                                        alt="Destination"
+                                        height={24}
+                                        width={24}
+                                        className={style.logo}
+                                    />
+                                    <p className={style.locationbox_name}>{checkpoint.destination.name}</p>
+                                </div>
+
+                                <div className={style.locationbox}>
+                                    <Image
+                                        src="/images/Daskboard/budget.png"
+                                        alt="Budget"
+                                        height={24}
+                                        width={24}
+                                        className={style.logo}
+                                    />
+                                    <p className={style.locationbox_name}>₹{checkpoint.Total_checkpointBudget}</p>
+                                </div>
+                                <div className={style.buttonWrapper}>
                                     <button
                                         type="button"
                                         onClick={() => setActiveCheckpoint(checkpoint)}
                                         title="Click to view full details"
-                                        className={style.btn_checkpoint}>
-                                        About
+                                        className={style.btn_checkpoint}
+                                    >
+                                        View Details
                                     </button>
                                 </div>
                             </div>

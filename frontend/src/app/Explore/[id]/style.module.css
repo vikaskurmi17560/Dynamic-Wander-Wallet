@@ -62,115 +62,105 @@
 }
 
 .timeline {
-    padding: 2rem;
+    padding: 1em;
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 2em;
     justify-content: center;
-    align-items: flex-start;
     position: relative;
+    margin-top: 30px;
 }
 
 .timelineItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 280px;
-    min-height: 340px;
     position: relative;
-    box-sizing: border-box;
-    flex-grow: 1;
-}
-
-.card {
-    height: auto;
-    /* instead of fixed height */
-    min-height: 100%;
-    max-height: 500px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.9em;
-    /* if you want to limit height with scroll */
+    width: 280px;
 }
 
 .progressLine {
     width: 4px;
     height: 40px;
-    background-color: #ccc;
-    transition: background-color 0.3s ease;
+    background: #ccc;
     position: absolute;
     top: -40px;
     left: 50%;
     transform: translateX(-50%);
     display: none;
-    z-index: 0;
 }
 
 .activeLine {
     display: block;
-    background-color: #3b82f6;
+    background: #3b82f6;
 }
 
+.card {
+    background: #fff;
+    border-radius: 1em;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 1.2em;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
 
 .completed {
     border-left: 5px solid #10b981;
 }
 
-.checkpoint {
-    font-weight: bold;
+.h3 {
     font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    color: #1f2937;
+    color: #1e40af;
 }
 
 .locationbox {
     display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-    margin: 0.5rem 0;
-    flex-wrap: nowrap;
-    width: 100%;
+    align-items: center;
+    gap: 0.8em;
+    font-size: 0.95rem;
+    color: #374151;
+    /* border: 1px solid black; */
+    overflow: scroll;
+    scrollbar-width: none;
 }
 
 .logo {
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
     object-fit: contain;
-    flex-shrink: 0;
-    margin-top: 0.2rem;
 }
 
-.data {
-    font-size: 0.95rem;
-    color: #374151;
-    margin: 0;
-    word-break: break-word;
-    /* 🔑 Break long words */
-    white-space: normal;
-    /* 🔑 Allow multiple lines */
-    flex: 1;
-    line-height: 1.4;
+.locationbox_name {
+    /* border: 1px solid red; */
+    padding: 0%;
+    text-align: start;
 }
 
+.buttonWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+}
 
 .btn_checkpoint {
-    margin-top: 1rem;
-    background-color: white;
-    border: 2px solid #3b82f6;
-    color: #3b82f6;
-    padding: 0.4rem 1rem;
-    border-radius: 0.5rem;
-    font-weight: 600;
+    background-color: #3b82f6;
+    color: #fff;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 0.5em;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    transition: background-color 0.3s ease;
 }
 
 .btn_checkpoint:hover {
-    background-color: #3b82f6;
-    color: white;
+    background-color: #2563eb;
 }
-
 
 .card {
     background: white;
@@ -187,49 +177,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-.card:hover {
-    transform: scale(1.03);
-}
-
-.logo {
-    height: 2em;
-    width: 2em;
-}
-
-.locationbox {
-    /* border: 1px solid black; */
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-}
-
-.checkpoint {
-    color: black;
-    font-size: 1.4em;
-    font-family: sans-serif;
-    font-weight: 500;
-}
-
-.data {
-    color: black;
-    /* border: 1px solid black; */
-    font-size: 1em;
-    font-family: sans-serif;
-    height: 7vh;
-    display: flex;
-    align-items: center;
-    /* justify-content: start; */
-}
-
-.completed {
-    opacity: 0.6;
-}
-
-.activeCheckpoint {
-    border: 2px solid yellow;
-    box-shadow: 0 0 10px yellow;
 }
 
 .modalOverlay {

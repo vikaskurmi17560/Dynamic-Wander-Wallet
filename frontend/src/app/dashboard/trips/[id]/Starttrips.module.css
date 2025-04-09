@@ -62,33 +62,26 @@
 }
 
 .timeline {
-    padding: 0.7em;
+    padding: 1em;
     display: flex;
     flex-wrap: wrap;
-    gap: 3em;
-    justify-content: space-between;
-    align-items: flex-start;
+    gap: 2em;
+    justify-content: center;
     position: relative;
-    margin-top: 20px;
-    /* border: 1px solid red; */
+    margin-top: 30px;
 }
 
 .timelineItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     position: relative;
-    width: 44vh;
-    height: 35vh;
+    width: 280px;
 }
 
 .progressLine {
-    width: 5px;
-    height: 50px;
-    background: gray;
-    transition: background 0.3s ease-in-out;
+    width: 4px;
+    height: 40px;
+    background: #ccc;
     position: absolute;
-    top: -50%;
+    top: -40px;
     left: 50%;
     transform: translateX(-50%);
     display: none;
@@ -96,74 +89,78 @@
 
 .activeLine {
     display: block;
-    background: blue;
-}
-
-.btn_checkpoint {
-    border: 1px solid blue;
-    padding: 0.4em 1em;
-    border-radius: 0.3em;
-    color: blue;
+    background: #3b82f6;
 }
 
 .card {
-    background: white;
-    padding: 0.5em;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    position: relative;
-    border: 2px solid gray;
+    background: #fff;
+    border-radius: 1em;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 1.2em;
+    transition: transform 0.3s, box-shadow 0.3s;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 0.8em;
+    position: relative;
 }
 
 .card:hover {
-    transform: scale(1.03);
-}
-
-.logo {
-    height: 2em;
-    width: 2em;
-}
-
-.locationbox {
-    /* border: 1px solid black; */
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-}
-
-.checkpoint {
-    color: black;
-    font-size: 1.4em;
-    font-family: sans-serif;
-    font-weight: 500;
-}
-
-.data {
-    color: black;
-    /* border: 1px solid black; */
-    font-size: 1em;
-    font-family: sans-serif;
-    height: 7vh;
-    display: flex;
-    align-items: center;
-    /* justify-content: start; */
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 }
 
 .completed {
-    opacity: 0.6;
+    border-left: 5px solid #10b981;
 }
 
-.activeCheckpoint {
-    border: 2px solid yellow;
-    box-shadow: 0 0 10px yellow;
+.h3 {
+    font-size: 1.1rem;
+    color: #1e40af;
+}
+
+.locationbox {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    font-size: 0.95rem;
+    color: #374151;
+    /* border: 1px solid black; */
+    overflow: scroll;
+    scrollbar-width: none;
+    height: 13vh;
+}
+
+.logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.locationbox_name {
+    /* border: 1px solid red; */
+    padding: 0%;
+    text-align: start;
+}
+
+.buttonWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+}
+
+.btn_checkpoint {
+    background-color: #3b82f6;
+    color: #fff;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 0.5em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn_checkpoint:hover {
+    background-color: #2563eb;
 }
 
 .modalOverlay {
@@ -229,11 +226,13 @@
     flex-direction: column;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
-.div{
+
+.div {
     display: flex;
     gap: 2em;
 }
-.transportname{
+
+.transportname {
     margin-left: 1em;
     font-size: 1.1em;
     color: black;
@@ -242,6 +241,7 @@
     color: #be3207;
     /* border: 1px solid black; */
 }
+
 .modal_values {
     color: black;
     font-family: sans-serif;
@@ -306,12 +306,12 @@
 }
 
 
-.hotel_buttons{
+.hotel_buttons {
     display: flex;
     gap: 0.5em;
 }
 
-.hotel_btn{
+.hotel_btn {
     cursor: pointer;
     /* border: 1px solid black; */
     border: none;
@@ -325,7 +325,7 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 }
 
-.hotel_btn:hover{
+.hotel_btn:hover {
     background-color: #be3207;
     color: white;
 }
@@ -398,7 +398,7 @@
         flex-direction: column;
         align-items: center;
     }
-    
+
     .timelineItem {
         width: 80%;
         height: auto;
@@ -409,9 +409,11 @@
     .heading {
         font-size: 2.5em;
     }
+
     .timelineItem {
         width: 90%;
     }
+
     .modal {
         width: 85%;
         height: auto;
@@ -422,13 +424,16 @@
     .heading {
         font-size: 2em;
     }
+
     .btn_box {
         width: 70%;
         font-size: 1em;
     }
+
     .timelineItem {
         width: 100%;
     }
+
     .modal {
         width: 90%;
         padding: 20px;
