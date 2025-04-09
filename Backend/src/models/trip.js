@@ -37,7 +37,11 @@ const tripSchema = new mongoose.Schema({
   TotalBudget:{
     type:Number,
     required:false,
-  }
+  },
+  followedby: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 },
   { timestamps: true }
 );

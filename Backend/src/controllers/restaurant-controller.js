@@ -1,8 +1,12 @@
 const Restaurants = require("../models/restaurants");
+const User = require ('../models/user');
 
 exports.createRestaurant = async (req, res) => {
     try {
+        const {userId}=req.query;
         const restaurant = await Restaurants.create(req.body);
+        
+        await User.findByIdAndUpdate(userId, { $inc: { badge_point: 100 } });
         res.status(201).json({
             success: true,
             message: "Create Restaurant SuccessFully ",
@@ -51,6 +55,7 @@ exports.getRestaurantsById = async (req, res) => {
 exports.deleteRestaurantById = async (req, res) => {
     try {
         const { checkpoint_id } = req.query;
+        const {userId}=req.body;
         if (!checkpoint_id) {
             return res.status(404).json({ message: "CheckpointID is Not Here" });
         }
@@ -58,6 +63,8 @@ exports.deleteRestaurantById = async (req, res) => {
         if (!restaurants) {
             return res.status(404).json({ error: "Restaurant not found" });
         }
+        
+        await User.findByIdAndUpdate(userId, { $inc: { badge_point: -100 } });
         res.status(200).json({ message: "Delete Restaurant Successfully" });
     } catch (error) {
         res.status(500).json({ error: error.message });

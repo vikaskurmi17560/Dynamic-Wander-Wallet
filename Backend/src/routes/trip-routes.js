@@ -11,4 +11,7 @@ router.post("/fetch", tripController.getTripId);
 router.get("/alltrip", tripController.getAllTrip);
 router.post("/update-trip",upload.fields([{ name: "cover_image", maxCount: 1 }, { name: "image", maxCount: 10 }]),tripController.uploadImagesByTripId);
 router.post("/createBudget",tripController.tripBudget);
+router.post("/follow",tripController.followTrip);
+router.post("/unfollow",tripController.unfollowTrip);
+
 module.exports = router;
