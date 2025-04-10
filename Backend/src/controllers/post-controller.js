@@ -27,6 +27,8 @@ exports.createPost = async (req, res) => {
         const newPost = await Post.create({ image, title, description, tags, location, postedBy, likes, comments });
         
         await User.findByIdAndUpdate(user_id, { $inc: { badge_point: 50 } });
+        await User.findByIdAndUpdate(user_id,{ $push: { posts: post_id } });
+
         return res.status(201).json({
             success: true,
             message: "Post Creation Successfully",
@@ -132,6 +134,8 @@ exports.deletePostById = async (req, res) => {
         }
         
         await User.findByIdAndUpdate(userId, { $inc: { badge_point: -50 } });
+        await User.findByIdAndUpdate(userId,{ $pull: { posts: post_id } });
+       
         return res.status(200).json({
             success: true,
             message: "Post Deletion Successfully"
@@ -143,30 +147,33 @@ exports.deletePostById = async (req, res) => {
 
 exports.deletePostByUserId = async (req, res) => {
   try {
-      const { user_id } = req.query;
+    const { user_id } = req.query;
 
-      
-      const deleteResult = await Post.deleteMany({ postedBy: user_id });
+    const deletedPosts = await Post.find({ postedBy: user_id });
+    const deletedPostIds = deletedPosts.map(post => post._id);
 
-      if (deleteResult.deletedCount === 0) {
-          return res.status(400).json({
-              success: false,
-              message: "No posts found for this user.",
-          });
-      }
+    const deleteResult = await Post.deleteMany({ postedBy: user_id });
 
-      await User.findByIdAndUpdate(user_id, {
-          $inc: { badge_point: -(50 * deleteResult.deletedCount) },
+    if (deleteResult.deletedCount === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No posts found for this user.",
       });
+    }
+    await User.findByIdAndUpdate(user_id, {
+      $pull: { posts: { $in: deletedPostIds } },
+      $inc: { badge_point: -(50 * deleteResult.deletedCount) },
+    });
 
-      return res.status(200).json({
-          success: true,
-          message: `${deleteResult.deletedCount} post(s) deleted successfully.`,
-      });
+    return res.status(200).json({
+      success: true,
+      message: `${deleteResult.deletedCount} post(s) deleted successfully.`,
+    });
   } catch (error) {
-      return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
+
 
 
 exports.getAllPosts = async (req, res) => {
