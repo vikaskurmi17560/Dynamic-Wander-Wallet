@@ -14,7 +14,7 @@ interface Checkpoint {
     destination: { name: string; latitude: number; longitude: number };
     description: string;
     transport_budget: { category: string; transport_type: string; transport_price: number }[];
-    Total_checkpointBudget : number;
+    Total_checkpointBudget: number;
 }
 interface Hotel {
     name: string;
@@ -209,7 +209,7 @@ const page = () => {
             {error && <p className={style.error}>{error}</p>}
 
             <div className={style.btn_container}>
-                <div className={style.box}>
+                <div className={style.gallery}>
                     <button className={style.button} onClick={handleGallery}>
                         🖼️ <span>Gallery</span>
                     </button>
@@ -323,9 +323,6 @@ const page = () => {
                     );
                 })}
             </div>
-
-
-
             {activeCheckpoint && (
                 <div className={style.modalOverlay}>
                     <div className={style.modal}>

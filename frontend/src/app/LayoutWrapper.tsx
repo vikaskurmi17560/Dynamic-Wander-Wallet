@@ -7,8 +7,7 @@ import Footer from "@/components/FOOTER/Footer";
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  // Hide Navbar and Footer only on /blog (the Reels page)
-  const hideLayout = pathname === "/blog";
+  const hideLayout = pathname === "/blog" || pathname === "/create";
 
   return (
     <>

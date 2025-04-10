@@ -1,10 +1,14 @@
 .wrapper {
-    margin-top: 6.9em;
-    background-color: #f9fafb;   
+    background-color: #f9fafb; 
+    margin: 0%;
+    padding: 0%; 
+    display: flex; 
 }
 
+.content{
+    width: 100%;
+}
 .nav {
-    /* position: fixed; */
     display: flex;
     justify-content: center;
     align-items: center;
