@@ -1,80 +1,121 @@
 const Checkpoints = require("../models/checkpoints");
 const Restaurant = require("../models/restaurants");
 const Hotel = require("../models/hotel");
+const User = require("../models/user");
 
 exports.createCheckpoint = async (req, res) => {
-    try {
-        const checkpoint = await Checkpoints.create(req.body);
-        res.status(201).json({
-            success: true,
-            message: "Creation on Checkpoint is Done",
-            checkpoint
-        });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+  try {
+    const { userId } = req.query;
+    const checkpoint = await Checkpoints.create(req.body);
+    await User.findByIdAndUpdate(userId, { $inc: { badge_point: 200 } });
+    res.status(201).json({
+      success: true,
+      message: "Creation on Checkpoint is Done",
+      checkpoint
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 exports.getCheckpointsByTrip = async (req, res) => {
-    try {
-        const { tripId } = req.query;
+  try {
+    const { tripId } = req.query;
 
-        if (!tripId) {
-            return res.status(400).json({ error: "Trip ID is required" });
-        }
-
-        const checkpoints = await Checkpoints.find({ trip_id: tripId }).sort("createdAt");
-
-        res.status(200).json({
-            success: true,
-            message: "Get Checkpoint data Successfully",
-            checkpoints
-        });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (!tripId) {
+      return res.status(400).json({ error: "Trip ID is required" });
     }
+
+    const checkpoints = await Checkpoints.find({ trip_id: tripId }).sort("createdAt");
+
+    res.status(200).json({
+      success: true,
+      message: "Get Checkpoint data Successfully",
+      checkpoints
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 exports.getcheckpointById = async (req, res) => {
-    try {
-        const { _id } = req.query;
-        const checkpoint = await Checkpoints.findById(_id);
+  try {
+    const { _id } = req.query;
+    const checkpoint = await Checkpoints.findById(_id);
 
-        if (!checkpoint) {
-            return res.status(404).json({ error: "Trip not found" });
-        }
-
-        res.status(200).json({
-            success: true,
-            message: "get checkpoint by checkpoint id",
-            checkpoint
-        });
-    } catch (error) {
-        res.status(500).json({ error: "Error fetching trip" });
+    if (!checkpoint) {
+      return res.status(404).json({ error: "Trip not found" });
     }
+    
+    res.status(200).json({
+      success: true,
+      message: "get checkpoint by checkpoint id",
+      checkpoint
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching trip" });
+  }
 }
 
-exports.deleteCheckpointByTrip = async (req, res) => {
-    try {
-        const { tripId } = req.query;
+exports.deleteCheckpointById = async (req, res) => {
+  try {
+    const { checkpointId } = req.query; 
+    const { userId } = req.body;
 
-        if (!tripId) {
-            return res.status(400).json({ error: "Trip ID is required" });
-        }
-
-        const checkpoints = await Checkpoints.findByIdAndDelete({ trip_id: tripId });
-
-        if (!checkpoints) {
-            return res.status(404).json({ error: "checkpoint not found" });
-        }
-
-        res.status(200).json({
-            success: true,
-            message: "Delete Checkpoint Successfully"
-        });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (!checkpointId) {
+      return res.status(400).json({ error: "Checkpoint ID is required." });
     }
+
+    
+    const deletedCheckpoint = await Checkpoints.findByIdAndDelete(checkpointId);
+
+    if (!deletedCheckpoint) {
+      return res.status(404).json({ error: "Checkpoint not found." });
+    }
+
+   
+    await User.findByIdAndUpdate(userId, {
+      $inc: { badge_point: -200 },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Checkpoint deleted successfully.",
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+exports.deleteCheckpointByTrip = async (req, res) => {
+  try {
+    const { tripId } = req.query;
+    const { userId } = req.body;
+
+    if (!tripId) {
+      return res.status(400).json({ error: "Trip ID is required" });
+    }
+
+
+    const deleteResult = await Checkpoints.deleteMany({ trip_id: tripId });
+
+    if (deleteResult.deletedCount === 0) {
+      return res.status(404).json({ error: "No checkpoints found for the given trip ID." });
+    }
+
+
+    await User.findByIdAndUpdate(userId, {
+      $inc: { badge_point: -(200 * deleteResult.deletedCount) },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: `${deleteResult.deletedCount} checkpoint(s) deleted successfully.`,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 exports.CreateBudgetOnCheckpoint = async (req, res) => {
@@ -103,12 +144,12 @@ exports.CreateBudgetOnCheckpoint = async (req, res) => {
     }, 0);
 
     const restaurantList = await Restaurant.find({ checkpoint_id });
-  
+
     const restaurant_budget = restaurantList.reduce((total, restaurant) => {
-        const restaurantTotal = restaurant.prices.reduce((sum, meal) => sum + (meal.meal_price || 0), 0);
-        return total + restaurantTotal;
-      }, 0);
-  
+      const restaurantTotal = restaurant.prices.reduce((sum, meal) => sum + (meal.meal_price || 0), 0);
+      return total + restaurantTotal;
+    }, 0);
+
 
     const total_budget = hotel_budget + restaurant_budget + checkpoint_budget;
 

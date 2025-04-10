@@ -3,7 +3,6 @@ const Trip = require('../models/trip');
 const User = require('../models/user');
 const { uploadSingleImage, uploadMultipleImages } = require("../services/cloudinary");
 
-// CREATE TRIP
 exports.createTrip = async (req, res) => {
   try {
     const savedTrip = await Trip.create(req.body);
@@ -13,7 +12,7 @@ exports.createTrip = async (req, res) => {
   }
 };
 
-// GET TRIPS BY USER
+
 exports.getTripsByUser = async (req, res) => {
   try {
     const { userId } = req.query;
@@ -32,7 +31,6 @@ exports.getTripsByUser = async (req, res) => {
   }
 };
 
-// GET TRIP BY ID
 exports.getTripsByid = async (req, res) => {
   try {
     const { trip_id } = req.query;
@@ -51,7 +49,7 @@ exports.getTripsByid = async (req, res) => {
   }
 };
 
-// DELETE TRIP
+
 exports.deleteTrip = async (req, res) => {
   try {
     const { trip_id } = req.query;
@@ -63,6 +61,7 @@ exports.deleteTrip = async (req, res) => {
 
     const deletedTrip = await Trip.findByIdAndDelete(trip_id);
     await User.findByIdAndUpdate(userId, { $inc: { total_trip: -1 } });
+    await User.findByIdAndUpdate(userId, { $inc: { badge_point: 5000 } });
 
     if (!deletedTrip) {
       return res.status(404).json({ error: "Trip not found" });
@@ -77,7 +76,7 @@ exports.deleteTrip = async (req, res) => {
   }
 };
 
-// GET TRIP BY _id IN BODY
+
 exports.getTripId = async (req, res) => {
   try {
     const { _id } = req.body;
@@ -93,7 +92,7 @@ exports.getTripId = async (req, res) => {
   }
 };
 
-// GET ALL TRIPS
+
 exports.getAllTrip = async (req, res) => {
   try {
     const trips = await Trip.find();
@@ -108,7 +107,7 @@ exports.getAllTrip = async (req, res) => {
   }
 };
 
-// UPLOAD IMAGES FOR A TRIP
+
 exports.uploadImagesByTripId = async (req, res) => {
   try {
     const { trip_id } = req.query;
@@ -151,7 +150,7 @@ exports.uploadImagesByTripId = async (req, res) => {
   }
 };
 
-// CALCULATE & UPDATE TRIP BUDGET
+
 exports.tripBudget = async (req, res) => {
   try {
     const { trip_id } = req.query;
@@ -185,6 +184,7 @@ exports.tripBudget = async (req, res) => {
     }
 
     await User.findByIdAndUpdate(userId, { $inc: { total_trip: 1 } });
+    await User.findByIdAndUpdate(userId, { $inc: { badge_point: 5000 } });
 
     return res.status(200).json({
       success: true,
@@ -196,3 +196,28 @@ exports.tripBudget = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+exports.followTrip = async (req, res) => {
+  try {
+    const { tripId, userId } = req.body;
+
+    const trip = await Trip.findById(tripId);
+    if (!trip) {
+      return res.status(404).json({ error: "Trip not found" });
+    }
+
+    
+    if (trip.followedby.includes(userId)) {
+      return res.status(400).json({ error: "User already follows this trip" });
+    }
+
+    
+    trip.followedby.push(userId);
+    await trip.save();
+
+    return res.status(200).json({ success: true, message: "Trip followed successfully" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+

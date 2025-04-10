@@ -3,3 +3,5 @@ export const SignupURL= ServerURL+"/api/v1/user/signup";
 export const SigninURL= ServerURL+"/api/v1/user/login";
 export const GetUserURL=ServerURL+"/api/v1/user/get-user";
 export const UpdateUserURL=ServerURL+"/api/v1/user/update-user"
+export const FollowTripURL=ServerURL+"/api/v1/trip/follow"
+

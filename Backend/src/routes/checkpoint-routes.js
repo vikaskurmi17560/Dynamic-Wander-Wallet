@@ -7,5 +7,6 @@ router.get('/getbytripid', checkpointController.getCheckpointsByTrip);
 router.get('/getbyid',checkpointController.getcheckpointById);
 router.delete('/delete',checkpointController.deleteCheckpointByTrip);
 router.post('/budget',checkpointController.CreateBudgetOnCheckpoint);
+router.delete('/deletebycheckpointid',checkpointController.deleteCheckpointById);
 
 module.exports = router;

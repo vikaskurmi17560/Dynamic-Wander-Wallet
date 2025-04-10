@@ -8,7 +8,7 @@ exports.createPost = async (req, res) => {
         const { user_id } = req.query;
 
         const userExists = await User.findById(user_id);
-
+        
         if (!userExists) {
             return res.status(400).json({
                 success: false,
@@ -23,7 +23,10 @@ exports.createPost = async (req, res) => {
                 image = uploadedImage.secure_url
             }
         }
+        
         const newPost = await Post.create({ image, title, description, tags, location, postedBy, likes, comments });
+        
+        await User.findByIdAndUpdate(user_id, { $inc: { badge_point: 50 } });
         return res.status(201).json({
             success: true,
             message: "Post Creation Successfully",
@@ -119,6 +122,7 @@ exports.updatePostById = async (req, res) => {
 exports.deletePostById = async (req, res) => {
     try {
         const { post_id } = req.query;
+        const {userId} = req.body;
         const deletedPost = await Post.findByIdAndDelete({ _id: post_id });
         if (!deletedPost) {
             res.status(400).json({
@@ -126,6 +130,8 @@ exports.deletePostById = async (req, res) => {
                 message: "Post not exists or not deleted etc.."
             })
         }
+        
+        await User.findByIdAndUpdate(userId, { $inc: { badge_point: -50 } });
         return res.status(200).json({
             success: true,
             message: "Post Deletion Successfully"
@@ -136,23 +142,32 @@ exports.deletePostById = async (req, res) => {
 }
 
 exports.deletePostByUserId = async (req, res) => {
-    try {
-        const { user_id } = req.query;
-        const deletedPost = await Post.findByIdAndDelete({ postedBy: user_id });
-        if (!deletedPost) {
-            res.status(400).json({
-                success: false,
-                message: "Post not exists or not deleted etc.."
-            })
-        }
-        return res.status(200).json({
-            success: true,
-            message: "All Post Deletion Successfully"
-        })
-    } catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
-}
+  try {
+      const { user_id } = req.query;
+
+      
+      const deleteResult = await Post.deleteMany({ postedBy: user_id });
+
+      if (deleteResult.deletedCount === 0) {
+          return res.status(400).json({
+              success: false,
+              message: "No posts found for this user.",
+          });
+      }
+
+      await User.findByIdAndUpdate(user_id, {
+          $inc: { badge_point: -(50 * deleteResult.deletedCount) },
+      });
+
+      return res.status(200).json({
+          success: true,
+          message: `${deleteResult.deletedCount} post(s) deleted successfully.`,
+      });
+  } catch (error) {
+      return res.status(500).json({ error: error.message });
+  }
+};
+
 
 exports.getAllPosts = async (req, res) => {
     try {
