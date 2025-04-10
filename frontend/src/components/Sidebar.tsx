@@ -33,9 +33,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
     <div className={styles.buttonContainer}>
       <Link href="/" className={styles.logo}>
         <Image
-          src="/images/BrandLogo.png"
-          height={45}
-          width={100}
+          src="/images/LOGOPIC.png"
+          height={65}
+          width={150}
           alt="Brand Logo"
           className={styles.image}
           priority
