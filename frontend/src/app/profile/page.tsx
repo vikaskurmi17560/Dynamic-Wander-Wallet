@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import useData from "../../hook/useData";
-
+import style from "./profile.module.css";
 
 function profile() {
   const [post, setPost] = useState<Boolean>(true);
@@ -18,9 +18,9 @@ function profile() {
   if (isAuthenticated) {
     return (
 
-      <main className='w-full min-h-screen flex flex-col bg-slate-200 mt-[15vh] '>
-        <section className='flex flex-col gap-24'>
-          <section style={{ backgroundImage: `url(${user.banner})` }} className="relative w-[100%] bg-cover bg-center pl-6 h-60 bg-slate-600 flex items-center ">
+      <main className={style.main}>
+        <section className={style.container}>
+          <section style={{ backgroundImage: `url(${user.banner})` }} className={style.profile_photo_container} >
             {user.profile ? <img src={user.profile} alt='profile image' className="w-[200px] absolute top-[50%] h-[200px] bg-slate-300 rounded-full flex justify-center items-center" />
               :
               <div className="w-[200px] absolute top-[50%] h-[200px] bg-slate-300 rounded-full flex justify-center items-center" >

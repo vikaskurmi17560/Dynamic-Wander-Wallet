@@ -132,9 +132,11 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
 
         try {
             const response = await axios.post(
-                "http://localhost:7050/api/v1/checkpoint/create",
+                `http://localhost:7050/api/v1/checkpoint/create?userId=${userId}`,
                 newCheckpoint,
-                { headers: { "Content-Type": "application/json" } }
+                {
+                    headers: { "Content-Type": "application/json" }
+                }
             );
 
             console.log("New Checkpoint:", newCheckpoint);
@@ -163,7 +165,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
             console.log("Saving checkpoint...");
             await handleSubmit(e);
 
-            const result = await updateCheckpointBudgets(tripId , userId);
+            const result = await updateCheckpointBudgets(tripId, userId);
             if (result.success) {
                 console.log("Trip budget updated:", result.tripBudget);
             } else {

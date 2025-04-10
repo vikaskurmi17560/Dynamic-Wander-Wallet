@@ -208,6 +208,7 @@
 
 .modal_value {
     color: black;
+    width: 100%;
     font-family: sans-serif;
     min-height: 6vh;
     font-size: 1em;
