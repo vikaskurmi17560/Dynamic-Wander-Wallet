@@ -6,6 +6,7 @@ import Post from "./Post/page";
 import Reels from "./Reels/page";
 import styles from "./blog.module.css";
 
+
 const Blog = () => {
   const [activeTab, setActiveTab] = useState<"post" | "reels">("post");
 
