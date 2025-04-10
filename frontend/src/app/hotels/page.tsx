@@ -5,14 +5,15 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import style from "./hotels.module.css";
+import useData from '@/hook/useData';
 
 const Hotels = () => {
-
+  const { userId } = useData();
   const searchParams = useSearchParams();
   const tripId = searchParams.get("tripId");
   const checkpointId = searchParams.get("checkpointId");
   const router = useRouter();
-  
+
   type Location = {
     latitude: number | null;
     longitude: number | null;
@@ -106,10 +107,11 @@ const Hotels = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:7050/api/v1/hotel/create",
+        `http://localhost:7050/api/v1/hotel/create?userId=${userId}`,
         updatedFormData,
         { headers: { "Content-Type": "application/json" } }
       );
+
       console.log("Response:", response.data);
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -147,7 +149,7 @@ const Hotels = () => {
           <div className={style.box}>
             <label className={style.label}>
               <p className={style.content}>Rating</p>
-              <input type="number" name="rating" value={formData.rating === 3.0 ? "" : formData.rating } onChange={handleChange} placeholder='Enter the rating' className={style.input} />
+              <input type="number" name="rating" value={formData.rating === 3.0 ? "" : formData.rating} onChange={handleChange} placeholder='Enter the rating' className={style.input} />
             </label>
             <label className={style.label}>
               <p className={style.content}>Hotel Type*</p>

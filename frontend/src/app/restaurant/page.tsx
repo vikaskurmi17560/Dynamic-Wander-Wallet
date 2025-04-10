@@ -5,13 +5,14 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import style from "./restaurant.module.css";
+import useData from "@/hook/useData";
 
 const Restaurant = () => {
     const searchParams = useSearchParams();
     const tripId = searchParams.get("tripId");
     const checkpointId = searchParams.get("checkpointId");
     const router = useRouter();
-
+    const { userId } = useData();
     type Location = {
         latitude: number | null;
         longitude: number | null;
@@ -103,14 +104,14 @@ const Restaurant = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:7050/api/v1/restaurant/create",
+                `http://localhost:7050/api/v1/restaurant/create?userId=${userId}`,
                 updatedFormData,
                 { headers: { "Content-Type": "application/json" } }
             );
             console.log("Response:", response.data);
             router.back();
         } catch (error) {
-            console.error("Error submitting form:", error.response ? error.response.data : error);
+            console.error("Error submitting form:", error);
         }
     };
 
