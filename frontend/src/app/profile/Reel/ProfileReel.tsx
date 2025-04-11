@@ -35,35 +35,34 @@ const ProfileReel = () => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
+    const fetchPosts = async () => {
+        try {
+            const response = await axios.get(`http://localhost:7050/api/v1/post/getbyuserid?user_id=${userId}`);
+            const postsData: Post[] = response.data.userPosts || [];
+            const videoPosts = postsData.filter(post => isVideo(post.image));
+
+            const postsWithUsers = await Promise.all(
+                videoPosts.map(async (post) => {
+                    try {
+                        const userRes = await axios.get('http://localhost:7050/api/v1/user/get-user', {
+                            params: { user_id: post.postedBy },
+                        });
+                        return { ...post, postedUser: userRes.data.user };
+                    } catch {
+                        return post;
+                    }
+                })
+            );
+
+            setPosts(postsWithUsers);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await axios.get(`http://localhost:7050/api/v1/post/getbyuserid?user_id=${userId}`);
-                const postsData: Post[] = response.data.userPosts || [];
-                const videoPosts = postsData.filter(post => isVideo(post.image));
-
-                const postsWithUsers = await Promise.all(
-                    videoPosts.map(async (post) => {
-                        try {
-                            const userRes = await axios.get('http://localhost:7050/api/v1/user/get-user', {
-                                params: { user_id: post.postedBy },
-                            });
-                            return { ...post, postedUser: userRes.data.user };
-                        } catch {
-                            return post;
-                        }
-                    })
-                );
-
-                setPosts(postsWithUsers);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        };
-
         if (userId) fetchPosts();
     }, [userId]);
-
     const nextPost = () => {
         if (activeIndex === null) return;
         setActiveIndex((prev) => (prev! + 1) % posts.length);
@@ -82,7 +81,7 @@ const ProfileReel = () => {
                         <div className={style.imageWrapper} onClick={() => setActiveIndex(idx)}>
                             <video
                                 src={post.image}
-                                className={style.image}   
+                                className={style.image}
                                 muted
                                 loop
                                 playsInline
@@ -104,6 +103,7 @@ const ProfileReel = () => {
                     onClose={() => setActiveIndex(null)}
                     onNext={nextPost}
                     onPrev={prevPost}
+                    onDelete={fetchPosts}
                 />
             )}
         </div>

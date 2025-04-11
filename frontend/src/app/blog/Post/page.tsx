@@ -36,10 +36,8 @@ const PostCard: React.FC = () => {
                 const response = await axios.get('http://localhost:7050/api/v1/post/getallpost');
                 const postsData: Post[] = response.data;
 
-                // Filter only image posts
                 const imagePosts = postsData.filter(post => isImage(post.image));
 
-                // Attach user data to each image post
                 const postsWithUsers = await Promise.all(
                     imagePosts.map(async (post) => {
                         try {
@@ -73,7 +71,7 @@ const PostCard: React.FC = () => {
     };
 
     return (
-        <div className={style.main}>
+        <>
             <div className={style.grid}>
                 {posts.map((post, idx) => (
                     <div key={post._id} className={style.card}>
@@ -86,7 +84,6 @@ const PostCard: React.FC = () => {
                     </div>
                 ))}
             </div>
-
             {activeIndex !== null && posts[activeIndex] && (
                 <IndividualPost
                     post={posts[activeIndex]}
@@ -95,7 +92,7 @@ const PostCard: React.FC = () => {
                     onPrev={prevPost}
                 />
             )}
-        </div>
+        </>
     );
 };
 

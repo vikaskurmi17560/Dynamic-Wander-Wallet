@@ -7,11 +7,11 @@
 }
 
 .content {
-    padding-top: 2em;
-    /* margin-left: 7%; */
+    margin-top: 0.2em;
     width: 99%;
-    height: 100vh;
+    height: 100%;
     overflow-y: scroll;
+    scrollbar-width: none;
     display: flex;
     align-items: center;
     justify-content: center;

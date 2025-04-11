@@ -5,7 +5,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import style from "./ProfilePost.module.css";
 import { FaImage, FaHeart, FaComment } from "react-icons/fa";
-import IndividualPost from '../blog/Post/IndividualPost';
+import DisplayPost from './DisplayPost';
 
 interface Post {
     _id: string;
@@ -16,8 +16,8 @@ interface Post {
     createdAt: string;
     postedBy: string;
     postedUser?: User;
-    likes: string[];     
-    comments: string[];  
+    likes: string[];
+    comments: string[];
 }
 
 interface User {
@@ -35,33 +35,33 @@ const ProfilePost = () => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
+    const fetchPosts = async () => {
+        try {
+            const response = await axios.get(`http://localhost:7050/api/v1/post/getbyuserid?user_id=${userId}`);
+            const postsData: Post[] = response.data.userPosts || [];
+
+            const imagePosts = postsData.filter(post => isImage(post.image));
+
+            const postsWithUsers = await Promise.all(
+                imagePosts.map(async (post) => {
+                    try {
+                        const userRes = await axios.get('http://localhost:7050/api/v1/user/get-user', {
+                            params: { user_id: post.postedBy },
+                        });
+                        return { ...post, postedUser: userRes.data.user };
+                    } catch {
+                        return post;
+                    }
+                })
+            );
+
+            setPosts(postsWithUsers);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await axios.get(`http://localhost:7050/api/v1/post/getbyuserid?user_id=${userId}`);
-                const postsData: Post[] = response.data.userPosts || [];
-
-                const imagePosts = postsData.filter(post => isImage(post.image));
-
-                const postsWithUsers = await Promise.all(
-                    imagePosts.map(async (post) => {
-                        try {
-                            const userRes = await axios.get('http://localhost:7050/api/v1/user/get-user', {
-                                params: { user_id: post.postedBy },
-                            });
-                            return { ...post, postedUser: userRes.data.user };
-                        } catch {
-                            return post;
-                        }
-                    })
-                );
-
-                setPosts(postsWithUsers);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        };
-
         if (userId) fetchPosts();
     }, [userId]);
 
@@ -101,11 +101,12 @@ const ProfilePost = () => {
             </div>
 
             {activeIndex !== null && posts[activeIndex] && (
-                <IndividualPost
+                <DisplayPost
                     post={posts[activeIndex]}
                     onClose={() => setActiveIndex(null)}
                     onNext={nextPost}
                     onPrev={prevPost}
+                    onDelete={fetchPosts}
                 />
             )}
         </div>

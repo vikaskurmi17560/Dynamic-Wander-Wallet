@@ -1,8 +1,7 @@
 'use client';
 
-import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
-import style from "@/app/blog/Post/individual.module.css";
+import style from './DisplayPost.module.css';
 import { faComment, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -51,7 +50,7 @@ interface IndividualPostProps {
     onDelete?: () => void;
 }
 
-const IndividualPost: React.FC<IndividualPostProps> = ({
+const DisplayPost: React.FC<IndividualPostProps> = ({
     post,
     onClose,
     onNext,
@@ -63,31 +62,8 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
     const [comments, setComments] = useState<Comment[]>([]);
     const [newComment, setNewComment] = useState('');
     const { userId } = useData();
-    const videoRef = React.useRef<HTMLVideoElement>(null);
-    const [isPlaying, setIsPlaying] = useState(true);
-    const [isMuted, setIsMuted] = useState(true);
     const [isSetting, setIsSetting] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
-
-    const handleVideoClick = () => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        if (video.paused) {
-            video.play();
-            setIsPlaying(true);
-        } else {
-            video.pause();
-            setIsPlaying(false);
-        }
-    };
-
-    const toggleMute = () => {
-        const video = videoRef.current;
-        if (!video) return;
-        video.muted = !video.muted;
-        setIsMuted(video.muted);
-    };
 
     const getLocation = () => {
         try {
@@ -179,6 +155,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
             console.error('Failed to add comment', error);
         }
     };
+
     const handleDeletePost = async () => {
         try {
             const response = await axios.delete(`http://localhost:7050/api/v1/post/delete`, {
@@ -197,30 +174,11 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
             alert("Something went wrong while deleting the post.");
         }
     };
+
     return (
         <div className={style.modal}>
             <div className={style.modalContainer}>
-                <div className={style.videoWrapper}>
-                    <video
-                        ref={videoRef}
-                        src={post.image}
-                        className={style.modalVideo}
-                        muted={isMuted}
-                        autoPlay
-                        loop={false}
-                        playsInline
-                        onClick={handleVideoClick}
-                    />
-                    {!isPlaying && (
-                        <div className={style.centerControl} onClick={handleVideoClick}>
-                            <FaPlay size={40} color="white" />
-                        </div>
-                    )}
-
-                    <div className={style.soundControl} onClick={toggleMute}>
-                        {isMuted ? <FaVolumeMute size={20} color="white" /> : <FaVolumeUp size={20} color="white" />}
-                    </div>
-                </div>
+                <img src={post.image} alt="Post" className={style.modalImage} />
 
                 <div className={style.modalContent}>
                     <div className={style.profile_div}>
@@ -235,7 +193,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                             i_am_{post.postedUser?.name || 'Unknown User'}
                             <p className={style.profile_location}>{getLocation()}</p>
                         </span>
-                        <FontAwesomeIcon icon={faEllipsisV} className={style.profile_dot_icon} onClick={() => setIsSetting((prev) => !prev)}/>
+                        <FontAwesomeIcon icon={faEllipsisV} className={style.profile_dot_icon} onClick={() => setIsSetting((prev) => !prev)} />
                     </div>
                     {
                         isSetting ? (
@@ -267,6 +225,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                             </div>
                         )
                     }
+
                     <div className={style.profile_comment}>
                         <div className={style.comment_div}>
                             {post.postedUser?.profile && (
@@ -350,4 +309,4 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
     );
 };
 
-export default IndividualPost;
+export default DisplayPost;

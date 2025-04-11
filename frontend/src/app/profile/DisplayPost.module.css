@@ -11,6 +11,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 .modalContainer {
@@ -246,7 +248,7 @@
 
 /* ......................Display style................. */
 
-.setting_div {
+.setting_div{
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
@@ -260,13 +262,13 @@
     font-family: sans-serif;
 }
 
-.setting_container {
-    background-color: rgb(38, 38, 38);
+.setting_container{
+    background-color:  rgb(38, 38, 38);
     width: 50vh;
     height: 54.5vh;
 }
 
-.setting_box {
+.setting_box{
     height: 7.8vh;
     border: 1px solid rgb(57, 57, 57);
     display: flex;
@@ -275,13 +277,13 @@
     cursor: pointer;
 }
 
-.delete_div {
-    background-color: rgb(38, 38, 38);
+.delete_div{
+    background-color:  rgb(38, 38, 38);
     width: 50vh;
     height: 30vh;
 }
 
-.delete_heading {
+.delete_heading{
     height: 14.5vh;
     display: flex;
     flex-direction: column;
@@ -291,11 +293,11 @@
     font-family: sans-serif;
 }
 
-.heading_h1 {
+.heading_h1{
     font-size: 1.5em;
 }
 
-.heading_p {
+.heading_p{
     color: rgb(129, 129, 129);
     font-weight: 100;
 }
