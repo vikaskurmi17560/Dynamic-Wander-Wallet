@@ -78,25 +78,29 @@ exports.getPostById = async (req, res) => {
 exports.getPostByUserId = async (req, res) => {
   try {
     const { user_id } = req.query;
+
     const userPosts = await Post.find({ postedBy: user_id });
+
     if (!userPosts || userPosts.length === 0) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
-        message: "UserPosts is not here opr Empty"
-      })
+        message: "UserPosts is not here or Empty"
+      });
     }
+
     return res.status(200).json({
       success: true,
       message: "Get All Post of the User successfully",
       userPosts
-    })
-  }
-  catch (error) {
+    });
+
+  } catch (error) {
     return res.status(500).json({
       error: error.message
-    })
+    });
   }
-}
+};
+
 
 exports.updatePostById = async (req, res) => {
   try {
