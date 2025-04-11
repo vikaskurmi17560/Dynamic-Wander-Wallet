@@ -63,6 +63,7 @@ const ProfileReel = () => {
     useEffect(() => {
         if (userId) fetchPosts();
     }, [userId]);
+    
     const nextPost = () => {
         if (activeIndex === null) return;
         setActiveIndex((prev) => (prev! + 1) % posts.length);

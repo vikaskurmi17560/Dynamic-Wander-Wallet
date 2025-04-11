@@ -46,7 +46,7 @@ exports.getcheckpointById = async (req, res) => {
     if (!checkpoint) {
       return res.status(404).json({ error: "Trip not found" });
     }
-    
+
     res.status(200).json({
       success: true,
       message: "get checkpoint by checkpoint id",
@@ -59,21 +59,21 @@ exports.getcheckpointById = async (req, res) => {
 
 exports.deleteCheckpointById = async (req, res) => {
   try {
-    const { checkpointId } = req.query; 
+    const { checkpointId } = req.query;
     const { userId } = req.body;
 
     if (!checkpointId) {
       return res.status(400).json({ error: "Checkpoint ID is required." });
     }
 
-    
+
     const deletedCheckpoint = await Checkpoints.findByIdAndDelete(checkpointId);
 
     if (!deletedCheckpoint) {
       return res.status(404).json({ error: "Checkpoint not found." });
     }
 
-   
+
     await User.findByIdAndUpdate(userId, {
       $inc: { badge_point: -200 },
     });

@@ -127,7 +127,6 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
         }
     };
 
-
     const handleLikeToggle = async () => {
         try {
             console.log("Sending like request with:", {
