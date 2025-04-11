@@ -1,173 +1,210 @@
-'use client'
-import React, { useEffect, useState } from 'react'
+"use client";
+
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useData from "../../hook/useData";
 import style from "./profile.module.css";
+import axios from 'axios';
+import Image from 'next/image';
+import { FaPhotoVideo, FaFilm, FaRoute } from 'react-icons/fa';
+import ProfilePost from './ProfilePost';
+import ProfileReel from './Reel/ProfileReel';
+import ProfileTrip from './Trip/ProfileTrip';
+import SuggestedUsers from './SuggestedUsers';
+import Form from "@/app/form/page";
 
-function profile() {
-  const [post, setPost] = useState<Boolean>(true);
-  const [videos, setVideos] = useState<Boolean>(false);
-  const [others, setOthers] = useState<Boolean>(false);
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  phone_no: string;
+  gender?: string;
+  profile?: string;
+  banner?: string;
+  bio?: string;
+  posts: any[];
+  followers: {
+    _id: string;
+    name: string;
+    profile?: string;
+  }[];
+  following: {
+    _id: string;
+    name: string;
+    profile?: string;
+  }[];
+  badge_point: number;
+  total_trip: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface Trip {
+  _id: string;
+  destination: string;
+  tripName: string;
+  source: string;
+  city: string;
+  cover_image?: string;
+  TotalBudget?: number;
+  createdAt: string;
+}
+
+const Profile = () => {
+  const [post, setPost] = useState(true);
+  const [videos, setVideos] = useState(false);
+  const [others, setOthers] = useState(false);
+  const [userData, setUserData] = useState<User | null>(null);
+  const [trips, setTrips] = useState<Trip[]>([]);
   const router = useRouter();
+  const [isShow, setIsShow] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const { userId, user, isAuthenticated } = useData();
 
-  const { user, isAuthenticated } = useData();
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch(`http://localhost:7050/api/v1/user/get-user?user_id=${userId}`);
+        const data = await res.json();
+        const response = await axios.get(`http://localhost:7050/api/v1/trip/getbyuserid?userId=${userId}`);
+        setTrips(response.data.trips || []);
 
+        if (data.success) {
+          setUserData(data.user);
+        } else {
+          console.error("Failed to fetch user:", data.message);
+        }
+      } catch (error) {
+        console.error("API error:", error);
+      }
+    };
+    if (userId) {
+      fetchUser();
+    }
+  }, [userId, isShow, user]);
 
+  if (!isAuthenticated || !user) return null;
 
-
-  if (isAuthenticated) {
-    return (
-
-      <main className={style.main}>
-        <section className={style.container}>
-          <section style={{ backgroundImage: `url(${user.banner})` }} className={style.profile_photo_container} >
-            {user.profile ? <img src={user.profile} alt='profile image' className="w-[200px] absolute top-[50%] h-[200px] bg-slate-300 rounded-full flex justify-center items-center" />
-              :
-              <div className="w-[200px] absolute top-[50%] h-[200px] bg-slate-300 rounded-full flex justify-center items-center" >
+  return (
+    <main className={style.main}>
+      <section className={style.container}>
+        <section
+          style={{ backgroundImage: `url(${user.banner || '/default-banner.jpg'})` }}
+          className={style.profile_photo_container}
+        >
+          <div className={style.photo_div}>
+            {user.profile ? (
+              <img src={user.profile} alt="profile" className={style.profile_photo} />
+            ) : (
+              <div className="w-[200px] absolute top-[50%] h-[200px] bg-slate-300 rounded-full flex justify-center items-center">
                 profile
-              </div>}
-          </section>
-
-          <section className="w-full h-fit flex flex-row gap-4 bg-gray-400 justify-around p-4">
-
-            <div className="w-[35%] h-fit flex flex-col bg-gray-100 p-4 gap-4">
-
-              <div className="grid grid-cols-[15%_5%_80%] ">
-                <div className="font-bold text-xl ">Name</div>
-                <div className="font-bold text-xl text-black">:</div>
-                <div className="text-lg">{user.name}</div>
-
-                <div className="font-bold text-xl ">Bio</div>
-                <div className="font-bold text-xl text-black">:</div>
-                <div className="text-lg">
-                  {user.bio}
-                </div>
               </div>
-
-              <div className="grid grid-cols-[18%_2%_80%] ">
-                <div className="font-bold text-xl ">Contact</div>
-                <div className="font-bold text-xl text-black">:</div>
-                <div className="text-lg">{user.phone_no}</div>
-              </div>
-
-
-
-              {/* Edit Profile Button */}
-              <button className="w-full text-center p-2 bg-slate-300 text-black font-bold rounded hover:bg-slate-400"
-                onClick={() => { router.push("/form") }}
-              >
-                Edit Profile
-              </button>
-            </div>
-
-
-            <div className="w-[60%] h-fit flex flex-col gap-8">
-
-              <div className="w-full grid grid-cols-4 bg-gray-100 p-4 rounded text-center">
-                <div className="text-black font-bold text-4xl">164</div>
-                <div className="text-black font-bold text-4xl">164</div>
-                <div className="text-black font-bold text-4xl">164</div>
-                <div className="text-black font-bold text-4xl">164</div>
-
-                <div className="text-gray-700 font-semibold text-2xl">Posts</div>
-                <div className="text-gray-700 font-semibold text-2xl">Followers</div>
-                <div className="text-gray-700 font-semibold text-2xl">Followings</div>
-                <div className="text-gray-700 font-semibold text-2xl">Videos</div>
-              </div>
-              <div className="w-full p-4 text-center text-gray-500 text-xl bg-blue-200">contents</div>
-            </div>
-          </section>
-
+            )}
+          </div>
         </section>
 
-        <section className="w-[100%] h-[200px] flex overflow-x-scroll space-x-4 snap-x scrollbar-hide px-4 py-4">
+        <section className={style.profile_container_data}>
+          <div className={style.profile_data_div}>
+            <div className={style.profile_name_div}>
+              <div className={style.profile_name}>i_am_{user.name}</div>
+              <div className={style.profile_bio}>
+                {user.bio?.trim() === '' ? 'Please insert your bio' : user.bio}
+              </div>
+            </div>
+            <button
+              className={style.edit_btn}
+              onClick={() => setIsFormOpen((prev) => !prev)}>
+              Edit Profile
+            </button>
+            {isFormOpen && <Form onClose={() => setIsFormOpen(false)} />}
+          </div>
 
-
-          <div className="bg-black rounded-full w-[150px] h-[150px] "></div>
-          <div className="bg-black rounded-full w-[150px] h-[150px] "></div>
-          <div className="bg-black rounded-full w-[150px] h-[150px] "></div>
-          <div className="bg-black rounded-full w-[150px] h-[150px] "></div>
-          <div className="bg-black rounded-full w-[150px] h-[150px] "></div>
-          <div className="bg-black rounded-full w-[150px] h-[150px] "></div>
-          <div className="bg-black rounded-full w-[150px] h-[150px] "></div>
-
-
-
+          <div className={style.profile_follow_div}>
+            <div className={style.profile_follow}>
+              <div className={style.follow_div}>
+                <p className={style.follow_number}>{userData?.posts?.length ?? 0}</p>
+                <p className={style.follow_name}>Posts</p>
+              </div>
+              <div className={style.follow_div}>
+                <p className={style.follow_number}>{userData?.followers?.length ?? 0}</p>
+                <p className={style.follow_name}>Followers</p>
+              </div>
+              <div className={style.follow_div}>
+                <p className={style.follow_number}>{userData?.following?.length ?? 0}</p>
+                <p className={style.follow_name}>Following</p>
+              </div>
+              <div className={style.follow_div}>
+                <p className={style.follow_number}>{userData?.total_trip ?? 0}</p>
+                <p className={style.follow_name}>Trips</p>
+              </div>
+            </div>
+            <div className={style.suggested_container}>
+              <button onClick={() => setIsShow((prev) => !prev)} className={style.edit_btn}>Suggestion for you</button>
+            </div>
+            {isShow && <SuggestedUsers onClose={() => setIsShow(false)} />}
+          </div>
         </section>
-        <section className="flex flex-col gap-10">
-          <div className="grid grid-cols-3 px-5 text-4xl text-black font-semibold text-center">
-            <div className={`cursor-pointer border-b-4 ${post === true ? "border-black" : "border-none"}  `} onClick={() => {
+      </section>
+
+      <section className={style.trip_story_div}>
+        {[...trips]
+          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+          .map((trip) => (
+            <div key={trip._id} className={style.story_image_div}>
+              <Image
+                src={trip.cover_image || "/images/Daskboard/Mytrip.jpg"}
+                alt='Loading....'
+                width={500}
+                height={500}
+                className={style.img}
+              />
+              <p className={style.story_city}>{trip.city}</p>
+            </div>
+          ))}
+      </section>
+
+      <section className={style.container_combine}>
+        <div className={style.heading_container}>
+          <div
+            className={`${style.box} ${post ? style.onclick : 'border-none'}`}
+            onClick={() => {
               setPost(true);
               setVideos(false);
               setOthers(false);
-            }}>post</div>
-            <div className={`cursor-pointer border-b-4  ${videos === true ? " border-black" : "border-none"}  `} onClick={() => {
+            }}
+          >
+            <FaPhotoVideo className="inline mr-1" /> Post
+          </div>
+          <div
+            className={`${style.box} ${videos ? style.onclick : 'border-none'}`}
+            onClick={() => {
               setVideos(true);
               setPost(false);
               setOthers(false);
-            }}>video</div>
-            <div className={`cursor-pointer border-b-4 ${others === true ? " border-black" : "border-none"}  `} onClick={() => {
+            }}
+          >
+            <FaFilm className="inline mr-1" /> Reels
+          </div>
+          <div
+            className={`${style.box} ${others ? style.onclick : 'border-none'}`}
+            onClick={() => {
               setOthers(true);
               setPost(false);
               setVideos(false);
-            }}>other</div>
+            }}
+          >
+            <FaRoute className="inline mr-1" /> Trips
           </div>
-          <div className=" h-auto w-[100%]">
-            {post === true && (
-              <div className="  w-[100%] grid grid-cols-4 gap-2 text-white">
-                <p className="w-[98%] h-[300px] bg-black">post</p>
-                <p className="w-[98%] h-[300px] bg-black">post</p>
-                <p className="w-[98%] h-[300px] bg-black">post</p>
-                <p className="w-[98%] h-[300px] bg-black">post</p>
-                <p className="w-[98%] h-[300px] bg-black">post</p>
-                <p className="w-[98%] h-[300px] bg-black">post</p>
-                <p className="w-[98%] h-[300px] bg-black">post</p>
-                <p className="w-[98%] h-[300px] bg-black">post</p>
-                <p className="w-[98%] h-[300px] bg-black">post</p>
-                <p className="w-[98%] h-[300px] bg-black">post</p>
-              </div>
-            )}
+        </div>
 
-            {videos === true && (
-              <div className="  w-[100%] grid grid-cols-4 gap-2 text-white">
-                <p className="w-[98%] h-[300px] bg-black">video</p>
-                <p className="w-[98%] h-[300px] bg-black">video</p>
-                <p className="w-[98%] h-[300px] bg-black">video</p>
-                <p className="w-[98%] h-[300px] bg-black">video</p>
-                <p className="w-[98%] h-[300px] bg-black">video</p>
-                <p className="w-[98%] h-[300px] bg-black">video</p>
-                <p className="w-[98%] h-[300px] bg-black">video</p>
-                <p className="w-[98%] h-[300px] bg-black">video</p>
-                <p className="w-[98%] h-[300px] bg-black">video</p>
-                <p className="w-[98%] h-[300px] bg-black">video</p>
-              </div>
-            )}
+        <div className={style.profile_post_data}>
+          {post && <ProfilePost />}
+          {videos && <ProfileReel />}
+          {others && <ProfileTrip />}
+        </div>
+      </section>
+    </main>
+  );
+};
 
-            {others === true && (
-              <div className=" w-[100%] grid grid-cols-4 gap-2 text-white">
-                <p className="w-[98%] h-[300px] bg-black">others</p>
-                <p className="w-[98%] h-[300px] bg-black">others</p>
-                <p className="w-[98%] h-[300px] bg-black">others</p>
-                <p className="w-[98%] h-[300px] bg-black">others</p>
-                <p className="w-[98%] h-[300px] bg-black">others</p>
-                <p className="w-[98%] h-[300px] bg-black">others</p>
-                <p className="w-[98%] h-[300px] bg-black">others</p>
-                <p className="w-[98%] h-[300px] bg-black">others</p>
-                <p className="w-[98%] h-[300px] bg-black">others</p>
-                <p className="w-[98%] h-[300px] bg-black">others</p>
-              </div>
-            )}
-
-
-          </div>
-        </section>
-      </main>
-    )
-  } else {
-    return null
-  }
-}
-
-export default profile;
-
-
+export default Profile;

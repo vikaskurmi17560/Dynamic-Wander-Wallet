@@ -1,7 +1,8 @@
 'use client';
 
+import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
-import style from './individual.module.css';
+import style from "@/app/blog/Post/individual.module.css";
 import { faComment, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -60,6 +61,29 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
     const [comments, setComments] = useState<Comment[]>([]);
     const [newComment, setNewComment] = useState('');
     const { userId } = useData();
+    const videoRef = React.useRef<HTMLVideoElement>(null);
+    const [isPlaying, setIsPlaying] = useState(true);
+    const [isMuted, setIsMuted] = useState(true);
+
+    const handleVideoClick = () => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        if (video.paused) {
+            video.play();
+            setIsPlaying(true);
+        } else {
+            video.pause();
+            setIsPlaying(false);
+        }
+    };
+
+    const toggleMute = () => {
+        const video = videoRef.current;
+        if (!video) return;
+        video.muted = !video.muted;
+        setIsMuted(video.muted);
+    };
 
     const getLocation = () => {
         try {
@@ -155,7 +179,27 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
     return (
         <div className={style.modal}>
             <div className={style.modalContainer}>
-                <img src={post.image} alt="Post" className={style.modalImage} />
+                <div className={style.videoWrapper}>
+                    <video
+                        ref={videoRef}
+                        src={post.image}
+                        className={style.modalVideo}
+                        muted={isMuted}
+                        autoPlay
+                        loop={false}
+                        playsInline
+                        onClick={handleVideoClick}
+                    />
+                    {!isPlaying && (
+                        <div className={style.centerControl} onClick={handleVideoClick}>
+                            <FaPlay size={40} color="white" />
+                        </div>
+                    )}
+
+                    <div className={style.soundControl} onClick={toggleMute}>
+                        {isMuted ? <FaVolumeMute size={20} color="white" /> : <FaVolumeUp size={20} color="white" />}
+                    </div>
+                </div>
 
                 <div className={style.modalContent}>
                     <div className={style.profile_div}>

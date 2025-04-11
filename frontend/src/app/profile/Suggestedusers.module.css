@@ -1,0 +1,91 @@
+.suggested_container {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgb(0, 0, 0, 0.6);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.h4 {
+    background-color: white;
+    width: 70%;
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+    font-size: 1.3em;
+    color: black;
+    text-transform: capitalize;
+}
+
+.suggested_list {
+    height: 41vh;
+    width: 70%;
+    background-color: white;
+    display: flex;
+    gap: 2em;
+    padding: 1em;
+    overflow-x: scroll;
+    background-color: black;
+}
+
+.suggested_user {
+    border: 1px solid rgb(157, 157, 157);
+    height: 34vh;
+    width: 25vh;
+    display: flex;
+    gap: 0.4em;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    border-radius: 0.4em;
+}
+
+.suggested_avatar {
+    width: 17vh;
+    height: 17vh;
+    border-radius: 50%;
+}
+
+.suggested_name {
+    /* border: 1px solid white; */
+    width: 100%;
+    height: 8vh;
+    text-align: center;
+    color: white;
+    font-family: sans-serif;
+}
+
+.btn {
+    /* border: 1px solid white; */
+    height: 6vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(0, 61, 243);
+    letter-spacing: 0.1em;
+    border-top: 1px solid rgb(98, 97, 97);
+}
+
+.btn.following {
+    color: white;
+} 
+
+
+.close_btn {
+    position: fixed;
+    right: 1em;
+    top: 0.5em;
+    font-size: 3em;
+    color: white;
+    cursor: pointer;
+}

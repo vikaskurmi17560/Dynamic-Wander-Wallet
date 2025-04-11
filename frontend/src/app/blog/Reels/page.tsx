@@ -1,4 +1,4 @@
-"use client"; // ✅ Only keep this if you're using Next.js and this is a Client Component
+"use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";

@@ -1,0 +1,192 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0%;
+    padding: 0%;
+    margin-top: 1.5em;
+    box-sizing: border-box;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3em;
+    padding: 0.2em;
+    justify-content: safe;
+}
+
+.tripCard {
+    position: relative;
+    width: 33.1%;
+    height: 45vh;
+    background-color: #fff;
+}
+
+.imageWrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card_info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+    color: #333;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+}
+
+.tripCard:hover .card_info {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    text-transform: uppercase;
+}
+
+.h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.info_box {
+    width: 90%;
+    height: 9vh;
+    display: flex;
+    gap: 1em;
+}
+
+.name {
+    width: 10em;
+    height: 3em;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5em;
+    background-color: #005ac1;
+    color: white;
+}
+
+.value {
+    width: 12em;
+    height: 3em;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    background-color: #005ac1;
+    color: white;
+    padding-left: 0.5em;
+}
+
+.buttonGroup {
+    margin-top: 0.8rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.button {
+    padding: 0.5rem 2.3rem;
+    background: #0070f3;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.buttonGroup .button:hover {
+    background: #005ac1;
+}
+
+.cross {
+    position: absolute;
+    top: 2.3%;
+    right: 2.5%;
+    color: black;
+    font-size: 1.8em;
+}
+
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.photo_div {
+    display: flex;
+    flex-direction: column;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 12px;
+    position: relative;
+    width: 85%;
+    height: 85%;
+}
+
+.image_show {
+    margin-bottom: 20px;
+    width: 100%;
+    height: 80%;
+    border-radius: 10px;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+.thumbnail_wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.thumbnail_wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.cross_icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    z-index: 1100;
+    transition: transform 0.2s ease;
+}
+
+.cross_icon:hover {
+    transform: scale(1.2);
+}

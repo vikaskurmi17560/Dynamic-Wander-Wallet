@@ -7,10 +7,10 @@ const sendEmail = require("../services/Reset-Password-email");
 const { uploadSingleImage } = require("../services/cloudinary");
 
 exports.signup = async (req, res) => {
-    const { name, email, phone_no, gender, password , confirm_password} = req.body;
+    const { name, email, phone_no, gender, password, confirm_password } = req.body;
 
     try {
-        
+
         const userExists = await Users.findOne({ email });
         if (userExists) {
             return res.status(400).json({
@@ -19,7 +19,7 @@ exports.signup = async (req, res) => {
             });
         }
 
-        
+
         if (password !== confirm_password) {
             return res.status(400).json({
                 success: false,
@@ -28,16 +28,16 @@ exports.signup = async (req, res) => {
         }
 
 
-       
+
         const newUser = await Users.create({
             name,
             email,
-            phone_no, 
+            phone_no,
             gender,
             password
         });
 
-     
+
         await WelcomeEmail(email);
 
         return res.status(201).json({
@@ -58,7 +58,7 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-       
+
         const userExists = await Users.findOne({ email });
         if (!userExists) {
             return res.status(400).json({
@@ -67,7 +67,7 @@ exports.login = async (req, res) => {
             });
         }
 
-        
+
         const isPasswordMatched = await bcrypt.compare(password, userExists.password);
 
         if (!isPasswordMatched) {
@@ -89,7 +89,7 @@ exports.login = async (req, res) => {
 
         return res.status(200).json({
             token,
-            user:userExists,
+            user: userExists,
             success: true,
             message: "Login successful"
         });
@@ -107,7 +107,7 @@ exports.forgetPassword = async (req, res) => {
     try {
         const { email } = req.body;
 
-      
+
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             return res.status(400).json({
                 success: false,
@@ -116,8 +116,8 @@ exports.forgetPassword = async (req, res) => {
         }
 
         const user = await Users.findOne({ email });
-        
-      
+
+
         if (!user) {
             return res.status(200).json({
                 success: true,
@@ -125,20 +125,20 @@ exports.forgetPassword = async (req, res) => {
             });
         }
 
-       
+
         const resetToken = crypto.randomBytes(32).toString("hex");
 
-       
+
         user.reset_password_token = crypto.createHash("sha256").update(resetToken).digest("hex");
         user.reset_password_token_expire = Date.now() + 10 * 60 * 1000; // Token valid for 10 minutes
 
-       
+
         await user.save({ validateBeforeSave: false });
 
-     
+
         const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
 
-        
+
         await sendEmail({
             email: user.email,
             subject: "Password Reset Request",
@@ -152,7 +152,7 @@ exports.forgetPassword = async (req, res) => {
     } catch (error) {
         console.error("Error in forgetPassword:", error);
 
-        
+
         return res.status(500).json({
             success: false,
             message: "An error occurred. Please try again later.",
@@ -200,17 +200,17 @@ exports.resetPassword = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     try {
-        let { name, phone_no, email, bio} = req.body; 
+        let { name, phone_no, email, bio } = req.body;
         const { user_id } = req.query;
         let updated_object = {};
 
-        
+
         if (name) updated_object.name = name;
         if (email) updated_object.email = email;
         if (bio) updated_object.bio = bio;
         if (phone_no) updated_object.phone_no = phone_no;
 
-        
+
         if (req.files) {
             if (req.files.profile) {
                 const uploadedProfile = await uploadSingleImage(req.files.profile[0].path);
@@ -226,10 +226,10 @@ exports.updateUser = async (req, res) => {
             }
         }
 
-      
-        const update_user = await Users.findByIdAndUpdate(user_id, updated_object, { 
-            new: true, 
-            runValidators: true 
+
+        const update_user = await Users.findByIdAndUpdate(user_id, updated_object, {
+            new: true,
+            runValidators: true
         });
 
         if (!update_user) {
@@ -245,8 +245,7 @@ exports.updateUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
     try {
-        const { user_id } = req.query; 
-
+        const { user_id } = req.query;
         if (!user_id) {
             return res.status(400).json({
                 success: false,
@@ -254,7 +253,7 @@ exports.getUser = async (req, res) => {
             });
         }
 
-       
+
         const userExists = await Users.findOne({ _id: user_id });
 
         if (!userExists) {
@@ -275,7 +274,7 @@ exports.getUser = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Server error",
-            error: error.message, 
+            error: error.message,
         });
     }
 };
@@ -347,16 +346,16 @@ exports.unfollowUser = async (req, res) => {
 };
 
 exports.getAllUser = async (req, res) => {
-  try {
+    try {
+        const allUsers = await Users.find();
 
-    const alluser = await Users.find();
+        if (!allUsers || allUsers.length === 0) {
+            return res.status(404).json({ success: false, message: "No users found" });
+        }
 
-    if (!alluser) {
-      return res.status(404).json({ error: "users is not here" });
+        res.status(200).json({ success: true, users: allUsers });
+    } catch (error) {
+        console.error("Error fetching all users:", error);
+        res.status(500).json({ success: false, message: "Server error while fetching users" });
     }
-
-    res.status(200).json(alluser);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching All user" });
-  }
-}
+};
