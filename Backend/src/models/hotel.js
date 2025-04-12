@@ -27,7 +27,16 @@ const hotelSchema = new mongoose.Schema({
     hotel_type: { type: String, required: true },
     price: { type: Number, required: true }
   }],
-  contact: { type: String }
+  contact: { type: String },
+   Earnbadge_point: [{
+      trip: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Hotel'
+      },
+      value: {
+        type: Number
+      }
+    }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Hotel', hotelSchema);

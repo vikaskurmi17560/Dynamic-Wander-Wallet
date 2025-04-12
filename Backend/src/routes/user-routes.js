@@ -15,5 +15,6 @@ router.get("/get-user", userController.getUser);
 router.post("/follow",userController.followUser);
 router.post("/unfollow",userController.unfollowUser);
 router.get("/getalluser",userController.getAllUser);
+router.post("/usebadgepoint",userController.useBadgePoints);
 
 module.exports = router;

@@ -6,7 +6,13 @@ exports.createRestaurant = async (req, res) => {
         const {userId}=req.query;
         const restaurant = await Restaurants.create(req.body);
         
-        await User.findByIdAndUpdate(userId, { $inc: { badge_point: 100 } });
+        restaurant.Earnbadge_point.push({
+            restaurant: restaurant._id, 
+            value: 100
+          });
+
+          await restaurant.save();
+
         res.status(201).json({
             success: true,
             message: "Create Restaurant SuccessFully ",
@@ -63,8 +69,7 @@ exports.deleteRestaurantById = async (req, res) => {
         if (!restaurants) {
             return res.status(404).json({ error: "Restaurant not found" });
         }
-        
-        await User.findByIdAndUpdate(userId, { $inc: { badge_point: -100 } });
+     
         res.status(200).json({ message: "Delete Restaurant Successfully" });
     } catch (error) {
         res.status(500).json({ error: error.message });

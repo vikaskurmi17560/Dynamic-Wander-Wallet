@@ -56,7 +56,16 @@ const CheckPointsSchema = new mongoose.Schema(
         Total_checkpointBudget:{
             type:Number,
             required:false
-        }
+        },
+         Earnbadge_point: [{
+            trip: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: 'Checkpoints'
+            },
+            value: {
+              type: Number
+            }
+          }]
     },
     { timestamps: true }
 );

@@ -63,6 +63,23 @@ const User_Schema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        badge_usage_history: [
+            {
+              product_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Product", // or another collection
+                required: true
+              },
+              used_points: {
+                type: Number,
+                required: true
+              },
+              used_at: {
+                type: Date,
+                default: Date.now
+              }
+            }
+          ],
         total_trip: {
             type: Number,
             default: 0,

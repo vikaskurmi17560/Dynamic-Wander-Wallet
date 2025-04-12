@@ -6,13 +6,13 @@ const tripSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  cover_image:{
-    type:String,
-    required:false
+  cover_image: {
+    type: String,
+    required: false
   },
-  image:[{
-     type: String,
-     required:false
+  image: [{
+    type: String,
+    required: false
   }],
   tripName: {
     type: String,
@@ -34,16 +34,23 @@ const tripSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  TotalBudget:{
-    type:Number,
-    required:false,
+  TotalBudget: {
+    type: Number,
+    required: false
   },
   followedby: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  }],
+  Earnbadge_point: [{
+    trip: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Trip'
+    },
+    value: {
+      type: Number
+    }
   }]
-},
-  { timestamps: true }
-);
+}, { timestamps: true });
 
 module.exports = mongoose.model('Trip', tripSchema);

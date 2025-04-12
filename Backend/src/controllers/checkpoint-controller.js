@@ -7,7 +7,14 @@ exports.createCheckpoint = async (req, res) => {
   try {
     const { userId } = req.query;
     const checkpoint = await Checkpoints.create(req.body);
-    await User.findByIdAndUpdate(userId, { $inc: { badge_point: 200 } });
+
+     checkpoint.Earnbadge_point.push({
+       checkpoint:  checkpoint._id, 
+      value: 100
+    });
+
+    await  checkpoint.save();
+
     res.status(201).json({
       success: true,
       message: "Creation on Checkpoint is Done",
@@ -74,9 +81,6 @@ exports.deleteCheckpointById = async (req, res) => {
     }
 
 
-    await User.findByIdAndUpdate(userId, {
-      $inc: { badge_point: -200 },
-    });
 
     res.status(200).json({
       success: true,
@@ -104,10 +108,6 @@ exports.deleteCheckpointByTrip = async (req, res) => {
       return res.status(404).json({ error: "No checkpoints found for the given trip ID." });
     }
 
-
-    await User.findByIdAndUpdate(userId, {
-      $inc: { badge_point: -(200 * deleteResult.deletedCount) },
-    });
 
     res.status(200).json({
       success: true,

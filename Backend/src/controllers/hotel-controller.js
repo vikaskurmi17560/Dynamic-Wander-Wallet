@@ -5,7 +5,13 @@ exports.createHotel = async (req, res) => {
   try {
     const { userId } = req.query;
     const hotel = await Hotel.create(req.body);
-    await User.findByIdAndUpdate(userId, { $inc: { badge_point: 100 } });
+    hotel.Earnbadge_point.push({
+      hotel: hotel._id, 
+      value: 50
+    });
+
+    await hotel.save();
+
     res.status(201).json({
       success: true,
       message: "hotel Creation done Successfully",
@@ -39,7 +45,7 @@ exports.deleteHotel = async (req, res) => {
       return res.status(404).json({ error: 'Hotel not found' });
     }
 
-    await User.findByIdAndUpdate(userId, { $inc: { badge_point: -100 } });
+
     res.status(200).json({ message: 'Hotel deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });

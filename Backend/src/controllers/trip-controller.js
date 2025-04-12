@@ -5,7 +5,17 @@ const { uploadSingleImage, uploadMultipleImages } = require("../services/cloudin
 
 exports.createTrip = async (req, res) => {
   try {
+   
     const savedTrip = await Trip.create(req.body);
+
+   
+    savedTrip.Earnbadge_point.push({
+      trip: savedTrip._id,
+      value: 500
+    });
+
+    await savedTrip.save();
+
     res.status(201).json(savedTrip);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -61,7 +71,6 @@ exports.deleteTrip = async (req, res) => {
 
     const deletedTrip = await Trip.findByIdAndDelete(trip_id);
     await User.findByIdAndUpdate(userId, { $inc: { total_trip: -1 } });
-    await User.findByIdAndUpdate(userId, { $inc: { badge_point: 5000 } });
 
     if (!deletedTrip) {
       return res.status(404).json({ error: "Trip not found" });

@@ -37,7 +37,6 @@ exports.createPost = async (req, res) => {
       comments,
     });
 
-    await User.findByIdAndUpdate(user_id, { $inc: { badge_point: 50 } });
     await User.findByIdAndUpdate(user_id, { $push: { posts: newPost._id } });
 
     return res.status(201).json({
@@ -148,7 +147,7 @@ exports.deletePostById = async (req, res) => {
       })
     }
 
-    await User.findByIdAndUpdate(userId, { $inc: { badge_point: -50 } });
+    
     await User.findByIdAndUpdate(userId, { $pull: { posts: post_id } });
 
     return res.status(200).json({
@@ -164,9 +163,6 @@ exports.deletePostByUserId = async (req, res) => {
   try {
     const { user_id } = req.query;
 
-    const deletedPosts = await Post.find({ postedBy: user_id });
-    const deletedPostIds = deletedPosts.map(post => post._id);
-
     const deleteResult = await Post.deleteMany({ postedBy: user_id });
 
     if (deleteResult.deletedCount === 0) {
@@ -176,7 +172,6 @@ exports.deletePostByUserId = async (req, res) => {
       });
     }
     await User.findByIdAndUpdate(user_id, {
-      $pull: { posts: { $in: deletedPostIds } },
       $inc: { badge_point: -(50 * deleteResult.deletedCount) },
     });
 
