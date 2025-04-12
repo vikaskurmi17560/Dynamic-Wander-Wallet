@@ -42,15 +42,10 @@ const tripSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
-  Earnbadge_point: [{
-    trip: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Trip'
-    },
-    value: {
-      type: Number
-    }
-  }]
+  Earnbadge_point: {
+    type: Number,
+    default: 0
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Trip', tripSchema);

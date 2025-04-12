@@ -3,18 +3,28 @@ const User = require('../models/user');
 
 exports.createHotel = async (req, res) => {
   try {
-    const { userId } = req.query;
-    const hotel = await Hotel.create(req.body);
-    hotel.Earnbadge_point.push({
-      hotel: hotel._id, 
-      value: 50
-    });
+    
+    const { checkpoint_id, Earnbudget_point, ...hoteldata } = req.body;
 
-    await hotel.save();
+    
+    if (Earnbudget_point !== undefined && Earnbudget_point !== null) {
+      hoteldata.Earnbadge_point = Earnbudget_point;
+    }
+
+    
+    const hotel = await Hotel.create(hoteldata);
+
+   
+    if (checkpoint_id && Earnbudget_point) {
+      await Checkpoint.findByIdAndUpdate(
+        checkpoint_id,
+        { $inc: { Earnbadge_point: Earnbudget_point } }
+      );
+    }
 
     res.status(201).json({
       success: true,
-      message: "hotel Creation done Successfully",
+      message: "Hotel creation done successfully",
       hotel
     });
   } catch (error) {

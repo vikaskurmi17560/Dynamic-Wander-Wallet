@@ -7,15 +7,6 @@ exports.createTrip = async (req, res) => {
   try {
    
     const savedTrip = await Trip.create(req.body);
-
-   
-    savedTrip.Earnbadge_point.push({
-      trip: savedTrip._id,
-      value: 500
-    });
-
-    await savedTrip.save();
-
     res.status(201).json(savedTrip);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -163,24 +154,22 @@ exports.uploadImagesByTripId = async (req, res) => {
 exports.tripBudget = async (req, res) => {
   try {
     const { trip_id } = req.query;
-    const { userId } = req.body;
+    const { userId , Earnbadge_point } = req.body;
 
-    console.log("Trip ID:", trip_id);
-    console.log("User ID:", userId);
+   
 
     if (!trip_id || !userId) {
       return res.status(400).json({ message: "trip_id or userId is missing" });
     }
 
     const TripCheckpointData = await Checkpoints.find({ trip_id });
-    console.log("Checkpoints found:", TripCheckpointData.length);
 
     const trip_budget = TripCheckpointData.reduce(
       (sum, item) => sum + (item.Total_checkpointBudget || 0),
       0
     );
 
-    console.log("Calculated Budget:", trip_budget);
+   
 
     const updatedTrip = await Trip.findByIdAndUpdate(
       trip_id,
@@ -192,8 +181,9 @@ exports.tripBudget = async (req, res) => {
       return res.status(404).json({ message: "Trip not found" });
     }
 
+    await Trip.findByIdAndUpdate(trip_id, { $inc: { Earnbadge_point:Earnbadge_point } });
     await User.findByIdAndUpdate(userId, { $inc: { total_trip: 1 } });
-    await User.findByIdAndUpdate(userId, { $inc: { badge_point: 5000 } });
+    await User.findByIdAndUpdate(userId, { $inc: { Earnbadge_point:Earnbadge_point } });
 
     return res.status(200).json({
       success: true,

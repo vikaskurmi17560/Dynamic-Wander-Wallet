@@ -7,10 +7,10 @@ const sendEmail = require("../services/Reset-Password-email");
 const { uploadSingleImage } = require("../services/cloudinary");
 
 exports.signup = async (req, res) => {
-    const { name, email, phone_no, gender, password, confirm_password} = req.body;
+    const { name, email, phone_no, gender, password, confirm_password } = req.body;
 
     try {
-       
+
         const userExists = await Users.findOne({ email });
         if (userExists) {
             return res.status(400).json({
@@ -28,17 +28,17 @@ exports.signup = async (req, res) => {
         }
 
 
-        
+
         const newUser = await Users.create({
             name,
             email,
             phone_no,
             gender,
             password,
-            badge_point: 1000
+            badge_point: 50
         });
 
-       
+
 
         await WelcomeEmail(email);
 
@@ -365,56 +365,57 @@ exports.getAllUser = async (req, res) => {
 
 
 exports.useBadgePoints = async (req, res) => {
-  try {
-    const { userId, productId, pointsToUse } = req.body;
+    try {
+        let { userId, productId, pointsToUse } = req.body;
 
-    
-    if (!userId || !productId || !pointsToUse || pointsToUse <= 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid input. userId, productId, and pointsToUse are required.",
-      });
+
+
+        if (!userId || !productId || isNaN(pointsToUse) || pointsToUse <= 0 || !Number.isInteger(pointsToUse)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid input. Valid userId, productId, and a positive integer pointsToUse are required.",
+            });
+        }
+
+
+        const user = await Users.findById(userId);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found.",
+            });
+        }
+
+        if (user.Earnbadge_point < pointsToUse) {
+            return res.status(400).json({
+                success: false,
+                message: `Insufficient badge points. You have ${user.Earnbadge_point}, but tried to use ${pointsToUse}.`,
+            });
+        }
+
+
+        user.Earnbadge_point -= pointsToUse;
+        user.badge_usage_history.push({
+            product_id: productId,
+            used_points: pointsToUse,
+            used_at: new Date(),
+        });
+
+
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Badge points used successfully.",
+            remaining_points: user.Earnbadge_point,
+            badge_usage_history: user.badge_usage_history,
+        });
+    } catch (error) {
+        console.error("Error using badge points:", error);
+        return res.status(500).json({
+            success: false,
+            message: "An unexpected server error occurred.",
+            error: error.message,
+        });
     }
-
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-
-   
-    if (user.badge_point < pointsToUse) {
-      return res.status(400).json({
-        success: false,
-        message: "Not enough badge points to complete this operation.",
-      });
-    }
-
-   
-    user.badge_point -= pointsToUse;
-
-    
-    user.badge_usage_history.push({
-      product_id: productId,
-      used_points: pointsToUse,
-    });
-
-    await user.save();
-
-    return res.status(200).json({
-      success: true,
-      message: "Badge points used successfully.",
-      remaining_points: user.badge_point,
-      badge_usage_history: user.badge_usage_history,
-    });
-  } catch (error) {
-    console.error("Error using badge points:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Server error",
-      error: error.message,
-    });
-  }
 };
