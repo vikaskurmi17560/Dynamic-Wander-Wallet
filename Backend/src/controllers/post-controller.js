@@ -101,6 +101,7 @@ exports.getPostByUserId = async (req, res) => {
 };
 
 
+
 exports.updatePostById = async (req, res) => {
   try {
     const { post_id } = req.query;
