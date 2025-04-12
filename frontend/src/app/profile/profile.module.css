@@ -30,6 +30,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-color: skyblue;
 }
 
 .photo_div {
@@ -40,12 +41,15 @@
     left: 2em;
     border-radius: 50%;
     border: 7px solid white;
+    /* z-index: 999; */
+    background-color: whitesmoke;
 }
 
 .profile_photo {
     height: 100%;
     width: 100%;
     border-radius: 50%;
+    object-fit: contain;
 }
 
 .profile_container_data {

@@ -91,7 +91,7 @@ exports.getPostByUserId = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Posts fetched successfully",
-      posts, // can be an empty array []
+      posts, 
     });
   } catch (error) {
     return res.status(500).json({
@@ -100,9 +100,6 @@ exports.getPostByUserId = async (req, res) => {
     });
   }
 };
-
-
-
 
 
 exports.updatePostById = async (req, res) => {

@@ -81,7 +81,7 @@ const Profile = () => {
     if (userId) {
       fetchUser();
     }
-  }, [userId, isShow, user , onclose]);
+  }, [userId, isShow, user, onclose]);
 
   if (!isAuthenticated || !user) return null;
 
@@ -89,17 +89,11 @@ const Profile = () => {
     <main className={style.main}>
       <section className={style.container}>
         <section
-          style={{ backgroundImage: `url(${user.banner || '/default-banner.jpg'})` }}
+          style={{ backgroundImage: `url(${user.banner || '/RedBackground.webp'})` }}
           className={style.profile_photo_container}
         >
           <div className={style.photo_div}>
-            {user.profile ? (
-              <img src={user.profile} alt="profile" className={style.profile_photo} />
-            ) : (
-              <div className="w-[200px] absolute top-[50%] h-[200px] bg-slate-300 rounded-full flex justify-center items-center">
-                profile
-              </div>
-            )}
+            <img src={user.profile || "/images/profileIcon.webp"} alt="profile" className={style.profile_photo} />
           </div>
         </section>
 
