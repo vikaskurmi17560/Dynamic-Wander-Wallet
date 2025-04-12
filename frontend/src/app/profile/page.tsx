@@ -81,7 +81,7 @@ const Profile = () => {
     if (userId) {
       fetchUser();
     }
-  }, [userId, isShow, user]);
+  }, [userId, isShow, user , onclose]);
 
   if (!isAuthenticated || !user) return null;
 
@@ -134,7 +134,7 @@ const Profile = () => {
                 <p className={style.follow_name}>Following</p>
               </div>
               <div className={style.follow_div}>
-                <p className={style.follow_number}>{userData?.total_trip ?? 0}</p>
+                <p className={style.follow_number}>{Math.max(userData?.total_trip ?? 0, 0)}</p>
                 <p className={style.follow_name}>Trips</p>
               </div>
             </div>

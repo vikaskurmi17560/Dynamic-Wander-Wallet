@@ -1,8 +1,7 @@
-"use client";
 import { useRouter } from "next/navigation";
-import toast from 'react-hot-toast';
-import { useForm } from 'react-hook-form'
-import React, { useState } from 'react'
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from "react";
 import { EditProfile } from "@/connection/userConnection";
 import useUserData from "@/hook/useData";
 import style from "./form.module.css";
@@ -12,13 +11,25 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const Form = ({ onClose }: { onClose: () => void }) => {
   const router = useRouter();
-  const { register, handleSubmit } = useForm();
   const { user } = useUserData();
+  const { register, handleSubmit, setValue } = useForm({
+    defaultValues: {
+      name: user?.name || "",
+      bio: user?.bio || "",
+      phone_no: user?.phone_no || "",
+      profile: undefined,
+      banner: undefined,
+    },
+  });
 
-  const name = user.name;
-  const profile = user.profile;
-  const bio = user.bio;
-  const phone_no = user.phone_no;
+  useEffect(() => {
+    if (user) {
+      setValue("name", user.name);
+      setValue("bio", user.bio);
+      setValue("phone_no", user.phone_no);
+      setValue("profile", user.profile);
+    }
+  }, [user, setValue]);
 
   async function editData(formdata: any) {
     let user_id = localStorage.getItem("user_id");
@@ -35,7 +46,6 @@ const Form = ({ onClose }: { onClose: () => void }) => {
         data.append("bio", formdata.bio);
         data.append("phone_no", formdata.phone_no);
 
-
         if (formdata.profile[0]) {
           data.append("profile", formdata.profile[0]);
         }
@@ -46,7 +56,6 @@ const Form = ({ onClose }: { onClose: () => void }) => {
         const response = await EditProfile(user_id, data);
         onClose();
         router.replace("/profile");
-
       } catch (error) {
         toast.error("Some error occurred");
       }
@@ -60,8 +69,8 @@ const Form = ({ onClose }: { onClose: () => void }) => {
         <form className="mt-6 space-y-4" onSubmit={handleSubmit(editData)}>
           <div className="flex flex-col items-center gap-2">
             <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300">
-              {profile ? (
-                <img src={profile} alt="Profile" className="w-full h-full object-cover" />
+              {user?.profile ? (
+                <img src={user.profile} alt="Profile" className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
                   No Image
@@ -108,7 +117,6 @@ const Form = ({ onClose }: { onClose: () => void }) => {
             />
           </div>
 
-
           <div>
             <label className="block text-sm font-medium text-gray-900">Profile Banner</label>
             <input
@@ -128,7 +136,7 @@ const Form = ({ onClose }: { onClose: () => void }) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Form
+export default Form;
