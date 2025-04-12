@@ -77,20 +77,21 @@ exports.getPostById = async (req, res) => {
 
 exports.getPostByUserId = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const posts = await Post.find({ userId });
+    const { user_id } = req.query;
 
-    if (!posts || posts.length === 0) {
-      return res.status(404).json({
+    if (!user_id) {
+      return res.status(400).json({
         success: false,
-        message: "No posts found for this user",
+        message: "User ID is required",
       });
     }
+
+    const posts = await Post.find({ postedBy: user_id });
 
     return res.status(200).json({
       success: true,
       message: "Posts fetched successfully",
-      posts,
+      posts, // can be an empty array []
     });
   } catch (error) {
     return res.status(500).json({
@@ -99,6 +100,8 @@ exports.getPostByUserId = async (req, res) => {
     });
   }
 };
+
+
 
 
 

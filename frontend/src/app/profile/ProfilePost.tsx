@@ -4,7 +4,7 @@ import useData from '@/hook/useData';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import style from "./ProfilePost.module.css";
-import { FaImage, FaHeart, FaComment } from "react-icons/fa";
+import { FaHeart, FaComment } from "react-icons/fa";
 import DisplayPost from './DisplayPost';
 
 interface Post {
@@ -34,11 +34,11 @@ const ProfilePost = () => {
     const { userId } = useData();
     const [posts, setPosts] = useState<Post[]>([]);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
+    console.log("User Id : ", userId);
     const fetchPosts = async () => {
         try {
             const response = await axios.get(`http://localhost:7050/api/v1/post/getbyuserid?user_id=${userId}`);
-            const postsData: Post[] = response.data.userPosts || [];
+            const postsData: Post[] = response.data.posts || [];
 
             const imagePosts = postsData.filter(post => isImage(post.image));
 
@@ -60,6 +60,7 @@ const ProfilePost = () => {
             console.error('Error fetching posts:', error);
         }
     };
+
 
     useEffect(() => {
         if (userId) fetchPosts();

@@ -37,10 +37,13 @@ const ProfileReel = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get(`http://localhost:7050/api/v1/post/getbyuserid?user_id=${userId}`);
-            const postsData: Post[] = response.data.userPosts || [];
+            const response = await axios.get(`http://localhost:7050/api/v1/post/getbyuserid`, {
+                params: { user_id: userId },
+            });
+    
+            const postsData: Post[] = response.data.posts || [];
             const videoPosts = postsData.filter(post => isVideo(post.image));
-
+    
             const postsWithUsers = await Promise.all(
                 videoPosts.map(async (post) => {
                     try {
@@ -48,18 +51,19 @@ const ProfileReel = () => {
                             params: { user_id: post.postedBy },
                         });
                         return { ...post, postedUser: userRes.data.user };
-                    } catch {
+                    } catch (err) {
+                        console.error("Error fetching user:", err);
                         return post;
                     }
                 })
             );
-
+    
             setPosts(postsWithUsers);
         } catch (error) {
             console.error('Error fetching posts:', error);
         }
     };
-
+    
     useEffect(() => {
         if (userId) fetchPosts();
     }, [userId]);
