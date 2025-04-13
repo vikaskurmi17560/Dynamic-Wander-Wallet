@@ -5,8 +5,8 @@ const User = require("../models/user");
 
 exports.createCheckpoint = async (req, res) => {
   try {
-    const { userId } = req.query;
-    const checkpoint = await Checkpoints.create(req.body);
+
+
 
     checkpoint.Earnbadge_point.push({
       checkpoint: checkpoint._id,
@@ -14,6 +14,24 @@ exports.createCheckpoint = async (req, res) => {
     });
 
     await checkpoint.save();
+
+    const { trip_id, Earnbudget_point, ...checkpointdata } = req.body;
+
+
+    if (Earnbudget_point !== undefined && Earnbudget_point !== null) {
+      checkpointdata.Earnbudget_point = Earnbudget_point;
+    }
+
+
+    const checkpoint = await Checkpoints.create(checkpointdata);
+
+    if (trip_id && Earnbudget_point) {
+      await Checkpoint.findByIdAndUpdate(
+        trip_id,
+        { $inc: { Earnbadge_point: Earnbudget_point } }
+      );
+    }
+
 
     res.status(201).json({
       success: true,

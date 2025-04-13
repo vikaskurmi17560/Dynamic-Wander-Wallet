@@ -23,20 +23,16 @@ const hotelSchema = new mongoose.Schema({
     default: "No description provided."
   },
   pricePerNight:
-  [{
-    hotel_type: { type: String, required: true },
-    price: { type: Number, required: true }
-  }],
+    [{
+      hotel_type: { type: String, required: true },
+      price: { type: Number, required: true }
+    }],
   contact: { type: String },
-   Earnbadge_point: [{
-      trip: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Hotel'
-      },
-      value: {
-        type: Number
-      }
-    }]
+  Earnbadge_point: {
+    type: Number,
+    required: false,
+    default: 0
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Hotel', hotelSchema);

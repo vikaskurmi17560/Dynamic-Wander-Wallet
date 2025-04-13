@@ -22,7 +22,7 @@ const User_Schema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        banner:{
+        banner: {
             type: String,
             required: false,
         },
@@ -39,53 +39,53 @@ const User_Schema = new mongoose.Schema(
         bio: {
             type: String,
             required: false,
-            maxlength: 150, 
+            maxlength: 150,
         },
         posts: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Post", 
+                ref: "Post",
             },
         ],
         followers: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "User", 
+                ref: "User",
             },
         ],
         following: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "User", 
+                ref: "User",
             },
         ],
-        badge_point: {
+        Earnbadge_point: {
             type: Number,
             default: 0,
         },
         badge_usage_history: [
             {
-              product_id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Product", // or another collection
-                required: true
-              },
-              used_points: {
-                type: Number,
-                required: true
-              },
-              used_at: {
-                type: Date,
-                default: Date.now
-              }
+                product_id: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "Product",
+                    required: true
+                },
+                used_points: {
+                    type: Number,
+                    required: true
+                },
+                used_at: {
+                    type: Date,
+                    default: Date.now
+                }
             }
-          ],
+        ],
         total_trip: {
             type: Number,
             default: 0,
         },
     },
-    { timestamps: true } 
+    { timestamps: true }
 );
 
 

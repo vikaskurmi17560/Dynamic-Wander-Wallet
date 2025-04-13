@@ -107,7 +107,7 @@ const Hotels = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:7050/api/v1/hotel/create?userId=${userId}`,
+        `http://localhost:7050/api/v1/hotel/create`,
         updatedFormData,
         { headers: { "Content-Type": "application/json" } }
       );

@@ -1,27 +1,35 @@
 const Restaurants = require("../models/restaurants");
 const User = require ('../models/user');
+const Checkpoint = require("../models/checkpoints");
 
 exports.createRestaurant = async (req, res) => {
     try {
-        const {userId}=req.query;
-        const restaurant = await Restaurants.create(req.body);
+      
+        const { checkpoint_id,Earnbudget_point, ...restaurantData } = req.body;
+
         
-        restaurant.Earnbadge_point.push({
-            restaurant: restaurant._id, 
-            value: 100
-          });
+        if (Earnbudget_point !== undefined && Earnbudget_point !== null) {
+            restaurantData.Earnbadge_point = Earnbudget_point;
+        }
 
-          await restaurant.save();
+        const restaurant = await Restaurants.create(restaurantData);
 
+        if (checkpoint_id && Earnbudget_point) {
+            await Checkpoint.findByIdAndUpdate(
+              checkpoint_id,
+              { $inc: { Earnbadge_point: Earnbudget_point } }
+            );
+          }
         res.status(201).json({
             success: true,
-            message: "Create Restaurant SuccessFully ",
+            message: "Create Restaurant Successfully",
             restaurant
         });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 exports.getRestaurantsByCheckpoint = async (req, res) => {
     try {

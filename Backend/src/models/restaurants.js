@@ -32,6 +32,7 @@ const RestaurantsSchema = new mongoose.Schema({
         meal_price: { type: Number, required: true }
     }],
     contact: { type: String, required: false },
+<<<<<<< HEAD
     Earnbadge_point: [{
         trip: {
             type: mongoose.Schema.Types.ObjectId,
@@ -41,6 +42,13 @@ const RestaurantsSchema = new mongoose.Schema({
             type: Number
         }
     }]
+=======
+    Earnbadge_point: {
+        type: Number,
+        required: false,
+        default: 0
+    }
+>>>>>>> 311ab6abe9e020d35b8d408898b2521058774957
 }, { timestamps: true })
 
 

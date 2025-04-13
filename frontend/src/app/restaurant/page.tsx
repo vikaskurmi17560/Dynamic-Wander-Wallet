@@ -104,7 +104,7 @@ const Restaurant = () => {
 
         try {
             const response = await axios.post(
-                `http://localhost:7050/api/v1/restaurant/create?userId=${userId}`,
+                `http://localhost:7050/api/v1/restaurant/create`,
                 updatedFormData,
                 { headers: { "Content-Type": "application/json" } }
             );
