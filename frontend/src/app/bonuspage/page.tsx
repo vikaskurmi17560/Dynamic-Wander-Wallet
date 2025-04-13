@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGift, faStar, faCoins, faTicketAlt } from "@fortawesome/free-solid-svg-icons";
@@ -42,12 +42,12 @@ const BonusPage = () => {
                 const res = await axios.get("http://localhost:7050/api/v1/user/get-user", {
                     params: { user_id: userId },
                 });
-                setUser(res.data);
+                setUser(res.data?.user || res.data); 
             } catch (error: any) {
-                throw new Error(error?.response?.data?.message || "Error fetching user");
+                console.error(error?.response?.data?.message || "Error fetching user");
             }
-        }
-        loadUser();
+        };
+        if (userId) loadUser();
     }, [userId]);
 
     return (
@@ -58,34 +58,34 @@ const BonusPage = () => {
                     <div className={style.navItem}>
                         <p className={style.name}>Cashback Won</p>
                         <div className={style.number_div}>
-                            <FontAwesomeIcon icon={faGift} className={style.faIcon} />\
+                            <FontAwesomeIcon icon={faGift} className={style.faIcon} />
                             <p className={style.value}>$40000</p>
                         </div>
                     </div>
                     <div className={style.navItem}>
                         <p className={style.name}>Wander Point</p>
                         <div className={style.number_div}>
-                            <FontAwesomeIcon icon={faStar} className={style.faIcon} />\
-                            {/* <p className={style.value}>{user.Earnbadge_point}</p> */}
+                            <FontAwesomeIcon icon={faStar} className={style.faIcon} />
+                            <p className={style.value}>{user?.Earnbadge_point ?? "0"}</p>
                         </div>
                     </div>
                     <div className={style.navItem}>
                         <p className={style.name}>Redeem Coins</p>
                         <div className={style.number_div}>
-                            <FontAwesomeIcon icon={faCoins} className={style.faIcon} />\
+                            <FontAwesomeIcon icon={faCoins} className={style.faIcon} />
                             <p className={style.value}>4567</p>
                         </div>
                     </div>
                     <div className={style.navItem}>
                         <p className={style.name}>My Vouchers</p>
                         <div className={style.number_div}>
-                            <FontAwesomeIcon icon={faTicketAlt} className={style.faIcon} />\
+                            <FontAwesomeIcon icon={faTicketAlt} className={style.faIcon} />
                             <p className={style.value}>000</p>
                         </div>
                     </div>
                 </div>
                 <div className={style.reward_container}>
-
+                    {/* Show rewards here */}
                 </div>
             </div>
         </div>
