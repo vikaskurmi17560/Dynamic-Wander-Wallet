@@ -6,7 +6,6 @@ const Trip = require("../models/trip");
 exports.createCheckpoint = async (req, res) => {
   try {
     
-
     const { trip_id, Earnbudget_point, ...checkpointdata } = req.body;
 
 

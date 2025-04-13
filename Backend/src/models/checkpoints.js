@@ -57,23 +57,12 @@ const CheckPointsSchema = new mongoose.Schema(
             type: Number,
             required: false
         },
-<<<<<<< HEAD
-        Earnbadge_point: [{
-            trip: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Checkpoints'
-            },
-            value: {
-                type: Number
-            }
-        }]
-=======
+
         Earnbadge_point: {
             type: Number,
             required: false,
             default: 0
         }
->>>>>>> 311ab6abe9e020d35b8d408898b2521058774957
     },
     { timestamps: true }
 );
