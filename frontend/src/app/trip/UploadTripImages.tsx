@@ -20,7 +20,6 @@ const UploadTripImages = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setShowReward(true);
         if (!tripId) {
             alert("Please provide a Trip ID.");
             return;
