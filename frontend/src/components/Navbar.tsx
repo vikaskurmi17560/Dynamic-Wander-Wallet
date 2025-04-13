@@ -62,6 +62,9 @@ function Navbar() {
           <Link href="/explore" className={styles.nav_item}>
             Explore
           </Link>
+          <Link href="/bonuspage" className={styles.nav_item}>
+            Wallet
+          </Link>
         </div>
 
         <div className={styles.right_section}>

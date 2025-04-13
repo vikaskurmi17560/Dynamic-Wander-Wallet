@@ -8,12 +8,12 @@ exports.createCheckpoint = async (req, res) => {
     const { userId } = req.query;
     const checkpoint = await Checkpoints.create(req.body);
 
-     checkpoint.Earnbadge_point.push({
-       checkpoint:  checkpoint._id, 
+    checkpoint.Earnbadge_point.push({
+      checkpoint: checkpoint._id,
       value: 100
     });
 
-    await  checkpoint.save();
+    await checkpoint.save();
 
     res.status(201).json({
       success: true,

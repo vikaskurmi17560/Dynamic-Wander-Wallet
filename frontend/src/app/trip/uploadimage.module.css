@@ -1,5 +1,14 @@
-.main {
+.container{
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0em;
+}
+
+.main {
+    /* width: 100%; */
+    width: 40%;
     background-color: black;
     display: flex;
     flex-direction: column;

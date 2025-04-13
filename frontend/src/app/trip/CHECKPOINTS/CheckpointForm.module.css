@@ -9,6 +9,7 @@
     flex-direction: column;
     gap: 0.7em;
     position: relative;
+    background-color: #fbdde7;
 }
 
 .cross_btn{
@@ -30,7 +31,6 @@
 }
 
 .source_dest {
-    /* border: 1px solid black; */
     display: flex;
     gap: auto;
     justify-content: space-between;
@@ -44,11 +44,14 @@
 }
 
 .heading {
-    font-family: cursive;
-    font-size: 2.5em;
+    font-family: sans-serif;
+    font-size: 2.2em;
     text-align: center;
     font-weight: 600;
     color: black;
+    letter-spacing: 1;
+    word-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
 .input {
@@ -95,7 +98,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0.7em 2.2em;
 }
 
