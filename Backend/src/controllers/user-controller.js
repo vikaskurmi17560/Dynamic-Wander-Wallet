@@ -35,7 +35,7 @@ exports.signup = async (req, res) => {
             phone_no,
             gender,
             password,
-            badge_point: 50
+            Earnbadge_point: 50
         });
 
 

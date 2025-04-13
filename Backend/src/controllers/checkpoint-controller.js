@@ -1,11 +1,11 @@
 const Checkpoints = require("../models/checkpoints");
 const Restaurant = require("../models/restaurants");
 const Hotel = require("../models/hotel");
-const User = require("../models/user");
+const Trip = require("../models/trip");
 
 exports.createCheckpoint = async (req, res) => {
   try {
-    
+
 
     const { trip_id, Earnbudget_point, ...checkpointdata } = req.body;
 
@@ -18,7 +18,7 @@ exports.createCheckpoint = async (req, res) => {
     const checkpoint = await Checkpoints.create(checkpointdata);
 
     if (trip_id && Earnbudget_point) {
-      await Checkpoint.findByIdAndUpdate(
+      await Trip.findByIdAndUpdate(
         trip_id,
         { $inc: { Earnbadge_point: Earnbudget_point } }
       );
