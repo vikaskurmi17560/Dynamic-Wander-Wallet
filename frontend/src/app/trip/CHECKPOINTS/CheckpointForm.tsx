@@ -8,7 +8,6 @@ import { getCurrentLocation } from "./FUNCTION/getLocation";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { updateCheckpointBudgets } from "./updateCheckpointBudgets";
 import useData from "@/hook/useData";
 
 
@@ -157,55 +156,26 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
         }
     };
 
-
-    const handleTripEnd = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        try {
-            console.log("Saving checkpoint...");
-            await handleSubmit(e);
-
-            const result = await updateCheckpointBudgets(tripId, userId);
-            if (result.success) {
-                console.log("Trip budget updated:", result.tripBudget);
-            } else {
-                alert("Failed to update budgets: " + result.error);
-            }
-            toggleCheckpoint();
-            toggleTripEnd();
-            console.log("Checkpoint saved. Redirecting...");
-        } catch (error) {
-            console.error("Error ending trip:", error);
-            alert("Failed to end the trip. Redirecting anyway...");
-        } finally {
-            router.push(`/trip/CHECKPOINTS/tripend?tripName=${formData.trip_id}`);
-        }
-    };
-
-
     return (
         <div className={style.main}>
             <h2 className={style.heading}>Create a Checkpoint</h2>
             <form onSubmit={handleSubmit} className={style.form}>
-                <div>
-                    <div className={style.name}>Trip Id</div>
-                    <input type="text" value={formData.trip_id} className={style.input} readOnly required />
-                </div>
+
                 <div className={style.source_dest}>
                     <div>
-                        <div className={style.name}>Source</div>
+                        <div className={style.name}>Source*</div>
                         <input type="text" placeholder="Source Name"
                             value={formData.source.name}
                             className={style.input} readOnly required />
                     </div>
                     <div>
-                        <div className={style.name}>Latitude</div>
+                        <div className={style.name}>Latitude*</div>
                         <input type="number" placeholder="Latitude"
                             value={formData.source.latitude}
                             className={style.input} readOnly required />
                     </div>
                     <div>
-                        <div className={style.name}>Longitude</div>
+                        <div className={style.name}>Longitude*</div>
                         <input type="number" placeholder="Longitude"
                             value={formData.source.longitude}
                             className={style.input} readOnly required />
@@ -213,7 +183,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                 </div>
                 <div className={style.source_dest}>
                     <div>
-                        <div className={style.name}>Destination</div>
+                        <div className={style.name}>Destination*</div>
                         <input
                             type="text"
                             placeholder="Destination Name"
@@ -226,7 +196,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                     </div>
                     <div>
                         <div>
-                            <div className={style.name}>Latitude</div>
+                            <div className={style.name}>Latitude*</div>
                             <input
                                 type="number"
                                 placeholder="Latitude"
@@ -239,7 +209,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                         </div>
                     </div>
                     <div>
-                        <div className={style.name}>Longitude</div>
+                        <div className={style.name}>Longitude*</div>
                         <input
                             type="number"
                             placeholder="Longitude"
@@ -254,18 +224,9 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                 <button type="button" onClick={() => getCurrentLocation(setFormData)} className="mt-2 bg-blue-500 text-white p-2 rounded">
                     Add Stop Point
                 </button>
-                <div>
-                    <div className={style.name}>Description</div>
-                    <textarea
-                        placeholder="Enter Description"
-                        value={formData.description}
-                        onChange={(e) => handleChange(e, "description")}
-                        className={style.textarea}
-                    ></textarea>
-                </div>
                 <div className={style.budget}>
                     <div>
-                        <div className={style.sub_name}>Transport Category</div>
+                        <div className={style.sub_name}>Transport Category*</div>
                         <select value={selectedCategory} onChange={handleCategoryChange} className={style.input} required>
                             <option value="">Select Category</option>
                             {categories.map((category) => (
@@ -276,7 +237,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                         </select>
                     </div>
                     <div>
-                        <div className={style.sub_name}>Transport Type</div>
+                        <div className={style.sub_name}>Transport Type*</div>
                         <select value={selectedType} onChange={handleTypeChange} className={style.input} disabled={selectedCategory === "By Walk"}>
                             <option value="">Select Transport Type</option>
                             {transportTypes.Vehicle.map((type) => (
@@ -293,19 +254,21 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                         <input type="text" placeholder="Extra Info" value={extraInfo} onChange={handleExtraInfoChange} className={style.input} />
                     </div>
                 </div>
+                <div>
+                    <div className={style.name}>Description</div>
+                    <textarea
+                        placeholder="Enter Description"
+                        value={formData.description}
+                        onChange={(e) => handleChange(e, "description")}
+                        className={style.textarea}
+                    ></textarea>
+                </div>
+
                 <div className={style.submit_btn}>
                     <button
                         type="submit"
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300">
+                        className="mt-2 bg-blue-500 text-white p-2 rounded w-4/5 h-12">
                         Checkpoint Verified
-
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={handleTripEnd}
-                        className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300">
-                        End Trip
                     </button>
                 </div>
             </form>

@@ -1,0 +1,106 @@
+.main {
+    border: 1px solid black;
+    margin: 0%;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    background-color: white;
+    margin-top: 6.9em;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    background-color: #ffffff;
+    text-align: center;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    align-items: center;
+    padding: 2rem;
+    background-color: whitesmoke;
+}
+
+.h1 {
+    font-size: 2.5rem;
+    color: #34495e;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: #f9fafb;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 1.2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.navItem {
+    flex: 1;
+    min-width: 120px;
+    background-color: #eaf3fb;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    text-align: left;
+}
+
+.name {
+    margin: 0;
+    color: #5a5a5a;
+    font-weight: 200;
+    font-size: 1em;
+    width: 10em;
+    /* border: 1px solid black; */
+    text-align: left;
+} 
+
+.navItem:hover {
+    background-color: #d4e8f9;
+    transform: translateY(-4px);
+}
+
+.faIcon {
+    font-size: 1em;
+    color: white;
+    /* border: 1px solid black; */
+    padding: 0.4em;
+    border-radius: 50%;
+    background-color:orange;
+}
+
+.number_div{
+    /* border: 1px solid black; */
+    width: 10em;
+    display: flex;
+    align-items: center;
+    gap: 0.2em;
+}
+
+.value{
+    color: black;
+}
+
+.reward_container{
+    min-height: 40vh;
+    /* border: 1px solid black; */
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    background-color: white;
+    height: auto;
+}
+

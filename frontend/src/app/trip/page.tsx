@@ -70,12 +70,6 @@ const Trip = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        // if (!tripData.userId) {
-        //     alert("User not logged in. Please log in first.");
-        //     return;
-        // }
-
         setLoading(true);
         try {
             const response = await axios.post(
