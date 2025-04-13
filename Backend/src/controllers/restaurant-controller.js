@@ -2,29 +2,38 @@ const Restaurants = require("../models/restaurants");
 const Trip = require('../models/trip');
 const Checkpoints = require("../models/checkpoints");
 
+
 exports.createRestaurant = async (req, res) => {
     try {
+        console.log("Received Body:", req.body);
 
-        const { trip_id, checkpoint_id, Earnbudget_point, ...restaurantData } = req.body;
+        const { trip_id, checkpoint_id, Earnbadge_point, Earnbudget_point, ...restaurantData } = req.body;
 
+        restaurantData.trip_id = trip_id;
+        restaurantData.checkpoint_id = checkpoint_id;
+
+        if (Earnbadge_point !== undefined && Earnbadge_point !== null) {
+            restaurantData.Earnbadge_point = Earnbadge_point;
+        }
 
         if (Earnbudget_point !== undefined && Earnbudget_point !== null) {
-            restaurantData.Earnbadge_point = Earnbudget_point;
+            restaurantData.Earnbudget_point = Earnbudget_point;
         }
 
         const restaurant = await Restaurants.create(restaurantData);
 
-        if (checkpoint_id && Earnbudget_point) {
+        if (checkpoint_id && Earnbadge_point) {
             await Checkpoints.findByIdAndUpdate(
                 checkpoint_id,
-                { $inc: { Earnbadge_point: Earnbudget_point } }
+                { $inc: { Earnbadge_point: Earnbadge_point } }
             );
         }
 
-        if (trip_id && Earnbudget_point) {
+       
+        if (trip_id && Earnbadge_point) {
             await Trip.findByIdAndUpdate(
                 trip_id,
-                { $inc: { Earnbadge_point: Earnbudget_point } }
+                { $inc: { Earnbadge_point: Earnbadge_point } }
             );
         }
 
@@ -34,9 +43,11 @@ exports.createRestaurant = async (req, res) => {
             restaurant
         });
     } catch (error) {
+        console.error("Error in createRestaurant:", error);
         res.status(500).json({ error: error.message });
     }
 };
+
 
 
 exports.getRestaurantsByCheckpoint = async (req, res) => {

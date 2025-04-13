@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import useData from "@/hook/useData";
+import Image from "next/image";
 
 
 interface Location {
@@ -38,7 +39,12 @@ const transportTypes = {
     ByWalk: [],
 };
 
-const CheckpointForm = ({ onCheckpointAdded }) => {
+interface CheckpointFormProps {
+    onCheckpointAdded: (checkpoint: any) => void;
+}
+
+const CheckpointForm: React.FC<CheckpointFormProps> = ({ onCheckpointAdded }) => {
+
     const { userId } = useData();
     const router = useRouter();
     const { tripId, location, toggleCheckpoint, saveLocation, toggleTripEnd } = useLocation();
@@ -50,6 +56,10 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
         description: "",
         transport_budget: [],
     });
+
+    const [showReward, setShowReward] = useState(false);
+    const [earnBadgePoint, setEarnBadgePoint] = useState(0);
+
 
     useEffect(() => {
         console.log("Location updated:", location);
@@ -110,6 +120,10 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        const earnBadgePoint = Math.floor(Math.random() * (40 - 20 + 1)) + 20;
+        setEarnBadgePoint(earnBadgePoint);
+        setShowReward(true);
+
         const newCheckpoint = {
             trip_id: formData.trip_id,
             source: { ...formData.source },
@@ -127,6 +141,7 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                     extra_info: selectedCategory === "Vehicle" ? extraInfo : "",
                 },
             ],
+            Earnbadge_point: earnBadgePoint,
         };
 
         try {
@@ -138,23 +153,25 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                 }
             );
 
-            console.log("New Checkpoint:", newCheckpoint);
-            console.log("API Response:", response.data);
-
             saveLocation({
                 name: newCheckpoint.destination.name,
                 lat: Number(newCheckpoint.destination.latitude),
                 lng: Number(newCheckpoint.destination.longitude)
             });
 
-            alert("Checkpoint added successfully!");
             onCheckpointAdded(response.data.checkpoint);
-            toggleCheckpoint();
+            setTimeout(() => {
+                setShowReward(false);
+                toggleCheckpoint();
+            }, 6000);
+
         } catch (error: any) {
             console.error("Error creating checkpoint:", error.response?.data || error.message);
             alert("Failed to create checkpoint. Check console for details.");
+            setShowReward(false);
         }
     };
+
 
     return (
         <div className={style.main}>
@@ -273,6 +290,24 @@ const CheckpointForm = ({ onCheckpointAdded }) => {
                 </div>
             </form>
             <FontAwesomeIcon icon={faTimes} className={style.cross_btn} onClick={() => toggleCheckpoint()} />
+            {showReward && (
+                <div className={style.coins_popup}>
+                    <div className={style.coins_border}>
+                        <div className={style.coins_image_div}>
+                            <Image
+                                src="/images/Trip/give_coin.png"
+                                alt="Coin"
+                                width={1000}
+                                height={1000}
+                                className={style.coin_img}
+                            />
+                        </div>
+                        <div className={style.coin_value}>
+                            Coins + {earnBadgePoint}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -5,6 +5,7 @@ import style from "./uploadimage.module.css";
 import { useRouter } from "next/navigation";
 import { updateCheckpointBudgets } from "./CHECKPOINTS/updateCheckpointBudgets";
 import useData from "@/hook/useData";
+import Image from "next/image";
 
 const UploadTripImages = () => {
     const { userId } = useData();
@@ -13,9 +14,13 @@ const UploadTripImages = () => {
     const [coverImage, setCoverImage] = useState<File | null>(null);
     const [uploadedData, setUploadedData] = useState<{ cover_image?: string }>({});
     const router = useRouter();
+
+    const [showReward, setShowReward] = useState(false);
+    const [earnBadgePoint, setEarnBadgePoint] = useState(0);
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        setShowReward(true);
         if (!tripId) {
             alert("Please provide a Trip ID.");
             return;
@@ -59,22 +64,27 @@ const UploadTripImages = () => {
 
         try {
             console.log("Saving checkpoint...");
-            // await handleSubmit(e);
 
             const result = await updateCheckpointBudgets(String(tripId), String(userId));
+            const budgetPoint = result.earnedPoints;
+
+            setEarnBadgePoint(budgetPoint);
+            setShowReward(true);
+
             if (result.success) {
                 console.log("Trip budget updated:", result.tripBudget);
             } else {
                 alert("Failed to update budgets: " + result.error);
             }
-            // toggleCheckpoint();
-            toggleTripEnd();
+            setTimeout(() => {
+                setShowReward(false);
+                toggleTripEnd();
+                router.push(`/trip/CHECKPOINTS/tripend`);
+            }, 6000);
             console.log("Checkpoint saved. Redirecting...");
         } catch (error) {
             console.error("Error ending trip:", error);
             alert("Failed to end the trip. Redirecting anyway...");
-        } finally {
-            router.push(`/trip/CHECKPOINTS/tripend`);
         }
     };
     return (
@@ -107,6 +117,26 @@ const UploadTripImages = () => {
                     </button>
                 </div>
             </div>
+            {showReward && (
+                <div className={style.rewardOverlay}>
+                    <div className={style.rewardCard}>
+                        <div className={style.coinImageWrapper}>
+                            <Image
+                                src="/images/Trip/give_coin.png"
+                                alt="Coin"
+                                width={120}
+                                height={120}
+                                className={style.coinImage}
+                            />
+                        </div>
+                        <div className={style.coinText}>
+                            <span className={style.coinAmount}>+{earnBadgePoint}</span>
+                            <span className={style.coinLabel}>Coins Earned!</span>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };

@@ -5,7 +5,6 @@ const { uploadSingleImage, uploadMultipleImages } = require("../services/cloudin
 
 exports.createTrip = async (req, res) => {
   try {
-   
     const savedTrip = await Trip.create(req.body);
     res.status(201).json(savedTrip);
   } catch (error) {
@@ -155,21 +154,15 @@ exports.tripBudget = async (req, res) => {
   try {
     const { trip_id } = req.query;
     const { userId , Earnbadge_point } = req.body;
-
-   
-
     if (!trip_id || !userId) {
       return res.status(400).json({ message: "trip_id or userId is missing" });
     }
 
     const TripCheckpointData = await Checkpoints.find({ trip_id });
-
     const trip_budget = TripCheckpointData.reduce(
       (sum, item) => sum + (item.Total_checkpointBudget || 0),
       0
     );
-
-   
 
     const updatedTrip = await Trip.findByIdAndUpdate(
       trip_id,

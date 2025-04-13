@@ -17,11 +17,11 @@
     width: 80%;
     height: 79vh;
     padding: 1em;
-    background-color: rgba(206, 205, 205, 0.3); 
+    background-color: rgba(206, 205, 205, 0.3);
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-    backdrop-filter: blur(7px); 
-   
-    border-radius: 10px; 
+    backdrop-filter: blur(7px);
+
+    border-radius: 10px;
 }
 
 .form {
@@ -47,17 +47,18 @@
 
 
 .content {
-    color: #FFDAB9; 
+    color: #FFDAB9;
     font-size: 0.9em;
 }
 
 
-.label{
+.label {
     width: 40%;
     display: flex;
     flex-direction: column;
     gap: 0.2em;
 }
+
 .input {
     height: 6vh;
     min-width: 90%;
@@ -68,18 +69,20 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
-.textarea_div{
+.textarea_div {
     width: 100%;
     display: flex;
     gap: 2em;
 }
-.labels{
+
+.labels {
     width: 50%;
     display: flex;
     flex-direction: column;
     gap: 0.2em;
     /* border: 1px solid red; */
 }
+
 .textarea {
     overflow: scroll;
     scrollbar-width: none;
@@ -91,4 +94,66 @@
     padding: 0.7em;
     color: black;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.reward_popup {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    animation: popup-fade 0.4s ease-out;
+}
+
+.reward_container {
+    background: linear-gradient(135deg, #ffed4b, #ffd700);
+    padding: 1.2rem 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: bounce 1s ease infinite;
+}
+
+.coin_graphic img {
+    width: 60px;
+    height: 60px;
+}
+
+.reward_text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    font-family: "Poppins", sans-serif;
+}
+
+.plus_text {
+    color: #ff7b00;
+    font-size: 2rem;
+    margin-right: 0.3rem;
+}
+
+@keyframes popup-fade {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -10%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0%);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
 }

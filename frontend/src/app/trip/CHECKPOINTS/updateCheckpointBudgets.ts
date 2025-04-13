@@ -2,16 +2,15 @@ import axios from "axios";
 
 export const updateCheckpointBudgets = async (tripId: string, userId: string) => {
   try {
-    // Step 1: Get all checkpoints
     const checkpointRes = await axios.get(`http://localhost:7050/api/v1/checkpoint/getbytripid`, {
       params: { tripId },
     });
 
     const checkpoints = checkpointRes.data?.checkpoints || [];
 
-    // Step 2: Update each checkpoint budget
     const updated: any[] = [];
 
+   
     for (const checkpoint of checkpoints) {
       const res = await axios.post(`http://localhost:7050/api/v1/checkpoint/budget`, null, {
         params: { checkpoint_id: checkpoint._id },
@@ -22,8 +21,13 @@ export const updateCheckpointBudgets = async (tripId: string, userId: string) =>
       }
     }
 
-    // Step 3: Create trip budget by combining checkpoint budgets
-    const tripRes = await axios.post(`http://localhost:7050/api/v1/trip/createBudget`, { userId }, {
+ 
+    const earnBadgePoint = Math.floor(Math.random() * (100 - 60 + 1)) + 60;
+
+    const tripRes = await axios.post(`http://localhost:7050/api/v1/trip/createBudget`, {
+      userId,
+      Earnbadge_point: earnBadgePoint,
+    }, {
       params: { trip_id: tripId },
     });
 
@@ -32,7 +36,8 @@ export const updateCheckpointBudgets = async (tripId: string, userId: string) =>
     return {
       success: true,
       updatedCheckpoints: updated,
-      tripBudget: updatedTrip?.TripBudget || 0,
+      tripBudget: updatedTrip?.TotalBudget || 0,
+      earnedPoints: earnBadgePoint,
     };
   } catch (err: any) {
     console.error("Error updating budgets:", err.message);

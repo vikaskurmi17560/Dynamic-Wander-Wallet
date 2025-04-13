@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import style from "./restaurant.module.css";
 import useData from "@/hook/useData";
+import Image from "next/image";
 
 const Restaurant = () => {
     const searchParams = useSearchParams();
@@ -13,6 +14,9 @@ const Restaurant = () => {
     const checkpointId = searchParams.get("checkpointId");
     const router = useRouter();
     const { userId } = useData();
+    const [showReward, setShowReward] = useState(false);
+    const [earnBadgePoint, setEarnBadgePoint] = useState(0);
+
     type Location = {
         latitude: number | null;
         longitude: number | null;
@@ -82,6 +86,9 @@ const Restaurant = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        const earnBadgePoint = Math.floor(Math.random() * (15 - 5 + 1)) + 5;
+        setEarnBadgePoint(earnBadgePoint);
+        setShowReward(true);
         if (!tripId || !checkpointId) {
             console.error("Error: trip_id or checkpoint_id is missing!");
             return;
@@ -96,8 +103,8 @@ const Restaurant = () => {
                 longitude: location.longitude ?? 0,
                 name: location.placeName || "Unknown Address",
             },
-            // Ensure prices is properly formatted as an array of objects
             prices: [{ meal_type: formData.mealType, meal_price: formData.prices[0].meal_price }],
+            Earnbadge_point: earnBadgePoint,
         };
 
         console.log("Submitting Data:", updatedFormData);
@@ -109,11 +116,15 @@ const Restaurant = () => {
                 { headers: { "Content-Type": "application/json" } }
             );
             console.log("Response:", response.data);
-            router.back();
-        } catch (error) {
-            console.error("Error submitting form:", error);
+            setTimeout(() => {
+                setShowReward(false);
+                router.back();
+            }, 2000);
+        } catch (error: any) {
+            console.error("Error submitting form:", error.response?.data || error.message);
         }
     };
+
 
 
     return (
@@ -189,6 +200,24 @@ const Restaurant = () => {
                     </div>
                 </form>
             </div>
+            {showReward && (
+                <div className={style.reward_popup}>
+                    <div className={style.reward_container}>
+                        <div className={style.coin_graphic}>
+                            <Image
+                                src="/images/Trip/give_coin.png"
+                                alt="Coin"
+                                width={80}
+                                height={80}
+                                className={style.coin_img}
+                            />
+                        </div>
+                        <div className={style.reward_text}>
+                            <span className={style.plus_text}>+{earnBadgePoint}</span> Coins Earned!
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

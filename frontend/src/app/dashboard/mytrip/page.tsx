@@ -35,6 +35,7 @@ const MyTrip = () => {
           `http://localhost:7050/api/v1/trip/getbyuserid?userId=${userId}`
         );
         setTrips(res.data.trips || []);
+        console.log(res.data);
       } catch (err) {
         console.error("Error fetching trips:", err);
         setError("Failed to fetch trips. Please try again.");

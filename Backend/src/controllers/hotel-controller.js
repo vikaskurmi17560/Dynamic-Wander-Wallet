@@ -4,42 +4,51 @@ const Trip = require("../models/trip");
 
 exports.createHotel = async (req, res) => {
   try {
+    console.log("Received Body:", req.body);
 
-    const { trip_id, checkpoint_id, Earnbudget_point, ...hoteldata } = req.body;
+    const { trip_id, checkpoint_id, Earnbadge_point, Earnbudget_point, ...hotelData } = req.body;
 
+    // Add required fields back to the hotel data
+    hotelData.trip_id = trip_id;
+    hotelData.checkpoint_id = checkpoint_id;
 
-    if (Earnbudget_point !== undefined && Earnbudget_point !== null) {
-      hoteldata.Earnbadge_point = Earnbudget_point;
+    if (Earnbadge_point !== undefined && Earnbadge_point !== null) {
+      hotelData.Earnbadge_point = Earnbadge_point;
     }
 
+    if (Earnbudget_point !== undefined && Earnbudget_point !== null) {
+      hotelData.Earnbudget_point = Earnbudget_point;
+    }
 
-    const hotel = await Hotel.create(hoteldata);
+    const hotel = await Hotel.create(hotelData);
 
-
-    if (checkpoint_id && Earnbudget_point) {
+    // Update Checkpoint badge points
+    if (checkpoint_id && Earnbadge_point) {
       await Checkpoints.findByIdAndUpdate(
         checkpoint_id,
-        { $inc: { Earnbadge_point: Earnbudget_point } }
+        { $inc: { Earnbadge_point: Earnbadge_point } }
       );
     }
 
-
-    if (trip_id && Earnbudget_point) {
+    // Update Trip badge points
+    if (trip_id && Earnbadge_point) {
       await Trip.findByIdAndUpdate(
         trip_id,
-        { $inc: { Earnbadge_point: Earnbudget_point } }
+        { $inc: { Earnbadge_point: Earnbadge_point } }
       );
     }
 
     res.status(201).json({
       success: true,
-      message: "Hotel creation done successfully",
+      message: "Hotel created successfully",
       hotel
     });
   } catch (error) {
+    console.error("Error in createHotel:", error);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.getHotelsByCheckpointId = async (req, res) => {
   try {

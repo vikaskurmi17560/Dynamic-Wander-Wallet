@@ -3,35 +3,43 @@ const Restaurant = require("../models/restaurants");
 const Hotel = require("../models/hotel");
 const Trip = require("../models/trip");
 
+
 exports.createCheckpoint = async (req, res) => {
   try {
-    
-    const { trip_id, Earnbudget_point, ...checkpointdata } = req.body;
+    const { trip_id, Earnbadge_point, ...checkpointdata } = req.body;
 
+    console.log("Trip ID:", trip_id);
+    console.log("Earnbadge_point:", Earnbadge_point);
 
-    if (Earnbudget_point !== undefined && Earnbudget_point !== null) {
-      checkpointdata.Earnbudget_point = Earnbudget_point;
+    if (!trip_id) {
+      return res.status(400).json({ error: "trip_id is required" });
     }
 
+    checkpointdata.trip_id = trip_id;
+
+    if (Earnbadge_point !== undefined && Earnbadge_point !== null) {
+      checkpointdata.Earnbadge_point = Earnbadge_point;
+    }
 
     const checkpoint = await Checkpoints.create(checkpointdata);
-
-    if (trip_id && Earnbudget_point) {
+    if (trip_id && Earnbadge_point) {
       await Trip.findByIdAndUpdate(
         trip_id,
-        { $inc: { Earnbadge_point: Earnbudget_point } }
+        { $inc: { Earnbadge_point: Earnbadge_point } }
       );
     }
-
     res.status(201).json({
       success: true,
-      message: "Creation on Checkpoint is Done",
-      checkpoint
+      message: "Checkpoint created successfully",
+      checkpoint,
     });
+
   } catch (error) {
+    console.error("Error creating checkpoint:", error);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.getCheckpointsByTrip = async (req, res) => {
   try {

@@ -368,8 +368,6 @@ exports.useBadgePoints = async (req, res) => {
     try {
         let { userId, productId, pointsToUse } = req.body;
 
-
-
         if (!userId || !productId || isNaN(pointsToUse) || pointsToUse <= 0 || !Number.isInteger(pointsToUse)) {
             return res.status(400).json({
                 success: false,

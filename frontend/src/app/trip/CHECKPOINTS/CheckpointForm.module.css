@@ -12,7 +12,7 @@
     background-color: #fbdde7;
 }
 
-.cross_btn{
+.cross_btn {
     position: absolute;
     top: 0.7em;
     right: 1em;
@@ -24,7 +24,7 @@
     cursor: pointer;
 }
 
-.form{
+.form {
     display: flex;
     flex-direction: column;
     gap: 0.8em;
@@ -75,7 +75,7 @@
     color: black;
 }
 
-.budget{
+.budget {
     border: 1px solid rgb(155, 155, 155);
     border-radius: 0.2em;
     padding: 0.7em;
@@ -87,14 +87,14 @@
     gap: 1.7em;
 }
 
-.sub_name{
+.sub_name {
     font-size: 0.9em;
     font-family: sans-serif;
     color: rgb(58, 9, 68);
     margin-bottom: 0.5em;
 }
 
-.submit_btn{
+.submit_btn {
     width: 100%;
     display: flex;
     align-items: center;
@@ -102,9 +102,94 @@
     padding: 0.7em 2.2em;
 }
 
-.btn_div{
+.btn_div {
     /* border: 1px solid black; */
     display: flex;
     justify-content: space-between;
     padding: 0.5em;
+}
+
+.coins_popup {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    animation: fadeOut 6s forwards;
+}
+
+.coins_border {
+    height: 27vh;
+    width: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: orange;
+    border: 4px solid transparent;
+    animation: borderMove 6s linear infinite, scaleUp 0.3s ease;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+    border-image: linear-gradient(45deg, red, yellow, green, cyan, blue, violet, red);
+    border-image-slice: 1;
+}
+
+.coins_image_div {
+    height: 10vh;
+    width: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.coin_img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+}
+
+.coin_value {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 5px black;
+}
+
+@keyframes borderMove {
+    0% {
+        border-image-source: linear-gradient(0deg, red, yellow, green, cyan, blue, violet, red);
+    }
+
+    100% {
+        border-image-source: linear-gradient(360deg, red, yellow, green, cyan, blue, violet, red);
+    }
+}
+
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(0.8);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
