@@ -1,0 +1,84 @@
+
+.voucherContainer {
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.voucherTitle {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.voucherGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.voucherCard {
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease;
+}
+
+.voucherCard:hover {
+    transform: translateY(-4px);
+}
+
+.voucherHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.voucherHeader h3 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.voucherDiscount {
+    background-color: #f97316;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.status {
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.active {
+    color: #10b981;
+}
+
+.redeemed {
+    color: #ef4444;
+}
+
+.redeemBtn {
+    margin-top: 12px;
+    background-color: #2563eb;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.redeemBtn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.redeemBtn:hover:not(:disabled) {
+    background-color: #1d4ed8;
+}

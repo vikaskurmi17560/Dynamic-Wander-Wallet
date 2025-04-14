@@ -1,0 +1,802 @@
+[
+    {
+        "name": "McDonald's",
+        "code": "VOUCHER6HLLP2RM",
+        "discountType": "percent",
+        "amount": 21,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-24T05:37:47.340958"
+    },
+    {
+        "name": "MakeMyTrip",
+        "code": "VOUCHERBXWK237O",
+        "discountType": "flat",
+        "amount": 44,
+        "isRedeemed": true,
+        "expiresAt": "2025-09-01T05:37:47.340984"
+    },
+    {
+        "name": "Puma",
+        "code": "VOUCHERNEMLP2HG",
+        "discountType": "flat",
+        "amount": 19,
+        "isRedeemed": false,
+        "expiresAt": "2025-08-26T05:37:47.341003"
+    },
+    {
+        "name": "Domino's",
+        "code": "VOUCHER762HRJR7",
+        "discountType": "flat",
+        "amount": 33,
+        "isRedeemed": false,
+        "expiresAt": "2025-05-25T05:37:47.341016"
+    },
+    {
+        "name": "Nykaa",
+        "code": "VOUCHER43MV12HD",
+        "discountType": "flat",
+        "amount": 12,
+        "isRedeemed": true,
+        "expiresAt": "2025-08-30T05:37:47.341029"
+    },
+    {
+        "name": "Flipkart",
+        "code": "VOUCHERFYJNAG5N",
+        "discountType": "percent",
+        "amount": 17,
+        "isRedeemed": false,
+        "expiresAt": "2025-09-02T05:37:47.341037"
+    },
+    {
+        "name": "Adidas",
+        "code": "VOUCHER5ZGHK1HL",
+        "discountType": "flat",
+        "amount": 31,
+        "isRedeemed": false,
+        "expiresAt": "2025-10-01T05:37:47.341050"
+    },
+    {
+        "name": "Burger King",
+        "code": "VOUCHERKRRCRX6X",
+        "discountType": "percent",
+        "amount": 18,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-02T05:37:47.341062"
+    },
+    {
+        "name": "McDonald's",
+        "code": "VOUCHERGFAWH29A",
+        "discountType": "percent",
+        "amount": 29,
+        "isRedeemed": true,
+        "expiresAt": "2025-09-01T05:37:47.341072"
+    },
+    {
+        "name": "Zomato",
+        "code": "VOUCHER8FP5X1LC",
+        "discountType": "flat",
+        "amount": 48,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-01T05:37:47.341080"
+    },
+    {
+        "name": "Burger King",
+        "code": "VOUCHERDTLM5BZQ",
+        "discountType": "percent",
+        "amount": 17,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-22T05:37:47.341088"
+    },
+    {
+        "name": "Boat",
+        "code": "VOUCHERCI4YL2UF",
+        "discountType": "flat",
+        "amount": 31,
+        "isRedeemed": false,
+        "expiresAt": "2025-08-28T05:37:47.341095"
+    },
+    {
+        "name": "Samsung",
+        "code": "VOUCHER3H0U8SLH",
+        "discountType": "percent",
+        "amount": 18,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-17T05:37:47.341103"
+    },
+    {
+        "name": "Spotify",
+        "code": "VOUCHERE0RVN7V8",
+        "discountType": "flat",
+        "amount": 41,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-14T05:37:47.341110"
+    },
+    {
+        "name": "Puma",
+        "code": "VOUCHER2KMV3TKW",
+        "discountType": "percent",
+        "amount": 14,
+        "isRedeemed": false,
+        "expiresAt": "2025-09-16T05:37:47.341117"
+    },
+    {
+        "name": "Spotify",
+        "code": "VOUCHERGLVW09YK",
+        "discountType": "flat",
+        "amount": 8,
+        "isRedeemed": false,
+        "expiresAt": "2025-10-11T05:37:47.341126"
+    },
+    {
+        "name": "Pizza Hut",
+        "code": "VOUCHER6KZIN2YO",
+        "discountType": "percent",
+        "amount": 30,
+        "isRedeemed": false,
+        "expiresAt": "2025-09-23T05:37:47.341134"
+    },
+    {
+        "name": "Samsung",
+        "code": "VOUCHERG6SMHZ70",
+        "discountType": "flat",
+        "amount": 25,
+        "isRedeemed": false,
+        "expiresAt": "2025-08-23T05:37:47.341141"
+    },
+    {
+        "name": "Snapdeal",
+        "code": "VOUCHER1I5J1WMN",
+        "discountType": "percent",
+        "amount": 22,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-26T05:37:47.341148"
+    },
+    {
+        "name": "Dell",
+        "code": "VOUCHERYPHCQVKQ",
+        "discountType": "percent",
+        "amount": 11,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-22T05:37:47.341155"
+    },
+    {
+        "name": "Myntra",
+        "code": "VOUCHERGJTDE41Q",
+        "discountType": "flat",
+        "amount": 16,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-04T05:37:47.341162"
+    },
+    {
+        "name": "Spotify",
+        "code": "VOUCHERN7M2A67O",
+        "discountType": "percent",
+        "amount": 27,
+        "isRedeemed": false,
+        "expiresAt": "2025-08-02T05:37:47.341169"
+    },
+    {
+        "name": "Nike",
+        "code": "VOUCHER9DXI2GZL",
+        "discountType": "flat",
+        "amount": 31,
+        "isRedeemed": true,
+        "expiresAt": "2025-04-29T05:37:47.341177"
+    },
+    {
+        "name": "Lenovo",
+        "code": "VOUCHER5LBMIJZ0",
+        "discountType": "percent",
+        "amount": 18,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-20T05:37:47.341196"
+    },
+    {
+        "name": "Netflix",
+        "code": "VOUCHERXCJIU17U",
+        "discountType": "flat",
+        "amount": 49,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-07T05:37:47.341203"
+    },
+    {
+        "name": "Domino's",
+        "code": "VOUCHERZJ8MSFTQ",
+        "discountType": "percent",
+        "amount": 27,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-20T05:37:47.341210"
+    },
+    {
+        "name": "Samsung",
+        "code": "VOUCHER3XRNM9MI",
+        "discountType": "percent",
+        "amount": 26,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-11T05:37:47.341218"
+    },
+    {
+        "name": "HP",
+        "code": "VOUCHERC6PR7UT9",
+        "discountType": "flat",
+        "amount": 32,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-23T05:37:47.341225"
+    },
+    {
+        "name": "Snapdeal",
+        "code": "VOUCHERA7P8J1ZH",
+        "discountType": "percent",
+        "amount": 26,
+        "isRedeemed": true,
+        "expiresAt": "2025-05-27T05:37:47.341232"
+    },
+    {
+        "name": "MakeMyTrip",
+        "code": "VOUCHERMR0IQFRY",
+        "discountType": "percent",
+        "amount": 28,
+        "isRedeemed": false,
+        "expiresAt": "2025-10-05T05:37:47.341240"
+    },
+    {
+        "name": "Nike",
+        "code": "VOUCHERZES38SSO",
+        "discountType": "flat",
+        "amount": 31,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-15T05:37:47.341249"
+    },
+    {
+        "name": "Flipkart",
+        "code": "VOUCHER176S83OR",
+        "discountType": "flat",
+        "amount": 7,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-25T05:37:47.341262"
+    },
+    {
+        "name": "Ola",
+        "code": "VOUCHERBKMGQ8R6",
+        "discountType": "percent",
+        "amount": 17,
+        "isRedeemed": true,
+        "expiresAt": "2025-08-05T05:37:47.341274"
+    },
+    {
+        "name": "Samsung",
+        "code": "VOUCHERM1988P6Z",
+        "discountType": "flat",
+        "amount": 29,
+        "isRedeemed": true,
+        "expiresAt": "2025-07-28T05:37:47.341281"
+    },
+    {
+        "name": "Boat",
+        "code": "VOUCHER8C8VFRN7",
+        "discountType": "percent",
+        "amount": 30,
+        "isRedeemed": false,
+        "expiresAt": "2025-10-09T05:37:47.341288"
+    },
+    {
+        "name": "HP",
+        "code": "VOUCHERSTQ2XA57",
+        "discountType": "percent",
+        "amount": 19,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-30T05:37:47.341296"
+    },
+    {
+        "name": "Zomato",
+        "code": "VOUCHERIKDAPMOB",
+        "discountType": "flat",
+        "amount": 16,
+        "isRedeemed": false,
+        "expiresAt": "2025-05-13T05:37:47.341303"
+    },
+    {
+        "name": "Zomato",
+        "code": "VOUCHERH0RP2YX4",
+        "discountType": "flat",
+        "amount": 22,
+        "isRedeemed": false,
+        "expiresAt": "2025-08-03T05:37:47.341310"
+    },
+    {
+        "name": "Pizza Hut",
+        "code": "VOUCHERQMUMHDW9",
+        "discountType": "percent",
+        "amount": 23,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-12T05:37:47.341317"
+    },
+    {
+        "name": "Boat",
+        "code": "VOUCHERK0XA6WQO",
+        "discountType": "flat",
+        "amount": 26,
+        "isRedeemed": false,
+        "expiresAt": "2025-09-16T05:37:47.341329"
+    },
+    {
+        "name": "HP",
+        "code": "VOUCHERGH8QZ1TZ",
+        "discountType": "flat",
+        "amount": 11,
+        "isRedeemed": false,
+        "expiresAt": "2025-10-02T05:37:47.341336"
+    },
+    {
+        "name": "Myntra",
+        "code": "VOUCHERT6K2NCAQ",
+        "discountType": "percent",
+        "amount": 29,
+        "isRedeemed": true,
+        "expiresAt": "2025-09-28T05:37:47.341346"
+    },
+    {
+        "name": "Samsung",
+        "code": "VOUCHERQU1YZ3U7",
+        "discountType": "flat",
+        "amount": 29,
+        "isRedeemed": true,
+        "expiresAt": "2025-08-20T05:37:47.341353"
+    },
+    {
+        "name": "Samsung",
+        "code": "VOUCHER0YPK8AH3",
+        "discountType": "flat",
+        "amount": 23,
+        "isRedeemed": false,
+        "expiresAt": "2025-05-30T05:37:47.341360"
+    },
+    {
+        "name": "Nike",
+        "code": "VOUCHERZ7LP81Y6",
+        "discountType": "flat",
+        "amount": 21,
+        "isRedeemed": false,
+        "expiresAt": "2025-09-25T05:37:47.341367"
+    },
+    {
+        "name": "Zomato",
+        "code": "VOUCHERFFTCPK8A",
+        "discountType": "flat",
+        "amount": 23,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-21T05:37:47.341375"
+    },
+    {
+        "name": "Netflix",
+        "code": "VOUCHER59Y6DHSQ",
+        "discountType": "percent",
+        "amount": 15,
+        "isRedeemed": false,
+        "expiresAt": "2025-05-18T05:37:47.341382"
+    },
+    {
+        "name": "Uber",
+        "code": "VOUCHEROSX2ZO9Z",
+        "discountType": "percent",
+        "amount": 16,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-06T05:37:47.341390"
+    },
+    {
+        "name": "Spotify",
+        "code": "VOUCHERS474HX5P",
+        "discountType": "percent",
+        "amount": 10,
+        "isRedeemed": true,
+        "expiresAt": "2025-06-21T05:37:47.341398"
+    },
+    {
+        "name": "Dell",
+        "code": "VOUCHER9XAIJY98",
+        "discountType": "percent",
+        "amount": 15,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-28T05:37:47.341405"
+    },
+    {
+        "name": "Flipkart",
+        "code": "VOUCHERFRUCS131",
+        "discountType": "percent",
+        "amount": 30,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-19T05:37:47.341412"
+    },
+    {
+        "name": "ASUS",
+        "code": "VOUCHER6IWMZWUG",
+        "discountType": "percent",
+        "amount": 14,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-27T05:37:47.341419"
+    },
+    {
+        "name": "Myntra",
+        "code": "VOUCHERDCR72R8W",
+        "discountType": "percent",
+        "amount": 13,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-25T05:37:47.341427"
+    },
+    {
+        "name": "Puma",
+        "code": "VOUCHERWC9CS713",
+        "discountType": "flat",
+        "amount": 27,
+        "isRedeemed": false,
+        "expiresAt": "2025-05-21T05:37:47.341435"
+    },
+    {
+        "name": "Tata Cliq",
+        "code": "VOUCHERB2GXD6DT",
+        "discountType": "flat",
+        "amount": 38,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-03T05:37:47.341462"
+    },
+    {
+        "name": "BigBasket",
+        "code": "VOUCHERZQ3M85YW",
+        "discountType": "flat",
+        "amount": 41,
+        "isRedeemed": false,
+        "expiresAt": "2025-10-03T05:37:47.341476"
+    },
+    {
+        "name": "Puma",
+        "code": "VOUCHERBOENH6A8",
+        "discountType": "flat",
+        "amount": 48,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-24T05:37:47.341483"
+    },
+    {
+        "name": "Pizza Hut",
+        "code": "VOUCHERL2QO76OS",
+        "discountType": "percent",
+        "amount": 11,
+        "isRedeemed": false,
+        "expiresAt": "2025-08-06T05:37:47.341491"
+    },
+    {
+        "name": "HP",
+        "code": "VOUCHERBU8PBDHP",
+        "discountType": "flat",
+        "amount": 41,
+        "isRedeemed": false,
+        "expiresAt": "2025-08-20T05:37:47.341498"
+    },
+    {
+        "name": "Myntra",
+        "code": "VOUCHERBDGVZ67U",
+        "discountType": "flat",
+        "amount": 37,
+        "isRedeemed": false,
+        "expiresAt": "2025-05-30T05:37:47.341505"
+    },
+    {
+        "name": "Flipkart",
+        "code": "VOUCHERS7JXBXOH",
+        "discountType": "percent",
+        "amount": 14,
+        "isRedeemed": false,
+        "expiresAt": "2025-05-15T05:37:47.341513"
+    },
+    {
+        "name": "Ajio",
+        "code": "VOUCHERGIPH50U7",
+        "discountType": "flat",
+        "amount": 25,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-14T05:37:47.341519"
+    },
+    {
+        "name": "ASUS",
+        "code": "VOUCHERKECOMIF3",
+        "discountType": "percent",
+        "amount": 17,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-14T05:37:47.341527"
+    },
+    {
+        "name": "Ola",
+        "code": "VOUCHERBKPZG688",
+        "discountType": "percent",
+        "amount": 19,
+        "isRedeemed": true,
+        "expiresAt": "2025-07-13T05:37:47.341535"
+    },
+    {
+        "name": "Snapdeal",
+        "code": "VOUCHER6RN8POML",
+        "discountType": "percent",
+        "amount": 23,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-07T05:37:47.341543"
+    },
+    {
+        "name": "Dell",
+        "code": "VOUCHERXYGGYMRR",
+        "discountType": "percent",
+        "amount": 12,
+        "isRedeemed": true,
+        "expiresAt": "2025-08-10T05:37:47.341550"
+    },
+    {
+        "name": "Flipkart",
+        "code": "VOUCHERLWT7EKZP",
+        "discountType": "percent",
+        "amount": 29,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-17T05:37:47.341558"
+    },
+    {
+        "name": "Adidas",
+        "code": "VOUCHERHIOI0KEX",
+        "discountType": "percent",
+        "amount": 25,
+        "isRedeemed": true,
+        "expiresAt": "2025-07-13T05:37:47.341567"
+    },
+    {
+        "name": "ASUS",
+        "code": "VOUCHERCAJG116D",
+        "discountType": "flat",
+        "amount": 32,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-07T05:37:47.341578"
+    },
+    {
+        "name": "Burger King",
+        "code": "VOUCHERJ3WSBZVV",
+        "discountType": "flat",
+        "amount": 22,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-23T05:37:47.341687"
+    },
+    {
+        "name": "Swiggy",
+        "code": "VOUCHER0AYP3PS3",
+        "discountType": "percent",
+        "amount": 22,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-20T05:37:47.341711"
+    },
+    {
+        "name": "Zomato",
+        "code": "VOUCHERPT19DDKK",
+        "discountType": "percent",
+        "amount": 19,
+        "isRedeemed": true,
+        "expiresAt": "2025-07-30T05:37:47.341723"
+    },
+    {
+        "name": "BigBasket",
+        "code": "VOUCHERD73Z2D8F",
+        "discountType": "percent",
+        "amount": 16,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-23T05:37:47.341735"
+    },
+    {
+        "name": "Pizza Hut",
+        "code": "VOUCHERIU1DE2JJ",
+        "discountType": "percent",
+        "amount": 27,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-24T05:37:47.341747"
+    },
+    {
+        "name": "Puma",
+        "code": "VOUCHER63QLRM7F",
+        "discountType": "flat",
+        "amount": 7,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-18T05:37:47.341758"
+    },
+    {
+        "name": "BigBasket",
+        "code": "VOUCHERHBD6084G",
+        "discountType": "flat",
+        "amount": 10,
+        "isRedeemed": false,
+        "expiresAt": "2025-10-05T05:37:47.341765"
+    },
+    {
+        "name": "MakeMyTrip",
+        "code": "VOUCHER6YEV67YX",
+        "discountType": "percent",
+        "amount": 22,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-21T05:37:47.341773"
+    },
+    {
+        "name": "MakeMyTrip",
+        "code": "VOUCHERX53APK7T",
+        "discountType": "percent",
+        "amount": 27,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-21T05:37:47.341782"
+    },
+    {
+        "name": "Ajio",
+        "code": "VOUCHERLT4WPGNE",
+        "discountType": "percent",
+        "amount": 13,
+        "isRedeemed": true,
+        "expiresAt": "2025-05-13T05:37:47.341789"
+    },
+    {
+        "name": "BigBasket",
+        "code": "VOUCHERZEOBZAKK",
+        "discountType": "flat",
+        "amount": 39,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-23T05:37:47.341797"
+    },
+    {
+        "name": "Spotify",
+        "code": "VOUCHERCL60YH2X",
+        "discountType": "flat",
+        "amount": 42,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-03T05:37:47.341804"
+    },
+    {
+        "name": "Blinkit",
+        "code": "VOUCHERFPS7JDY8",
+        "discountType": "percent",
+        "amount": 22,
+        "isRedeemed": false,
+        "expiresAt": "2025-08-31T05:37:47.341811"
+    },
+    {
+        "name": "Burger King",
+        "code": "VOUCHERHT6Y4CV4",
+        "discountType": "percent",
+        "amount": 10,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-30T05:37:47.341818"
+    },
+    {
+        "name": "Nike",
+        "code": "VOUCHERSCSUJFAU",
+        "discountType": "flat",
+        "amount": 33,
+        "isRedeemed": false,
+        "expiresAt": "2025-05-11T05:37:47.341825"
+    },
+    {
+        "name": "Zomato",
+        "code": "VOUCHERNRPRSQN6",
+        "discountType": "percent",
+        "amount": 27,
+        "isRedeemed": false,
+        "expiresAt": "2025-10-08T05:37:47.341832"
+    },
+    {
+        "name": "ASUS",
+        "code": "VOUCHER9A7HZ292",
+        "discountType": "flat",
+        "amount": 12,
+        "isRedeemed": false,
+        "expiresAt": "2025-08-11T05:37:47.341840"
+    },
+    {
+        "name": "Puma",
+        "code": "VOUCHEREERHXORG",
+        "discountType": "flat",
+        "amount": 32,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-23T05:37:47.341851"
+    },
+    {
+        "name": "Myntra",
+        "code": "VOUCHERQX0ZSNF7",
+        "discountType": "percent",
+        "amount": 18,
+        "isRedeemed": true,
+        "expiresAt": "2025-04-26T05:37:47.341863"
+    },
+    {
+        "name": "Spotify",
+        "code": "VOUCHERDGE8T4N6",
+        "discountType": "flat",
+        "amount": 6,
+        "isRedeemed": false,
+        "expiresAt": "2025-05-07T05:37:47.341872"
+    },
+    {
+        "name": "MakeMyTrip",
+        "code": "VOUCHER8H5XJ2MB",
+        "discountType": "percent",
+        "amount": 10,
+        "isRedeemed": false,
+        "expiresAt": "2025-08-15T05:37:47.341879"
+    },
+    {
+        "name": "Boat",
+        "code": "VOUCHER1NLVQI0R",
+        "discountType": "percent",
+        "amount": 29,
+        "isRedeemed": false,
+        "expiresAt": "2025-06-15T05:37:47.341897"
+    },
+    {
+        "name": "HP",
+        "code": "VOUCHERFOI9YWCX",
+        "discountType": "percent",
+        "amount": 18,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-14T05:37:47.341905"
+    },
+    {
+        "name": "Snapdeal",
+        "code": "VOUCHERAXTUZHS0",
+        "discountType": "percent",
+        "amount": 18,
+        "isRedeemed": false,
+        "expiresAt": "2025-04-15T05:37:47.341912"
+    },
+    {
+        "name": "Burger King",
+        "code": "VOUCHERHREECHM1",
+        "discountType": "percent",
+        "amount": 15,
+        "isRedeemed": false,
+        "expiresAt": "2025-05-12T05:37:47.341920"
+    },
+    {
+        "name": "Burger King",
+        "code": "VOUCHER0MLCT44A",
+        "discountType": "flat",
+        "amount": 16,
+        "isRedeemed": false,
+        "expiresAt": "2025-08-03T05:37:47.341927"
+    },
+    {
+        "name": "Flipkart",
+        "code": "VOUCHER1SM3WBL6",
+        "discountType": "percent",
+        "amount": 15,
+        "isRedeemed": false,
+        "expiresAt": "2025-07-22T05:37:47.341934"
+    },
+    {
+        "name": "Adidas",
+        "code": "VOUCHERTHPMXQQE",
+        "discountType": "flat",
+        "amount": 28,
+        "isRedeemed": true,
+        "expiresAt": "2025-09-04T05:37:47.341941"
+    },
+    {
+        "name": "BigBasket",
+        "code": "VOUCHERTKM16GKP",
+        "discountType": "percent",
+        "amount": 19,
+        "isRedeemed": false,
+        "expiresAt": "2025-10-06T05:37:47.341948"
+    },
+    {
+        "name": "Domino's",
+        "code": "VOUCHERTLR9AIBU",
+        "discountType": "flat",
+        "amount": 40,
+        "isRedeemed": true,
+        "expiresAt": "2025-06-09T05:37:47.341955"
+    },
+    {
+        "name": "Lenovo",
+        "code": "VOUCHERSVI9FHR8",
+        "discountType": "flat",
+        "amount": 50,
+        "isRedeemed": false,
+        "expiresAt": "2025-05-12T05:37:47.341963"
+    }
+]

@@ -6,6 +6,7 @@ import style from "./bonuspage.module.css";
 import useData from "@/hook/useData";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import VouchersPage from "./Vouchers";
 
 interface BadgeUsage {
     product_id: string;
@@ -42,7 +43,7 @@ const BonusPage = () => {
                 const res = await axios.get("http://localhost:7050/api/v1/user/get-user", {
                     params: { user_id: userId },
                 });
-                setUser(res.data?.user || res.data); 
+                setUser(res.data?.user || res.data);
             } catch (error: any) {
                 console.error(error?.response?.data?.message || "Error fetching user");
             }
@@ -85,7 +86,7 @@ const BonusPage = () => {
                     </div>
                 </div>
                 <div className={style.reward_container}>
-                    {/* Show rewards here */}
+                    <VouchersPage />
                 </div>
             </div>
         </div>

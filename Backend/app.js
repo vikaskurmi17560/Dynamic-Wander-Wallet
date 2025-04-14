@@ -20,7 +20,7 @@ const hotel_routes = require("./src/routes/hotel-routes");
 const restaurant_routes = require("./src/routes/restaurant-routes");
 const post_routes = require("./src/routes/post-routes");
 const product_routes = require("./src/routes/product-routes");
-
+const voucher_routes = require("./src/routes/voucher");
 
 app.use('/api/v1/user', user_route);
 app.use('/api/v1/trip', trip_routes);
@@ -28,6 +28,6 @@ app.use('/api/v1/checkpoint', checkpoint_routes);
 app.use('/api/v1/hotel', hotel_routes);
 app.use('/api/v1/restaurant', restaurant_routes);
 app.use('/api/v1/post', post_routes);
-app.use('/api/v1/product',product_routes);
-
+app.use('/api/v1/product', product_routes);
+app.use('/api/v1/voucher', voucher_routes);
 module.exports = app;
