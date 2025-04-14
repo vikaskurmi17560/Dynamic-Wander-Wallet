@@ -213,3 +213,36 @@ exports.followTrip = async (req, res) => {
   }
 };
 
+exports.updatedata = async (req, res) => {
+  try {
+    const { TripId, review, rating } = req.body;
+
+    if (!TripId || (!review && rating === undefined)) {
+      return res.status(400).json({ error: "TripId and at least one of review or rating is required" });
+    }
+
+    const updateData = {};
+
+    if (rating !== undefined) {
+      updateData.$push = { ...updateData.$push, rating: rating };
+    }
+
+    if (review) {
+      updateData.$push = { ...updateData.$push, review: review };
+    }
+
+    const updatetrip = await Trip.findByIdAndUpdate(TripId, updateData, { new: true });
+
+    if (!updatetrip) {
+      return res.status(400).json({ error: "Trip not updated successfully" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Data updated successfully",
+      updatetrip
+    });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};

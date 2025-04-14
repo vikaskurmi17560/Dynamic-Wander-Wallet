@@ -367,6 +367,11 @@ exports.getAllUser = async (req, res) => {
 exports.useBadgePoints = async (req, res) => {
     try {
         let { userId, productId, pointsToUse } = req.body;
+        console.log("Calling API:", {
+            userId,
+            productId,
+            pointsToUse,
+        });
 
         if (!userId || !productId || isNaN(pointsToUse) || pointsToUse <= 0 || !Number.isInteger(pointsToUse)) {
             return res.status(400).json({
