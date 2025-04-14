@@ -45,7 +45,23 @@ const tripSchema = new mongoose.Schema({
   Earnbadge_point: {
     type: Number,
     default: 0
-  }
+  },
+  rating:[{
+  type:Number,
+  min: 0,
+  max: 5
+  }],
+  review:[{
+    reviewBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
+    },
+    comment: {
+      type: String,
+      maxlength: 500
+    }
+  }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Trip', tripSchema);
