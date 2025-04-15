@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
 import React, { useEffect, useState } from "react";
 import style from "./Explore.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faSackDollar } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faStar } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import useCartStore from "@/app/store/useStore";
@@ -18,6 +18,8 @@ interface Trip {
   destination: string;
   cover_image?: string;
   TotalBudget?: number;
+  rating?: number[];
+  createdAt?: string;
 }
 
 const normalizeText = (text: string) =>
@@ -36,7 +38,11 @@ const Explore: React.FC = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get("http://localhost:7050/api/v1/trip/alltrip");
-        setTripData(res.data);
+        const sortedTrips = res.data.sort(
+          (a: Trip, b: Trip) =>
+            new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime()
+        );
+        setTripData(sortedTrips);
       } catch (err) {
         setError("Failed to fetch trip data.");
         console.error(err);
@@ -48,6 +54,7 @@ const Explore: React.FC = () => {
     fetchData();
   }, []);
 
+
   const filteredTrips = tripData.filter((trip) => {
     if (!searchQuery.trim()) return true;
 
@@ -56,6 +63,12 @@ const Explore: React.FC = () => {
 
     return cityNormalized.includes(queryNormalized);
   });
+
+  const calculateAverageRating = (ratings?: number[]): number => {
+    if (!ratings || ratings.length === 0) return 0;
+    const total = ratings.reduce((sum, r) => sum + r, 0);
+    return parseFloat((total / ratings.length).toFixed(1));
+  };
 
   return (
     <>
@@ -114,7 +127,15 @@ const Explore: React.FC = () => {
                   <p className={style.name}>Budget</p>
                   <span className={style.value}>₹{trip.TotalBudget}</span>
                 </div>
+                <div className={style.trip_location}>
+                  <p className={style.name}>Rating</p>
+                  <span className={style.value}>
+                    <FontAwesomeIcon icon={faStar} style={{ color: "#facc15" }} />{" "}
+                    {calculateAverageRating(trip.rating)}
+                  </span>
+                </div>
               </div>
+
               <div className={style.card_buttons}>
                 <button
                   className={style.quick_book}

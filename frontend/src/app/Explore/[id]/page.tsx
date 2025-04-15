@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import Feedback from "./Feedback";
 
 interface Checkpoint {
     _id: string;
@@ -37,7 +38,6 @@ interface Restaurant {
     description?: string;
     contact?: string;
 }
-
 
 
 const page = () => {
@@ -138,7 +138,6 @@ const page = () => {
         if (tripId) fetchTripData();
     }, [tripId]);
     useEffect(() => {
-        // Freeze scroll on modal open
         if (isGallery) {
             document.body.style.overflow = "hidden";
         } else {
@@ -163,7 +162,6 @@ const page = () => {
                 image: trip.image || [],
             });
 
-            // Set default selected image for modal preview
             if (trip.image && trip.image.length > 0) {
                 setIsUrl(trip.image[0]);
             }
@@ -180,7 +178,6 @@ const page = () => {
             return;
         }
 
-        // Optional: filter out any falsy strings just in case
         const validImages = uploadedData.image.filter(img => img && img.trim() !== "");
 
         if (validImages.length === 0) {
@@ -191,7 +188,6 @@ const page = () => {
         setIsUrl(validImages[0]);
         setIsGallery((prev) => !prev);
     };
-
 
     return (
         <div className={style.container}>
@@ -208,12 +204,10 @@ const page = () => {
             {loading && <p className={style.loading}>Loading checkpoints...</p>}
             {error && <p className={style.error}>{error}</p>}
 
-            <div className={style.btn_container}>
-                <div className={style.gallery}>
-                    <button className={style.button} onClick={handleGallery}>
-                        🖼️ <span>Gallery</span>
-                    </button>
-                </div>
+            <div className={style.gallery}>
+                <button className={style.button} onClick={handleGallery}>
+                    🖼️ <span>Gallery</span>
+                </button>
             </div>
 
             {isGallery && (
@@ -256,72 +250,76 @@ const page = () => {
                     />
                 </div>
             )}
-            <div className={style.timeline}>
-                {checkpoints.map((checkpoint, index) => {
-                    const isCompleted = completedCheckpoints.includes(checkpoint._id);
-                    const showLine = completedCheckpoints.length > index;
+            <div className={style.timeline_feedback}>
+                <div className={style.timeline}>
+                    {checkpoints.map((checkpoint, index) => {
+                        const isCompleted = completedCheckpoints.includes(checkpoint._id);
+                        const showLine = completedCheckpoints.length > index;
 
-                    return (
-                        <div key={checkpoint._id} className={style.timelineItem}>
-                            {index > 0 && (
+                        return (
+                            <div key={checkpoint._id} className={style.timelineItem}>
+                                {index > 0 && (
+                                    <div
+                                        className={`${style.progressLine} ${showLine ? style.activeLine : ""
+                                            }`}
+                                    ></div>
+                                )}
                                 <div
-                                    className={`${style.progressLine} ${showLine ? style.activeLine : ""
-                                        }`}
-                                ></div>
-                            )}
-                            <div
-                                className={`${style.card} ${isCompleted ? style.completed : ""}`}
-                            >
-                                <div className={style.header}>
-                                    <h3 className={style.h3}>Checkpoint {index + 1}</h3>
-                                </div>
+                                    className={`${style.card} ${isCompleted ? style.completed : ""}`}
+                                >
+                                    <div className={style.header}>
+                                        <h3 className={style.h3}>Checkpoint {index + 1}</h3>
+                                    </div>
 
-                                <div className={style.locationbox}>
-                                    <Image
-                                        src="/images/Daskboard/checkpoint.png"
-                                        alt="Checkpoint"
-                                        height={24}
-                                        width={24}
-                                        className={style.logo}
-                                    />
-                                    <p className={style.locationbox_name}>{checkpoint.source.name}</p>
-                                </div>
+                                    <div className={style.locationbox}>
+                                        <Image
+                                            src="/images/Daskboard/checkpoint.png"
+                                            alt="Checkpoint"
+                                            height={24}
+                                            width={24}
+                                            className={style.logo}
+                                        />
+                                        <p className={style.locationbox_name}>{checkpoint.source.name}</p>
+                                    </div>
 
-                                <div className={style.locationbox}>
-                                    <Image
-                                        src="/images/Daskboard/start_location.png"
-                                        alt="Destination"
-                                        height={24}
-                                        width={24}
-                                        className={style.logo}
-                                    />
-                                    <p className={style.locationbox_name}>{checkpoint.destination.name}</p>
-                                </div>
+                                    <div className={style.locationbox}>
+                                        <Image
+                                            src="/images/Daskboard/start_location.png"
+                                            alt="Destination"
+                                            height={24}
+                                            width={24}
+                                            className={style.logo}
+                                        />
+                                        <p className={style.locationbox_name}>{checkpoint.destination.name}</p>
+                                    </div>
 
-                                <div className={style.locationbox}>
-                                    <Image
-                                        src="/images/Daskboard/budget.png"
-                                        alt="Budget"
-                                        height={24}
-                                        width={24}
-                                        className={style.logo}
-                                    />
-                                    <p className={style.locationbox_name}>₹{checkpoint.Total_checkpointBudget}</p>
-                                </div>
-                                <div className={style.buttonWrapper}>
-                                    <button
-                                        type="button"
-                                        onClick={() => setActiveCheckpoint(checkpoint)}
-                                        title="Click to view full details"
-                                        className={style.btn_checkpoint}
-                                    >
-                                        View Details
-                                    </button>
+                                    <div className={style.locationbox}>
+                                        <Image
+                                            src="/images/Daskboard/budget.png"
+                                            alt="Budget"
+                                            height={24}
+                                            width={24}
+                                            className={style.logo}
+                                        />
+                                        <p className={style.locationbox_name}>₹{checkpoint.Total_checkpointBudget}</p>
+                                    </div>
+                                    <div className={style.buttonWrapper}>
+                                        <button
+                                            type="button"
+                                            onClick={() => setActiveCheckpoint(checkpoint)}
+                                            title="Click to view full details"
+                                            className={style.btn_checkpoint}
+                                        >
+                                            View Details
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
+                <Feedback
+                    tripId={tripId} />
             </div>
             {activeCheckpoint && (
                 <div className={style.modalOverlay}>
