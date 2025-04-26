@@ -255,7 +255,6 @@ exports.getUser = async (req, res) => {
             });
         }
 
-
         const userExists = await Users.findOne({ _id: user_id });
 
         if (!userExists) {

@@ -4,8 +4,10 @@
     min-height: 15vh;
     padding: 1em;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1.5em;
 }
 
 .search_box {
@@ -21,6 +23,33 @@
     height: 8.7vh;
 }
 
+.count_div{
+    width: 80%;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 1.5em;
+}
+
+.total_count{
+    display: flex;
+    gap: 0.5em;
+    font-size: 1.2em;
+    color: black;
+}
+
+.count_h{
+    color: rgb(129, 129, 129);
+}
+
+.bystate{
+    /* border: 1px solid black; */
+    color: black;
+    background-color: white;
+    padding: 0.4em 1em;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
 
 .input {
     padding-left: 0.8em;

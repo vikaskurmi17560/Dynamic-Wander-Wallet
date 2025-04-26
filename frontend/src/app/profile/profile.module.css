@@ -49,7 +49,7 @@
     height: 100%;
     width: 100%;
     border-radius: 50%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .profile_container_data {
@@ -194,19 +194,6 @@
     border-radius: 50%;
 }
 
-/* .story_name{
-    font-size: 0.9em;
-    color: red;
-    text-transform: capitalize;
-    font-weight: 100;
-    border: 1px solid red;
-    height: 8vh;
-    width: 100%;
-    overflow: scroll;
-    scrollbar-width: none;
-    text-align: center;
-} */
-
 .story_city{
     color: black;
     font-size: 1em;
@@ -220,7 +207,6 @@
 }
 
 .container_combine{
-    /* border: 1px solid black; */
     background-color: white;
     width: 98%;
     min-height: 60vh;
@@ -250,7 +236,6 @@
 }
 
 .profile_post_data{
-    /* border : 1px solid red; */
     height: auto;
     width: 100%;
 }

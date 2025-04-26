@@ -25,9 +25,18 @@ interface Trip {
 const normalizeText = (text: string) =>
   text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
+const states = [
+  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", 
+  "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", 
+  "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", 
+  "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", 
+  "Uttar Pradesh", "Uttarakhand", "West Bengal"
+];
+
 const Explore: React.FC = () => {
   const [tripData, setTripData] = useState<Trip[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedState, setSelectedState] = useState<string>(""); // for state filter
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -54,14 +63,14 @@ const Explore: React.FC = () => {
     fetchData();
   }, []);
 
-
   const filteredTrips = tripData.filter((trip) => {
-    if (!searchQuery.trim()) return true;
-
     const cityNormalized = normalizeText(trip.city);
     const queryNormalized = normalizeText(searchQuery);
+    const stateMatch = selectedState ? trip.state === selectedState : true;
 
-    return cityNormalized.includes(queryNormalized);
+    return (
+      (cityNormalized.includes(queryNormalized) || !searchQuery.trim()) && stateMatch
+    );
   });
 
   const calculateAverageRating = (ratings?: number[]): number => {
@@ -85,6 +94,29 @@ const Explore: React.FC = () => {
             <FontAwesomeIcon icon={faSearch} className={style.search_icon} />
           </div>
         </div>
+
+        <div className={style.count_div}>
+          <div className={style.total_count}>
+            <p className={style.count_h}>Total No. of Trips</p>
+            <p>{tripData.length}</p>
+          </div>
+          <div className={style.total_count}>
+            <p className={style.count_h}>Total No. of Trips (Filtered by City)</p>
+            <p>{filteredTrips.length}</p>
+          </div>
+          <div>
+            <select 
+              className={style.bystate} 
+              value={selectedState} 
+              onChange={(e) => setSelectedState(e.target.value)}
+            >
+              <option value="">All States</option>
+              {states.map((state) => (
+                <option key={state} value={state}>{state}</option>
+              ))}
+            </select>
+          </div>
+        </div>
       </div>
 
       <div className={style.trip_div}>
@@ -96,11 +128,7 @@ const Explore: React.FC = () => {
           filteredTrips.map((trip) => (
             <div key={trip._id} className={style.trip_card}>
               <Image
-                src={
-                  trip.cover_image && trip.cover_image.trim() !== ""
-                    ? trip.cover_image
-                    : "/images/Trip/CheckpointData.jpg"
-                }
+                src={trip.cover_image && trip.cover_image.trim() !== "" ? trip.cover_image : "/images/Trip/CheckpointData.jpg"}
                 alt={trip.tripName || "Trip Image"}
                 height={500}
                 width={500}

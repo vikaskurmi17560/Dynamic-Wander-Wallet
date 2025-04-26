@@ -1,0 +1,41 @@
+.main {
+    margin-top: 6.9em;
+}
+
+.main {
+    /* position: relative; */
+    height: 100vh;
+    width: 100%;
+}
+
+.distanceBox {
+    /* position: absolute;
+    bottom: 20px;
+    left: 50%; */
+    /* transform: translateX(-50%); */
+    background-color: white;
+    color:black;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    border: 1px solid balck;
+    /* z-index: 999; */
+    color : red;
+}
+
+.mapWrapper {
+    position: relative;
+}
+
+.distanceDisplay {
+    /* position: absolute; */
+    /* top: 20px; */
+    /* right: 20px; */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    color : black;
+}

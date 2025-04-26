@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; // ✅ Correct router import
+import { useRouter } from "next/navigation"; 
 import { GetUser } from "../connection/userConnection";
 import toast from "react-hot-toast";
 
@@ -18,7 +18,6 @@ const useData = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // ✅ Get token and user ID from localStorage
     const token = localStorage.getItem("token");
     const storedUserId = localStorage.getItem("user_id");
 
@@ -28,7 +27,6 @@ const useData = () => {
     }
 
     try {
-      // ✅ Extract actual userId from JSON
       const parsedUserId = JSON.parse(storedUserId)?.value || null;
       if (!parsedUserId) {
         setIsAuthenticated(false);
@@ -40,7 +38,7 @@ const useData = () => {
 
       const fetchUserData = async () => {
         try {
-          const response = await GetUser(parsedUserId); // ✅ Use correct userId
+          const response = await GetUser(parsedUserId); 
           if (response.success) {
             setUser({
               name: response.user.name || "",
@@ -68,13 +66,10 @@ const useData = () => {
     localStorage.removeItem("user_name");
     localStorage.removeItem("user_email");
     localStorage.removeItem("user_image");
-
     setIsAuthenticated(false);
     toast.success("Logged out successfully");
-
     router.replace("/login");
   };
-
   return { userId, user, isAuthenticated, handleLogout };
 };
 

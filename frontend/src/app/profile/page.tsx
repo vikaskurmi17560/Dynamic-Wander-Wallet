@@ -1,8 +1,6 @@
 "use client";
-
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useData from "../../hook/useData";
 import style from "./profile.module.css";
 import axios from 'axios';
 import Image from 'next/image';
@@ -11,7 +9,7 @@ import ProfilePost from './ProfilePost';
 import ProfileReel from './Reel/ProfileReel';
 import ProfileTrip from './Trip/ProfileTrip';
 import SuggestedUsers from './SuggestedUsers';
-import Form from "@/app/form/page";
+import { useData } from '@/context/UserContext';
 
 interface User {
   _id: string;
@@ -59,7 +57,7 @@ const Profile = () => {
   const router = useRouter();
   const [isShow, setIsShow] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const { userId, user, isAuthenticated } = useData();
+  const { userId, isAuthenticated } = useData();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -78,39 +76,39 @@ const Profile = () => {
         console.error("API error:", error);
       }
     };
-    if (userId) {
+
+    if (userId && isAuthenticated) {
       fetchUser();
     }
-  }, [userId, isShow, user, onclose]);
+  }, [userId, isAuthenticated, isFormOpen, isShow]);
 
-  if (!isAuthenticated || !user) return null;
+  if (!isAuthenticated || !userData) return null;
 
   return (
     <main className={style.main}>
       <section className={style.container}>
         <section
-          style={{ backgroundImage: `url(${user.banner || '/RedBackground.webp'})` }}
+          style={{ backgroundImage: `url(${userData.banner || '/RedBackground.webp'})` }}
           className={style.profile_photo_container}
         >
           <div className={style.photo_div}>
-            <img src={user.profile || "/images/profileIcon.webp"} alt="profile" className={style.profile_photo} />
+            <img src={userData.profile || "/images/profileIcon.webp"} alt="profile" className={style.profile_photo} />
           </div>
         </section>
 
         <section className={style.profile_container_data}>
           <div className={style.profile_data_div}>
             <div className={style.profile_name_div}>
-              <div className={style.profile_name}>i_am_{user.name}</div>
+              <div className={style.profile_name}>i_am_{userData.name}</div>
               <div className={style.profile_bio}>
-                {user.bio?.trim() === '' ? 'Please insert your bio' : user.bio}
+                {userData.bio?.trim() === '' ? 'Please insert your bio' : userData.bio}
               </div>
             </div>
             <button
               className={style.edit_btn}
-              onClick={() => setIsFormOpen((prev) => !prev)}>
+              onClick={() => router.push("/profile/editprofile")}>
               Edit Profile
             </button>
-            {isFormOpen && <Form onClose={() => setIsFormOpen(false)} />}
           </div>
 
           <div className={style.profile_follow_div}>

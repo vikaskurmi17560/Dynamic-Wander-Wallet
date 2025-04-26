@@ -3,29 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./Navbar.module.css";
-import useData from "@/hook/useData";
+// import useData from "@/hook/useData";
 import useLocation from "@/hook/useLocation";
+import { useData } from "@/context/UserContext";
 
 function Navbar() {
   const { isTripEnd } = useLocation();
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
-  const lastScrollY = useRef(0);
+  // const { isAuthenticated, handleLogout } = useData();
   const { isAuthenticated, handleLogout } = useData();
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY > lastScrollY.current && window.scrollY > 100) {
-  //       setVisible(false);
-  //     } else {
-  //       setVisible(true);
-  //     }
-  //     lastScrollY.current = window.scrollY;
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
 
   return (
     <nav className={`${styles.navbar} ${visible ? styles.visible : styles.hidden}`}>

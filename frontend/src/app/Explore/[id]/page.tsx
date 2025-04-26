@@ -1,13 +1,14 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import style from "./style.module.css";
-import Image from "next/image";
-import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import 'leaflet/dist/leaflet.css';
 import Feedback from "./Feedback";
+import TripImage from "../Components/TripImage";
+import Gallery from "../Components/Gallery";
+import CheckpointCard from "../Components/CheckpointCard";
+import HotelAndRestaurantDetails from "../Components/HotelAndRestaurantDetails";
 
 interface Checkpoint {
     _id: string;
@@ -17,6 +18,7 @@ interface Checkpoint {
     transport_budget: { category: string; transport_type: string; transport_price: number }[];
     Total_checkpointBudget: number;
 }
+
 interface Hotel {
     name: string;
     rating: number;
@@ -39,27 +41,21 @@ interface Restaurant {
     contact?: string;
 }
 
-
-const page = () => {
+const Page = () => {
     const params = useParams();
     const tripId = params?.id as string;
-
     const [checkpoints, setCheckpoints] = useState<Checkpoint[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [completedCheckpoints, setCompletedCheckpoints] = useState<string[]>([]);
     const [activeCheckpoint, setActiveCheckpoint] = useState<Checkpoint | null>(null);
-
     const [isHotel, setIsHotel] = useState<Hotel[] | null>(null);
-    const [isHotelDetail, setIsHotelDetail] = useState<Hotel | null>(null);
     const [isRestaurant, setIsRestaurant] = useState<Restaurant[] | null>(null);
-    const [isRestaurantDetail, setIsRestaurantDetail] = useState<Restaurant | null>(null);
     const [uploadedData, setUploadedData] = useState<{
         cover_image?: string;
         image?: string[];
     }>({});
-    const [isGallery, setIsGallery] = useState<boolean>(false);
     const [isUrl, setIsUrl] = useState<string>("");
+    const router = useRouter();
 
     useEffect(() => {
         if (!tripId) {
@@ -112,42 +108,10 @@ const page = () => {
         fetchHotelsAndRestaurants();
     }, [activeCheckpoint]);
 
-    const handleNavigate = (checkpoint: Checkpoint) => {
-        if (!checkpoint.source || !checkpoint.destination) {
-            console.error("Missing source or destination data.");
-            return;
-        }
-
-        const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(
-            checkpoint.source.latitude + "," + checkpoint.source.longitude
-        )}&destination=${encodeURIComponent(
-            checkpoint.destination.latitude + "," + checkpoint.destination.longitude
-        )}`;
-
-        window.open(url, "_blank");
-    };
-
-
-    const handleComplete = (checkpoint: Checkpoint) => {
-        setCompletedCheckpoints((prev) => [...prev, checkpoint._id]);
-        setActiveCheckpoint(null);
-    };
-
-
     useEffect(() => {
         if (tripId) fetchTripData();
     }, [tripId]);
-    useEffect(() => {
-        if (isGallery) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "auto";
-        }
 
-        return () => {
-            document.body.style.overflow = "auto";
-        };
-    }, [isGallery]);
     const fetchTripData = async () => {
         try {
             const response = await axios.post("http://localhost:7050/api/v1/trip/fetch", {
@@ -172,155 +136,32 @@ const page = () => {
         }
     };
 
-    const handleGallery = () => {
-        if (!uploadedData.image || uploadedData.image.length === 0) {
-            alert("No photos available.");
-            return;
-        }
-
-        const validImages = uploadedData.image.filter(img => img && img.trim() !== "");
-
-        if (validImages.length === 0) {
-            alert("No valid photos found.");
-            return;
-        }
-
-        setIsUrl(validImages[0]);
-        setIsGallery((prev) => !prev);
-    };
-
     return (
         <div className={style.container}>
-            <div className={style.img_div}>
-                <Image src="/images/Daskboard/Trip.jpg" alt="Trip Image" height={2000} width={2000} className={style.img} />
-                <p className={style.heading}>Trip Checkpoints</p>
-                <div className={style.btn_div}>
-                    <div className={style.btn_box}>
-                        <Link href="/explore" className={style.btn}>Explore</Link>
-                    </div>
-                </div>
-            </div>
-
+            <TripImage />
             {loading && <p className={style.loading}>Loading checkpoints...</p>}
             {error && <p className={style.error}>{error}</p>}
 
-            <div className={style.gallery}>
-                <button className={style.button} onClick={handleGallery}>
-                    🖼️ <span>Gallery</span>
-                </button>
-            </div>
-
-            {isGallery && (
-                <div className={style.watch_div}>
-                    <div className={style.photo_div}>
-                        <img
-                            src={isUrl}
-                            alt="Selected"
-                            className={style.image_show}
-                        />
-                        <div className={style.small_image_div}>
-                            {uploadedData.image && uploadedData.image.length > 0 && (
-                                <div className={style.thumbnail_wrapper}>
-                                    {uploadedData.image.map((url, idx) => (
-                                        <img
-                                            key={idx}
-                                            src={url}
-                                            alt={`Gallery ${idx + 1}`}
-                                            style={{
-                                                width: 150,
-                                                height: 100,
-                                                objectFit: "cover",
-                                                borderRadius: 6,
-                                                flexShrink: 0,
-                                                cursor: "pointer",
-                                                border: url === isUrl ? "4px solid white" : "none",
-                                                boxShadow: url === isUrl ? "0 0 8px rgba(255,255,255,0.8)" : "none",
-                                            }}
-                                            onClick={() => setIsUrl(url)}
-                                        />
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                    <FontAwesomeIcon
-                        icon={faTimes}
-                        className={style.cross_icon}
-                        onClick={handleGallery}
-                    />
-                </div>
-            )}
+            <Gallery
+                uploadedData={uploadedData}
+                setIsUrl={setIsUrl}
+                isUrl={isUrl}
+            />
             <div className={style.timeline_feedback}>
                 <div className={style.timeline}>
-                    {checkpoints.map((checkpoint, index) => {
-                        const isCompleted = completedCheckpoints.includes(checkpoint._id);
-                        const showLine = completedCheckpoints.length > index;
-
-                        return (
-                            <div key={checkpoint._id} className={style.timelineItem}>
-                                {index > 0 && (
-                                    <div
-                                        className={`${style.progressLine} ${showLine ? style.activeLine : ""
-                                            }`}
-                                    ></div>
-                                )}
-                                <div
-                                    className={`${style.card} ${isCompleted ? style.completed : ""}`}
-                                >
-                                    <div className={style.header}>
-                                        <h3 className={style.h3}>Checkpoint {index + 1}</h3>
-                                    </div>
-
-                                    <div className={style.locationbox}>
-                                        <Image
-                                            src="/images/Daskboard/checkpoint.png"
-                                            alt="Checkpoint"
-                                            height={24}
-                                            width={24}
-                                            className={style.logo}
-                                        />
-                                        <p className={style.locationbox_name}>{checkpoint.source.name}</p>
-                                    </div>
-
-                                    <div className={style.locationbox}>
-                                        <Image
-                                            src="/images/Daskboard/start_location.png"
-                                            alt="Destination"
-                                            height={24}
-                                            width={24}
-                                            className={style.logo}
-                                        />
-                                        <p className={style.locationbox_name}>{checkpoint.destination.name}</p>
-                                    </div>
-
-                                    <div className={style.locationbox}>
-                                        <Image
-                                            src="/images/Daskboard/budget.png"
-                                            alt="Budget"
-                                            height={24}
-                                            width={24}
-                                            className={style.logo}
-                                        />
-                                        <p className={style.locationbox_name}>₹{checkpoint.Total_checkpointBudget}</p>
-                                    </div>
-                                    <div className={style.buttonWrapper}>
-                                        <button
-                                            type="button"
-                                            onClick={() => setActiveCheckpoint(checkpoint)}
-                                            title="Click to view full details"
-                                            className={style.btn_checkpoint}
-                                        >
-                                            View Details
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
+                    {checkpoints.map((checkpoint, index) => (
+                        <CheckpointCard
+                            key={checkpoint._id}
+                            checkpoint={checkpoint}
+                            index={index}
+                            onViewDetails={setActiveCheckpoint}
+                        />
+                    ))}
                 </div>
                 <Feedback
                     tripId={tripId} />
             </div>
+
             {activeCheckpoint && (
                 <div className={style.modalOverlay}>
                     <div className={style.modal}>
@@ -338,86 +179,10 @@ const page = () => {
                             <p className={style.modal_value}>{activeCheckpoint.description || "No description available"}</p>
                         </div>
                         <strong className={style.modal_name}>Hotel</strong>
-                        <div className={style.hotel_buttons}>
-                            {isHotel?.length ? (
-                                isHotel.map((hotel, idx) => (
-                                    <p key={idx} className={style.hotel_btn} onClick={() => setIsHotelDetail(hotel)}>
-                                        {idx + 1}
-                                    </p>
-                                ))
-                            ) : (
-                                <p className={style.modal_value}>No hotels found</p>
-                            )}
-                        </div>
-                        <div>
-                            {isHotelDetail && (
-                                <div className={style.hotel_details}>
-                                    <div className={style.hotel_box}>
-                                        <h3 className={style.hotel_heading}>Hotel Detail</h3>
-                                        <div className={style.box}>
-                                            <span className={style.hotel_name}>Hotel Name</span><span className={style.hotel_value}>{isHotelDetail.name}</span>
-                                        </div>
-                                        <div className={style.box}>
-                                            <span className={style.hotel_name}>Hotel Rating ⭐</span><span className={style.hotel_value}>{isHotelDetail.rating}</span>
-                                        </div>
-                                        <div className={style.box}>
-                                            <span className={style.hotel_name}>Hotel Type</span><span className={style.hotel_value}>{isHotelDetail.pricePerNight[0].hotel_type || "N/A"}</span>
-                                        </div>
-                                        <div className={style.box}>
-                                            <span className={style.hotel_name}>Hotel (one night price)</span><span className={style.hotel_value}>₹{isHotelDetail.pricePerNight[0].price || "N/A"}</span>
-                                        </div>
-                                        <div className={style.box}>
-                                            <span className={style.hotel_name}>Description</span><span className={style.hotel_value}>{isHotelDetail.description || "N/A"}</span>
-                                        </div>
-                                        <div className={style.box}>
-                                            <span className={style.hotel_name}>Contact</span><span className={style.hotel_value}>{isHotelDetail.contact || "N/A"}</span>
-                                        </div>
-                                        <FontAwesomeIcon icon={faTimes} className={style.cross} onClick={() => setIsHotelDetail(null)} />
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                        <strong className={style.modal_name}>Restaurant</strong>
-                        <div className={style.hotel_buttons}>
-                            {isRestaurant?.length ? (
-                                isRestaurant.map((restaurant, idx) => (
-                                    <p key={idx} className={style.hotel_btn} onClick={() => setIsRestaurantDetail(restaurant)}>
-                                        {idx + 1}
-                                    </p>
-                                ))
-                            ) : (
-                                <p className={style.modal_value}>No Restaurant found</p>
-                            )}
-                        </div>
-                        {isRestaurantDetail && (
-                            <div className={style.hotel_details}>
-                                <div className={style.hotel_box}>
-                                    <h3 className={style.hotel_heading}>Restaurant Detail</h3>
-                                    <div className={style.box}>
-                                        <span className={style.hotel_name}>Restaurant Name</span><span className={style.hotel_value}>{isRestaurantDetail.restaurant_name}</span>
-                                    </div>
-                                    <div className={style.box}>
-                                        <span className={style.hotel_name}>Restaurant Rating ⭐</span><span className={style.hotel_value}>{isRestaurantDetail.rating}</span>
-                                    </div>
-                                    <div className={style.box}>
-                                        <span className={style.hotel_name}>Location</span><span className={style.hotel_value}>{isRestaurantDetail.location.name}</span>
-                                    </div>
-                                    <div className={style.box}>
-                                        <span className={style.hotel_name}>Meal Type</span><span className={style.hotel_value}>{isRestaurantDetail.prices[0].meal_type || "N/A"}</span>
-                                    </div>
-                                    <div className={style.box}>
-                                        <span className={style.hotel_name}>Meal</span><span className={style.hotel_value}>₹{isRestaurantDetail.prices[0].meal_price || "N/A"}</span>
-                                    </div>
-                                    <div className={style.box}>
-                                        <span className={style.hotel_name}>Description</span><span className={style.hotel_value}>{isRestaurantDetail.description || "N/A"}</span>
-                                    </div>
-                                    <div className={style.box}>
-                                        <span className={style.hotel_name}>Contact</span><span className={style.hotel_value}>{isRestaurantDetail.contact || "N/A"}</span>
-                                    </div>
-                                    <FontAwesomeIcon icon={faTimes} className={style.cross} onClick={() => setIsRestaurantDetail(null)} />
-                                </div>
-                            </div>
-                        )}
+                        <HotelAndRestaurantDetails
+                            isHotel={isHotel}
+                            isRestaurant={isRestaurant}
+                        />
                         <p className={style.modal_name}>Transport Budget</p>
                         <ul>
                             {activeCheckpoint.transport_budget.map((transport, idx) => (
@@ -438,10 +203,19 @@ const page = () => {
                             ))}
                         </ul>
                         <div className={style.modalButtons}>
-                            <button className={style.navigateButton} onClick={() => handleNavigate(activeCheckpoint)}>
+                            <button
+                                className={style.btn_checkpoint}
+                                onClick={() => {
+                                    if (activeCheckpoint) {
+                                        const { source, destination } = activeCheckpoint;
+                                        router.push(`/explore/${tripId}/NavigationMap?srcLat=${source.latitude}&srcLng=${source.longitude}&destLat=${destination.latitude}&destLng=${destination.longitude}`);
+                                    }
+                                }}
+                            >
                                 Navigate
                             </button>
-                            <button className={style.completeButton} onClick={() => handleComplete(activeCheckpoint)}>
+
+                            <button className={style.completeButton}>
                                 ✅ Complete
                             </button>
                             <button className={style.closeButton} onClick={() => setActiveCheckpoint(null)}>
@@ -455,4 +229,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;
