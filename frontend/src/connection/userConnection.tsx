@@ -1,4 +1,4 @@
-import { SignupURL, SigninURL, GetUserURL, UpdateUserURL } from "@/urls/allurls";
+import { SignupURL, SigninURL, GetUserURL, UpdateUserURL, ForgotUrl, ResetUrl } from "@/urls/allurls";
 import axios from "axios";
 
 
@@ -44,5 +44,31 @@ export async function EditProfile(id: string | null, formdata: any) {
   } catch (error) {
     console.error("Error updating user:", error);
     throw error;
+  }
+}
+
+
+export async function Forgot(formdata: any) {
+  try {
+      const response = await axios.post(ForgotUrl, formdata);
+      console.log(response.data);
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      throw error;
+  }
+}
+
+export async function Reset(formdata: any) {
+  try {
+      const response = await axios.post(
+          `${ResetUrl}?token=${formdata.token}`,
+          formdata
+      );
+      console.log(response.data);
+      return response.data;
+  } catch (error) {
+      console.error(error);
+      throw error;
   }
 }

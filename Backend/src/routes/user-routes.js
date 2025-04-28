@@ -6,8 +6,8 @@ const userController = require("../controllers/user-controller");
 
 router.post("/signup",userController.signup);
 router.post("/login", userController.login);
-router.post("/forget", userController.forgetPassword);
-router.post("/reset-password", userController.resetPassword);
+router.post("/forgot", userController.forgetPassword);
+router.post("/reset", userController.resetPassword);
 
 router.post("/update-user", upload.fields([{ name: "profile", maxCount: 1 }, { name: "banner", maxCount: 1 }]), userController.updateUser);
 
