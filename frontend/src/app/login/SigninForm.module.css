@@ -60,6 +60,7 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem;
+    color: black;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -103,4 +104,28 @@
 
 .link:hover {
     color: #3730a3;
+}
+
+.forget {
+    display: flex;
+    justify-content: space-between;
+    margin: 1em 0em;
+}
+
+.forget_btn {
+    color: #4f46e5;
+}
+
+.remember_div{
+    display: flex;
+    gap: 0.2em;
+}
+
+.remember_input{
+    color: black;
+    font-size: 1.2em;
+}
+
+.remember_name{
+    color: rgb(59, 59, 59);
 }

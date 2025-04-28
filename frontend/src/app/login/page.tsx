@@ -78,7 +78,13 @@ export default function Page() {
             Sign in
           </button>
         </form>
-
+        <div className={styles.forget}>
+          <div className={styles.remember_div}>
+            <input type="checkbox" className={styles.remember_input} />
+            <p className={styles.remember_name}>Remember me</p>
+          </div>
+          <button className={styles.forget_btn} onClick={() => router.push("/login/forget_password")}>Forget Password?</button>
+        </div>
         <p className={styles.footerText}>
           Not a member?{" "}
           <span

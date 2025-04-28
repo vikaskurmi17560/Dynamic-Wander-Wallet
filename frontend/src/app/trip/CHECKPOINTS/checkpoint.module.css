@@ -98,18 +98,44 @@
 }
 
 .addButton {
-    width: 70px;
-    height: 70px;
+    width: 19vh;
+    height: 10vh;
     background: linear-gradient(to bottom, #ff4b2b, #ff416c);
     color: white;
     font-size: 2em;
     border: none;
-    border-radius: 50%;
-    cursor: pointer;
+    border-radius: 0.5em;
     transition: 0.3s ease-in-out;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
     animation: bounce 1s infinite;
     margin-top: 40px;
+    display: flex;
+    gap: 0.7em;
+    align-items: center;
+    justify-content: center;
+}
+
+.div {
+    border-radius: 50%;
+    height: 1.4em;
+    width: 1.4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    cursor: pointer;
+}
+
+.div:hover {
+    color: black;
+    background-color: white;
+}
+
+.end {
+    /* font-size: 1em; */
+    height: 0.7em;
+    width: 0.7em;
+
 }
 
 .addButton:hover {
@@ -200,13 +226,14 @@
     font-size: 0.9em;
 }
 
-.btn_box{
+.btn_box {
     /* border: 1px solid black; */
     display: flex;
     padding-top: 0.4em;
     /* gap: 0.2em; */
     justify-content: space-between;
 }
+
 .button {
     --color: #0077ff;
     font-family: inherit;
@@ -329,6 +356,97 @@
 .btn3:hover::before {
     top: -30px;
     left: -30px;
+}
+
+.rewardOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.rewardCard {
+    background: radial-gradient(circle at top left, #fff8d6, #ffe55e);
+    border: 3px solid #ffd700;
+    border-radius: 20px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: popIn 0.4s ease forwards;
+    text-align: center;
+}
+
+.coinImageWrapper {
+    margin-bottom: 1rem;
+    animation: bounce 1.5s infinite;
+}
+
+.coinImage {
+    width: 100px;
+    height: 100px;
+}
+
+.coinText {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+.coinAmount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ff8c00;
+    display: block;
+}
+
+.coinLabel {
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 0.2rem;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        backdrop-filter: blur(0px);
+        opacity: 0;
+    }
+
+    to {
+        backdrop-filter: blur(4px);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 @media (max-width: 1024px) {

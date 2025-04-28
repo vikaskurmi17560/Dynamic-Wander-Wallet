@@ -7,12 +7,46 @@ import CheckpointForm from "./CheckpointForm";
 import useLocation from "@/hook/useLocation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { FaFlagCheckered } from "react-icons/fa";
+import { updateCheckpointBudgets } from "./updateCheckpointBudgets";
+import { useData } from "@/context/UserContext";
 
 const CheckpointDetail = () => {
   const router = useRouter();
+  const { userId } = useData();
   const [checkpoints, setCheckpoints] = useState<any[]>([]);
   const [lineHeight, setLineHeight] = useState(120);
-  const { isCheckpoint, toggleCheckpoint, tripId } = useLocation();
+  const { isCheckpoint, toggleCheckpoint, tripId , toggleTripEnd } = useLocation();
+  const [showReward, setShowReward] = useState(false);
+  const [earnBadgePoint, setEarnBadgePoint] = useState(0);
+  const handleTripEnd = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      console.log("Saving checkpoint...");
+
+      const result = await updateCheckpointBudgets(String(tripId), String(userId));
+      const budgetPoint = result.earnedPoints;
+
+      setEarnBadgePoint(budgetPoint);
+      setShowReward(true);
+
+      if (result.success) {
+        console.log("Trip budget updated:", result.tripBudget);
+      } else {
+        alert("Failed to update budgets: " + result.error);
+      }
+      setTimeout(() => {
+        setShowReward(false);
+        toggleTripEnd();
+        router.push(`/trip/CHECKPOINTS/tripend`);
+      }, 6000);
+      console.log("Checkpoint saved. Redirecting...");
+    } catch (error) {
+      console.error("Error ending trip:", error);
+      alert("Failed to end the trip. Redirecting anyway...");
+    }
+  };
 
   useEffect(() => {
     setLineHeight(140 + checkpoints.length * 130);
@@ -113,9 +147,33 @@ const CheckpointDetail = () => {
         ))}
       </div>
 
-      <button className={style.addButton} onClick={handleAddCheckpoint} title="Click to add a new checkpoint">
-        +
-      </button>
+      <div className={style.addButton} >
+        <div onClick={handleAddCheckpoint} title="Click to add a new checkpoint" className={style.div}>
+          +
+        </div>
+        <div className={style.div}>
+          <FaFlagCheckered size={50} className={style.end} onClick={handleTripEnd} title="Click to End Trip"/>
+        </div>
+      </div>
+      {showReward && (
+        <div className={style.rewardOverlay}>
+          <div className={style.rewardCard}>
+            <div className={style.coinImageWrapper}>
+              <Image
+                src="/images/Trip/give_coin.png"
+                alt="Coin"
+                width={120}
+                height={120}
+                className={style.coinImage}
+              />
+            </div>
+            <div className={style.coinText}>
+              <span className={style.coinAmount}>+{earnBadgePoint}</span>
+              <span className={style.coinLabel}>Coins Earned!</span>
+            </div>
+          </div>
+        </div>
+      )}
       <div className={isCheckpoint ? style.form_div : style.form_close}>
         {isCheckpoint && <CheckpointForm onCheckpointAdded={handleCheckpointAdded} />}
       </div>

@@ -91,8 +91,8 @@ const Trip = () => {
             router.push(`/trip/TripCheckpoint?tripName=${tripData.tripName}&destination=${tripData.destination}`);
 
         } catch (err: any) {
-            console.error("Error creating trip:", err);
-            alert(err.response?.data?.error || "Failed to create trip.");
+            // console.error("Error creating trip:", err);
+            alert("Failed to create trip. Due to User not login");
         } finally {
             setLoading(false);
         }

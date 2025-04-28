@@ -19,7 +19,6 @@ const Checkpoint = () => {
     const { location, saveLocation } = useLocation();
     const [tripId, setTripId] = useState<string>("");
     const [tripData, setTripData] = useState<any>(null);
-    const searchParams = useSearchParams();
     const [loading, setLoading] = useState(false);
     const [currentLocation, setCurrentLocation] = useState("");
     const [mapLocation, setMapLocation] = useState(defaultLocation);
@@ -27,7 +26,6 @@ const Checkpoint = () => {
 
     const handleFindLocation = async () => {
         setLoading(true);
-
         if (!("geolocation" in navigator)) {
             alert("Geolocation is not supported by your browser.");
             setLoading(false);
