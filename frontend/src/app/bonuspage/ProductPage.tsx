@@ -1,6 +1,8 @@
+"use client"
+
 import { useEffect, useState } from "react";
 import styles from "./ProductPage.module.css";
-import useData from "@/hook/useData";
+import { useData } from "@/context/UserContext";
 
 export interface Product {
     _id: string;
@@ -21,7 +23,7 @@ interface ProductPageProps {
 const ProductPage = ({ WanderPoint, onPurchaseSuccess }: ProductPageProps) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [currentPoints, setCurrentPoints] = useState<number>(WanderPoint ?? 0);
+    const [currentPoints, setCurrentPoints] = useState<number>(WanderPoint);
     const { userId } = useData();
     const fetchProducts = async () => {
         try {
@@ -50,7 +52,7 @@ const ProductPage = ({ WanderPoint, onPurchaseSuccess }: ProductPageProps) => {
 
     const handleBuy = async (productId: string, price: number) => {
         const pointsNeeded = calculateWanderPoints(price);
-
+        console.log(currentPoints);
         if (currentPoints < pointsNeeded) {
             alert(`Not enough Wander Points! You need ${pointsNeeded} but have only ${currentPoints}.`);
             return;

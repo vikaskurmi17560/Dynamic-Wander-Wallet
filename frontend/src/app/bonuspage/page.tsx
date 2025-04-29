@@ -5,9 +5,9 @@ import axios from "axios";
 import style from "./bonuspage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGift, faStar, faCoins, faTicketAlt } from "@fortawesome/free-solid-svg-icons";
-import useData from "@/hook/useData";
 import ProductPage from "./ProductPage";
 import WanderPoint from "./WanderPoint";
+import { useData } from "@/context/UserContext";
 
 interface BadgeUsage {
     product_id: string;
