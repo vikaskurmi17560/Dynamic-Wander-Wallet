@@ -62,13 +62,13 @@ export async function Forgot(formdata: any) {
 export async function Reset(formdata: any) {
   try {
       const response = await axios.post(
-          `${ResetUrl}?token=${formdata.token}`,
+          `${ResetUrl}?token=${formdata.token}`, 
           formdata
       );
       console.log(response.data);
       return response.data;
   } catch (error) {
-      console.error(error);
+      console.error("API error:", error);
       throw error;
   }
 }

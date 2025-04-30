@@ -63,6 +63,17 @@ const User_Schema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        confirm_password: {
+            type: String,
+            validate: {
+                validator: (function (val) {
+                    return val === this.password;
+                }
+                ),
+                message: "done",
+            }
+    
+        },
         badge_usage_history: [
             {
                 product_id: {
@@ -95,6 +106,7 @@ User_Schema.pre("save", async function (next) {
     }
 
     this.password = await bcrypt.hash(this.password, 12);
+    this.confirm_password = undefined;
     next();
 });
 

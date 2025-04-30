@@ -128,17 +128,17 @@ exports.forgetPassword = async (req, res) => {
         }
 
 
-        const resetToken = crypto.randomBytes(32).toString("hex");
+        const resetToken = randomBytes(32).toString("hex");
 
 
-        user.reset_password_token = crypto.createHash("sha256").update(resetToken).digest("hex");
+        user.reset_password_token = createHash("sha256").update(resetToken).digest("hex");
         user.reset_password_token_expire = Date.now() + 10 * 60 * 1000; // Token valid for 10 minutes
 
 
         await user.save({ validateBeforeSave: false });
 
 
-        const resetUrl = `http://localhost:3000/reset?token=${resetToken}`;
+        const resetUrl = `http://localhost:3000/login/resetpassword?token=${resetToken}`;
 
 
         await sendEmail({
