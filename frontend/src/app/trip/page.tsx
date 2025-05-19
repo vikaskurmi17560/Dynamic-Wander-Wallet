@@ -15,6 +15,7 @@ const Trip = () => {
         source: "",
         destination: "",
         userId: "",
+        numberMembers: 1,
     });
     const router = useRouter();
     const [states, setStates] = useState<string[]>([]);
@@ -91,7 +92,6 @@ const Trip = () => {
             router.push(`/trip/TripCheckpoint?tripName=${tripData.tripName}&destination=${tripData.destination}`);
 
         } catch (err: any) {
-            // console.error("Error creating trip:", err);
             alert("Failed to create trip. Due to User not login");
         } finally {
             setLoading(false);
@@ -123,38 +123,51 @@ const Trip = () => {
                             className={style.input}
                         />
                     </div>
-                    <div className={style.inputbox}>
-                        <p className={style.name}>Destination State</p>
-                        <select
-                            name="state"
-                            value={tripData.state}
-                            onChange={handleData}
-                            className={style.input}
-                        >
-                            <option value="">Select State</option>
-                            {states.map((state) => (
-                                <option key={state} value={state}>
-                                    {state}
-                                </option>
-                            ))}
-                        </select>
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: "1em" }}>
+                        <div className={style.inputbox}>
+                            <p className={style.name}>Destination State</p>
+                            <select
+                                name="state"
+                                value={tripData.state}
+                                onChange={handleData}
+                                className={style.input}
+                            >
+                                <option value="">Select State</option>
+                                {states.map((state) => (
+                                    <option key={state} value={state}>
+                                        {state}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className={style.inputbox}>
+                            <p className={style.name}>Destination City</p>
+                            <select
+                                name="city"
+                                value={tripData.city}
+                                onChange={handleData}
+                                className={style.input}
+                                disabled={!tripData.state}
+                            >
+                                <option value="">Select City</option>
+                                {cities.map((city) => (
+                                    <option key={city} value={city}>
+                                        {city}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
                     <div className={style.inputbox}>
-                        <p className={style.name}>Destination City</p>
-                        <select
-                            name="city"
-                            value={tripData.city}
+                        <p className={style.name}>No. of members</p>
+                        <input
+                            type="number"
+                            name="numberMembers"
+                            value={tripData.numberMembers}
                             onChange={handleData}
+                            placeholder={`tripData.numberMembers === 1 ? "Enter the no. of members" : tripData.numberMembers`}
                             className={style.input}
-                            disabled={!tripData.state}
-                        >
-                            <option value="">Select City</option>
-                            {cities.map((city) => (
-                                <option key={city} value={city}>
-                                    {city}
-                                </option>
-                            ))}
-                        </select>
+                        />
                     </div>
                     <div className={style.inputbox}>
                         <p className={style.name}>Start Place</p>

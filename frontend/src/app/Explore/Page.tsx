@@ -20,16 +20,17 @@ interface Trip {
   TotalBudget?: number;
   rating?: number[];
   createdAt?: string;
+  numberMembers: string;
 }
 
 const normalizeText = (text: string) =>
   text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
 const states = [
-  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", 
-  "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", 
-  "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", 
-  "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", 
+  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa",
+  "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala",
+  "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland",
+  "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
   "Uttar Pradesh", "Uttarakhand", "West Bengal"
 ];
 
@@ -105,9 +106,9 @@ const Explore: React.FC = () => {
             <p>{filteredTrips.length}</p>
           </div>
           <div>
-            <select 
-              className={style.bystate} 
-              value={selectedState} 
+            <select
+              className={style.bystate}
+              value={selectedState}
               onChange={(e) => setSelectedState(e.target.value)}
             >
               <option value="">All States</option>
@@ -154,6 +155,10 @@ const Explore: React.FC = () => {
                 <div className={style.trip_location}>
                   <p className={style.name}>Budget</p>
                   <span className={style.value}>₹{trip.TotalBudget}</span>
+                </div>
+                <div className={style.trip_location} style={{ display: "flex", alignItems: "center" }}>
+                  <p className={style.name}>Members</p>
+                  <span className={style.value}>{trip.numberMembers}</span>
                 </div>
                 <div className={style.trip_location}>
                   <p className={style.name}>Rating</p>

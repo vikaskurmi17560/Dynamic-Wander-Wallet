@@ -42,16 +42,20 @@ const tripSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
+  numberMembers: {
+    type: Number,
+    default: 1,
+  },
   Earnbadge_point: {
     type: Number,
     default: 0
   },
-  rating:[{
-  type:Number,
-  min: 0,
-  max: 5
+  rating: [{
+    type: Number,
+    min: 0,
+    max: 5
   }],
-  review:[{
+  review: [{
     reviewBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

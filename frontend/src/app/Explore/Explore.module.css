@@ -120,16 +120,23 @@
 
 .trip_name {
     font-size: 1.3em;
-    font-weight: bold;
+    font-weight: 540;
     color: #333;
-    font-family: cursive;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
+    overflow: hidden;
+    height: 4vh;
+    text-transform: capitalize;
 }
 
 .trip_location {
     margin-top: 0.4em;
     width: 100%;
     display: flex;
+    align-items: center;
+    gap: 0.4em;
+    height: 4vh;
+    border-bottom: 1px solid rgb(161, 161, 161);
 }
 
 .name {
@@ -144,6 +151,7 @@
 
 .value{
     color: #398e91;
+    text-transform: capitalize;
 }
 
 .card_buttons {
