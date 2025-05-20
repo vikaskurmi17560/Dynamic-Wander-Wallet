@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./Navbar.module.css";
-// import useData from "@/hook/useData";
 import useLocation from "@/hook/useLocation";
 import { useData } from "@/context/UserContext";
 
@@ -11,7 +10,6 @@ function Navbar() {
   const { isTripEnd } = useLocation();
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
-  // const { isAuthenticated, handleLogout } = useData();
   const { isAuthenticated, handleLogout } = useData();
 
   return (
@@ -30,23 +28,24 @@ function Navbar() {
       <div className={styles.menu_icon} onClick={() => setMenuOpen(!menuOpen)}>
         ☰
       </div>
-
       <div className={`${styles.nav_links} ${menuOpen ? styles.open : ""}`}>
         <div className={styles.left_section}>
           <Link href="/" className={styles.nav_item}>
             Home
           </Link>
-          <Link href="/blog" className={styles.nav_item}>Blogs</Link>
-          <Link href={!isTripEnd ? "/trip" : "/trip/TripCheckpoint"} className={styles.nav_item}>
+          <Link href={isAuthenticated ? "/blog" : "/login"} className={styles.nav_item}>
+            Blogs
+          </Link>
+          <Link href={isAuthenticated ? !isTripEnd ? "/trip" : "/trip/TripCheckpoint" : "/login"} className={styles.nav_item}>
             Trip
           </Link>
-          <Link href="/create" className={styles.nav_item}>
+          <Link href={isAuthenticated ? "/create" : "/login"} className={styles.nav_item}>
             Create
           </Link>
-          <Link href="/dashboard" className={styles.nav_item}>
+          <Link href={isAuthenticated ? "/dashboard" : "/login"} className={styles.nav_item}>
             Dashboard
           </Link>
-          <Link href="/explore" className={styles.nav_item}>
+          <Link href={isAuthenticated ? "/explore" : "/login"} className={styles.nav_item}>
             Explore
           </Link>
           <Link href="/bonuspage" className={styles.nav_item}>

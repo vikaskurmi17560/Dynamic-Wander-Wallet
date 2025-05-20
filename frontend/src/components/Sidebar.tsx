@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
+import { useData } from "@/context/UserContext";
 
 interface SidebarProps {
   activeTab?: "post" | "reels";
@@ -22,11 +23,11 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   const router = useRouter();
   const pathname = usePathname();
-
+  const { isAuthenticated } = useData();
   const isActive = (path: string) => pathname === path;
 
   const handleTabClick = (tab: "post" | "reels") => {
-    onTabChange?.(tab); 
+    onTabChange?.(tab);
   };
 
   return (
@@ -59,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       </div>
 
       <div
-        className={`${styles.btn} ${activeTab === "reels"? styles.active : ""}`}
+        className={`${styles.btn} ${activeTab === "reels" ? styles.active : ""}`}
         onClick={() => { handleTabClick("reels"); router.push("/blog") }}
       >
         <FaVideo className={styles.icon} />
@@ -90,13 +91,25 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
         <span>Dashboard</span>
       </div>
 
-      <div
-        className={`${styles.btn} ${isActive("/profile") ? styles.active : ""}`}
-        onClick={() => router.push("/profile")}
-      >
-        <FaUser className={styles.icon} />
-        <span>Profile</span>
-      </div>
+      {
+        isAuthenticated ? (
+          <div
+            className={`${styles.btn} ${isActive("/profile") ? styles.active : ""}`}
+            onClick={() => router.push("/profile")}
+          >
+            <FaUser className={styles.icon} />
+            <span>Profile</span>
+          </div>
+        ) : (
+          <div
+            className={`${styles.btn} ${isActive("/login") ? styles.active : ""}`}
+            onClick={() => router.push("/login")}
+          >
+            <FaUser className={styles.icon} />
+            <span>Profile</span>
+          </div>
+        )
+      }
     </div>
   );
 };
