@@ -25,7 +25,6 @@ const ResetPassword = () => {
                 toast.error(res.message || 'Something went wrong');
             }
         } catch (error) {
-            console.error("Reset password error:", error);
             toast.error("Something went wrong, please try again.");
         }
       }

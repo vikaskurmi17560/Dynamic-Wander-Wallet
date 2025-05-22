@@ -39,7 +39,6 @@ const EditProfile = () => {
                 toast.error("Failed to load user data");
             }
         } catch (error) {
-            console.error("Error fetching user data:", error);
             toast.error("Error fetching user data");
         } finally {
             setLoading(false);

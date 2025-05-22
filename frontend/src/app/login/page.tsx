@@ -38,8 +38,10 @@ export default function Page() {
         await updateUserContext();
         router.replace("/profile");
       }
+      else {
+      toast.error("Login failed. Please check your credentials.");
+    }
     } catch (error: any) {
-      console.error("Signin Error:", error.message);
       toast.error(error.message || "An unexpected error occurred");
     }
   }

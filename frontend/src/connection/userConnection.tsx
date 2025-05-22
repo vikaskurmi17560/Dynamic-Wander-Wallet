@@ -7,7 +7,6 @@ export async function Register(formdata: any) {
     const response = await axios.post(SignupURL, formdata);
     return response.data;
   } catch (error) {
-    console.error(error);
     throw error;
   }
 }
@@ -19,7 +18,6 @@ export async function Signin(formdata: any) {
     const response = await axios.post(SigninURL, formdata)
     return response.data;
   } catch (error) {
-    console.error(error);
     throw error;
   }
 
@@ -30,7 +28,6 @@ export async function GetUser(id: string | null) {
     const response = await axios.get(`${GetUserURL}?user_id=${id}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching user:", error);
     throw error;
   }
 }
@@ -42,8 +39,7 @@ export async function EditProfile(id: string | null, formdata: any) {
     });
     return response.data;
   } catch (error) {
-    console.error("Error updating user:", error);
-    throw error;
+   throw error;
   }
 }
 
@@ -54,7 +50,6 @@ export async function Forgot(formdata: any) {
       console.log(response.data);
       return response.data;
   } catch (error) {
-      console.error(error);
       throw error;
   }
 }
@@ -68,7 +63,6 @@ export async function Reset(formdata: any) {
       console.log(response.data);
       return response.data;
   } catch (error) {
-      console.error("API error:", error);
       throw error;
   }
 }
