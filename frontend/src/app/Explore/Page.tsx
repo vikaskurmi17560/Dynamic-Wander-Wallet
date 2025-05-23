@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import style from "./explore.module.css";
+import style from "./Explore.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faStar } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -37,7 +37,7 @@ const states = [
   "Uttar Pradesh", "Uttarakhand", "West Bengal"
 ];
 
-const page: React.FC = () => {
+const Explore: React.FC = () => {
   const [tripData, setTripData] = useState<Trip[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedState, setSelectedState] = useState<string>("");
@@ -226,4 +226,4 @@ const page: React.FC = () => {
   );
 };
 
-export default page;
+export default Explore;
