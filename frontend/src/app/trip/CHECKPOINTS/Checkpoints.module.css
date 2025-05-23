@@ -42,7 +42,7 @@
     /* border: 1px solid black; */
     height: 100%;
     width: 60%;
-    padding-bottom: 0.4em;
+    padding: 0.4em;
     background-color: aliceblue;
     /* border-radius: 10px; */
     display: flex;

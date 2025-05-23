@@ -190,9 +190,9 @@ const Profile = () => {
         </div>
 
         <div className={style.profile_post_data}>
-          {post && <ProfilePost />}
-          {videos && <ProfileReel />}
-          {others && <ProfileTrip />}
+          {post && <ProfilePost userId={userId} />}
+          {videos && <ProfileReel userId={userId} />}
+          {others && <ProfileTrip isDisabled={false} userId={userId} />}
         </div>
       </section>
     </main>

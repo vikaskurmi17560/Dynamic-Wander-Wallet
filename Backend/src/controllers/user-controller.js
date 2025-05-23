@@ -346,6 +346,21 @@ exports.unfollowUser = async (req, res) => {
     }
 };
 
+exports.checkFollowStatus = async (req, res) => {
+    try {
+        const { id, currentUserId } = req.query;
+
+        const user = await Users.findById(id);
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        const isFollowing = user.followers.includes(currentUserId);
+        res.status(200).json({ isFollowing });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 exports.getAllUser = async (req, res) => {
     try {
         const allUsers = await Users.find();

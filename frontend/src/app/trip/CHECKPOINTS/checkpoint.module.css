@@ -117,13 +117,15 @@
 
 .div {
     border-radius: 50%;
-    height: 1.4em;
-    width: 1.4em;
+    height: 1.5em;
+    width: 1.5em;
     display: flex;
+    font-size: 1em;
     align-items: center;
     justify-content: center;
     background-color: black;
     cursor: pointer;
+    color: white;
 }
 
 .div:hover {

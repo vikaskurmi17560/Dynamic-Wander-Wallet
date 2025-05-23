@@ -128,7 +128,7 @@ const CheckpointDetailsPage = () => {
             <div className={style.map_container}>
                 <h2 className={style.map_heading}>Map View</h2>
                 <div className={style.map_div}>
-                    <MapContainer center={[source.latitude, source.longitude]} zoom={8} className={style.map}>
+                    <MapContainer center={[source.latitude, source.longitude]} zoom={11} className={style.map}>
                         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                         <Marker position={[source.latitude, source.longitude]} icon={sourceIcon}>
                             <Popup><strong>Source:</strong> {source.name}</Popup>
@@ -148,7 +148,7 @@ const CheckpointDetailsPage = () => {
                     <div className={style.div}>
                         <div>
                             <strong className={style.name}>Source</strong>
-                            <p className={style.input}> {checkpoint.source?.name || "N/A"}</p>
+                            <p className={style.inputname}> {checkpoint.source?.name || "N/A"}</p>
                         </div>
                         <div>
                             <strong className={style.name}>Latitude</strong>
@@ -162,7 +162,7 @@ const CheckpointDetailsPage = () => {
                     <div className={style.div}>
                         <div>
                             <strong className={style.name}>Destination</strong>
-                            <p className={style.input}> {checkpoint.destination?.name || "N/A"}</p>
+                            <p className={style.inputname}> {checkpoint.destination?.name || "N/A"}</p>
                         </div>
                         <div>
                             <strong className={style.name}>Latitude</strong>

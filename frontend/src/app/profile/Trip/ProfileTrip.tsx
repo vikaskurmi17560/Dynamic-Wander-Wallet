@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import style from "./ProfileTrip.module.css";
-import useData from "@/hook/useData";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -22,11 +21,16 @@ interface Trip {
     image?: string[];
 }
 
-const ProfileTrip = () => {
+interface ProfileTripProps {
+    isDisabled: boolean;
+    userId: string;
+}
+
+const ProfileTrip: React.FC<ProfileTripProps> = ({ isDisabled, userId }) => {
     const [trips, setTrips] = useState<Trip[]>([]);
     const [loading, setLoading] = useState(true);
-    const { userId } = useData();
     const router = useRouter();
+
     const [isGallery, setIsGallery] = useState(false);
     const [isUrl, setIsUrl] = useState("");
     const [uploadedData, setUploadedData] = useState<{
@@ -66,7 +70,7 @@ const ProfileTrip = () => {
     }, [isGallery]);
 
     const openGallery = (trip: Trip) => {
-        const validImages = trip.image?.filter((img) => img && img.trim() !== "") || [];
+        const validImages = trip.image?.filter((img) => img?.trim() !== "") || [];
 
         if (validImages.length === 0) {
             alert("No valid photos found.");
@@ -140,21 +144,20 @@ const ProfileTrip = () => {
                                 <span className={style.value}>₹{trip.TotalBudget ?? "N/A"}</span>
                             </div>
                             <div className={style.buttonGroup}>
-                                <button className={style.button} onClick={() => router.push(`/dashboard/trips/${trip._id}`)}>
-                                    About
-                                </button>
-                                <button className={style.button} onClick={() => openGallery(trip)}>
-                                    Gallery
-                                </button>
-                                <button
-                                    className={style.button}
-                                    onClick={() => {
-                                        setSelectedTripId(trip._id);
-                                        setIsSetting(true);
-                                    }}
-                                >
-                                    Delete
-                                </button>
+                                <button className={style.button} onClick={() => router.push(`/dashboard/trips/${trip._id}`)}>About</button>
+                                <button className={style.button} onClick={() => openGallery(trip)}>Gallery</button>
+                                {!isDisabled && (
+                                    <button
+                                        className={style.button}
+                                        onClick={() => {
+                                            setSelectedTripId(trip._id);
+                                            setIsSetting(true);
+                                        }}
+                                        disabled={isDisabled}
+                                    >
+                                        Delete
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -164,14 +167,10 @@ const ProfileTrip = () => {
             {isSetting && (
                 <div className={style.setting_div}>
                     <div className={style.setting_container}>
-                        <div
-                            style={{ color: "red" }}
-                            className={style.setting_box}
-                            onClick={() => {
-                                setIsDelete(true);
-                                setIsSetting(false);
-                            }}
-                        >
+                        <div className={style.setting_box} style={{ color: "red" }} onClick={() => {
+                            setIsDelete(true);
+                            setIsSetting(false);
+                        }}>
                             Delete
                         </div>
                         <div className={style.setting_box}>Edit</div>
@@ -179,26 +178,20 @@ const ProfileTrip = () => {
                         <div className={style.setting_box}>Share to..</div>
                         <div className={style.setting_box}>Go to Trip</div>
                         <div className={style.setting_box}>About this Account</div>
-                        <div className={style.setting_box} onClick={() => setIsSetting(false)}>
-                            Cancel
-                        </div>
+                        <div className={style.setting_box} onClick={() => setIsSetting(false)}>Cancel</div>
                     </div>
                 </div>
             )}
 
-            {!isSetting && isDelete && selectedTripId && (
+            {isDelete && selectedTripId && (
                 <div className={style.setting_div}>
                     <div className={style.delete_div}>
                         <div className={style.delete_heading}>
                             <p className={style.heading_h1}>Delete post?</p>
                             <p className={style.heading_p}>Are you sure you want to delete this post?</p>
                         </div>
-                        <div style={{ color: "red" }} className={style.setting_box} onClick={handleDeletePost}>
-                            Delete
-                        </div>
-                        <div className={style.setting_box} onClick={() => setIsDelete(false)}>
-                            Cancel
-                        </div>
+                        <div className={style.setting_box} style={{ color: "red" }} onClick={handleDeletePost}>Delete</div>
+                        <div className={style.setting_box} onClick={() => setIsDelete(false)}>Cancel</div>
                     </div>
                 </div>
             )}
@@ -213,7 +206,7 @@ const ProfileTrip = () => {
                             className={style.image_show}
                         />
                         <div className={style.small_image_div}>
-                            {uploadedData.image && uploadedData.image.length > 0 && (
+                            {uploadedData.image?.length > 0 && (
                                 <div className={style.thumbnail_wrapper}>
                                     {uploadedData.image.map((url, idx) => (
                                         <img

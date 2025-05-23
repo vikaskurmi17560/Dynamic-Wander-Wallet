@@ -44,6 +44,7 @@ interface Comment {
 
 interface IndividualPostProps {
     post: Post;
+    isDisabled: boolean;
     onClose: () => void;
     onNext: () => void;
     onPrev: () => void;
@@ -52,10 +53,12 @@ interface IndividualPostProps {
 
 const DisplayPost: React.FC<IndividualPostProps> = ({
     post,
+    isDisabled,
     onClose,
     onNext,
     onPrev,
     onDelete
+
 }) => {
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
@@ -199,7 +202,17 @@ const DisplayPost: React.FC<IndividualPostProps> = ({
                         isSetting ? (
                             <div className={style.setting_div}>
                                 <div className={style.setting_container}>
-                                    <div style={{ color: "red" }} className={style.setting_box} onClick={() => { setIsDelete((prev) => !prev); setIsSetting((prev) => !prev) }}>Delete</div>
+                                    <div
+                                        style={{ color: "red", cursor: isDisabled ? "not-allowed" : "pointer", opacity: isDisabled ? 0.5 : 1 }}
+                                        className={style.setting_box}
+                                        onClick={() => {
+                                            if (isDisabled) return;
+                                            setIsDelete((prev) => !prev);
+                                            setIsSetting((prev) => !prev);
+                                        }}
+                                    >
+                                        Delete
+                                    </div>
                                     <div className={style.setting_box}>Edit</div>
                                     <div className={style.setting_box}>Hide like count to others</div>
                                     <div className={style.setting_box}>Share to.</div>

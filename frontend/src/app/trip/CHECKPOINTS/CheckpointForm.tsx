@@ -163,7 +163,7 @@ const CheckpointForm: React.FC<CheckpointFormProps> = ({ onCheckpointAdded }) =>
             setTimeout(() => {
                 setShowReward(false);
                 toggleCheckpoint();
-            }, 6000);
+            }, 5000);
 
         } catch (error: any) {
             console.error("Error creating checkpoint:", error.response?.data || error.message);
@@ -291,19 +291,21 @@ const CheckpointForm: React.FC<CheckpointFormProps> = ({ onCheckpointAdded }) =>
             </form>
             <FontAwesomeIcon icon={faTimes} className={style.cross_btn} onClick={() => toggleCheckpoint()} />
             {showReward && (
-                <div className={style.coins_popup}>
-                    <div className={style.coins_border}>
-                        <div className={style.coins_image_div}>
-                            <Image
-                                src="/images/Trip/give_coin.png"
-                                alt="Coin"
-                                width={1000}
-                                height={1000}
-                                className={style.coin_img}
-                            />
-                        </div>
-                        <div className={style.coin_value}>
-                            Coins + {earnBadgePoint}
+                <div className={style.reward_div}>
+                    <div className={style.coins_popup}>
+                        <div className={style.coins_border}>
+                            <div className={style.coins_image_div}>
+                                <Image
+                                    src="/images/Trip/give_coin.png"
+                                    alt="Coin"
+                                    width={1000}
+                                    height={1000}
+                                    className={style.coin_img}
+                                />
+                            </div>
+                            <div className={style.coin_value}>
+                                Coins + {earnBadgePoint}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ const CheckpointDetail = () => {
   const { userId } = useData();
   const [checkpoints, setCheckpoints] = useState<any[]>([]);
   const [lineHeight, setLineHeight] = useState(120);
-  const { isCheckpoint, toggleCheckpoint, tripId , toggleTripEnd } = useLocation();
+  const { isCheckpoint, toggleCheckpoint, tripId, toggleTripEnd } = useLocation();
   const [showReward, setShowReward] = useState(false);
   const [earnBadgePoint, setEarnBadgePoint] = useState(0);
   const handleTripEnd = async (e: React.FormEvent) => {
@@ -149,10 +149,10 @@ const CheckpointDetail = () => {
 
       <div className={style.addButton} >
         <div onClick={handleAddCheckpoint} title="Click to add a new checkpoint" className={style.div}>
-          +
+          🞧
         </div>
         <div className={style.div}>
-          <FaFlagCheckered size={50} className={style.end} onClick={handleTripEnd} title="Click to End Trip"/>
+          <FaFlagCheckered size={50} className={style.end} onClick={handleTripEnd} title="Click to End Trip" />
         </div>
       </div>
       {showReward && (

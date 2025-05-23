@@ -1,0 +1,241 @@
+.main {
+    margin: 0%;
+    overflow: hidden;
+    margin-top: 15vh;
+    width: 100%;
+    background-color: rgb(240, 233, 224);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5em;
+}
+
+.container {
+    background-color: white;
+    width: 98%;
+    height: auto;
+    border-top-right-radius: 0.9em;
+    border-top-left-radius: 0.9em;
+}
+
+.profile_photo_container {
+    /* border: 2px solid red; */
+    height: 30vh;
+    width: 100%;
+    margin-bottom: 6em;
+    border-top-right-radius: 0.9em;
+    border-top-left-radius: 0.9em;
+    position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: skyblue;
+}
+
+.photo_div {
+    height: 24vh;
+    width: 24vh;
+    position: absolute;
+    bottom: -37%;
+    left: 2em;
+    border-radius: 50%;
+    border: 7px solid white;
+    /* z-index: 999; */
+    background-color: whitesmoke;
+}
+
+.profile_photo {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile_container_data {
+    /* border: 2px solid red; */
+    height: auto;
+    width: 100%;
+    display: flex;
+    /* flex-direction: column; */
+    /* align-items: center; */
+    justify-content: center;
+}
+
+.profile_data_div {
+    /* border: 1px solid black; */
+    height: 40vh;
+    width: 50%;
+    padding: 2em;
+}
+
+.profile_name_div {
+    /* border: 1px solid black; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9em;
+    margin-bottom: 0.6em;
+}
+
+.profile_name {
+    color: black;
+    display: flex;
+    align-items: center;
+    font-size: 1.6em;
+    font-weight: 600;
+    font-family: sans-serif;
+    height: 5vh;
+}
+
+.profile_bio {
+    color: rgb(86, 86, 86);
+    min-height: 20vh;
+    overflow: scroll;
+    scrollbar-width: none;
+    width: 100%;
+    white-space: pre-wrap;
+    /* border: 1px solid black; */
+}
+
+.edit_btn {
+    font-family: sans-serif;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 300;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edit_btn:hover {
+    background-color: #1d4ed8;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.profile_follow_div {
+    width: 50%;
+    /* border: 1px solid green; */
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 6em;
+    justify-content: center;
+    /* border:1px solid black; */
+}
+
+.profile_follow {
+    display: flex;
+    gap: 3em;
+    justify-content: center;
+    /* border:1px solid black; */
+    height: 15vh;
+    width: 99%;
+    border-radius: 7px;
+    background-color: whitesmoke;
+}
+
+.follow_div {
+    /* border : 1px solid black; */
+    height: 15vh;
+    width: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+
+}
+
+.follow_number {
+    font-size: 2em;
+    font-weight: 500;
+    color: black;
+}
+
+.follow_name {
+    font-size: 1.1em;
+    font-weight: 200;
+    color: rgb(73, 73, 73);
+}
+
+.trip_story_div{
+    /* border: 1px solid black; */
+    display: flex;
+    gap: 2em;
+    width: 90%;
+    margin: 2em 0em;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    height: 30vh;
+    font-family: sans-serif;
+}
+
+.story_image_div{
+    max-width: 35vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 0.4em;
+    /* border: 1px solid red; */
+}
+
+.img{
+    max-width: 18vh;
+    height: 18vh;
+    border: 5px solid white;
+    border-radius: 50%;
+}
+
+.story_city{
+    color: black;
+    font-size: 1em;
+    text-transform: uppercase;
+    height: 8vh;
+    width: 100%;
+    overflow: scroll;
+    scrollbar-width: none;
+    text-align: center;
+    /* border: 1px solid red; */
+}
+
+.container_combine{
+    background-color: white;
+    width: 98%;
+    min-height: 60vh;
+}
+
+.heading_container{
+    display: flex;
+    width: 100%;
+    border: 1px solid balck;
+}
+
+.box{
+    width: 33.5%;
+    padding-top: 0.6em;
+    height: 6vh;
+    border: 1px solid red;
+    text-align: center;
+    border: none;
+    color: black;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 1px solid rgb(220, 220, 220);
+}
+
+.onclick{
+    border-bottom: 2px solid rgb(49, 49, 49);
+}
+
+.profile_post_data{
+    height: auto;
+    width: 100%;
+}

@@ -74,7 +74,7 @@ const CommentLike: React.FC<Props> = ({ postId, isCommentOpen, onToggle }) => {
       );
       setComments(res.data.comments || []);
     } catch (error) {
-      console.error("Failed to fetch comments", error);
+      // console.error("Failed to fetch comments", error);
     }
   };
 
@@ -123,7 +123,7 @@ const CommentLike: React.FC<Props> = ({ postId, isCommentOpen, onToggle }) => {
         </div>
         <button className={style.button} onClick={onToggle}>
           <FaComment style={{ fontSize: "1.6em" }} />
-          <span className={style.number}>{comments.length}</span>
+          <span className={style.number}>{comments?.length}</span>
         </button>
         <button className={style.button}><FaShare style={{ fontSize: "1.6em" }} /></button>
         <button className={style.button}><FaBookmark style={{ fontSize: "1.6em" }} /></button>
@@ -134,7 +134,7 @@ const CommentLike: React.FC<Props> = ({ postId, isCommentOpen, onToggle }) => {
         <div className={style.comment_div}>
           <div className={style.comment_heading}>Comments</div>
           <div className={style.comments}>
-            {comments.map((c) => (
+            {comments?.map((c) => (
               <div key={c._id} className={style.comment}>
                 <Image
                   src={c.user?.profile || "/images/profilelogo.png"}
@@ -146,7 +146,7 @@ const CommentLike: React.FC<Props> = ({ postId, isCommentOpen, onToggle }) => {
                 />
                 <p className={style.comment_desp}>
                   <strong>i_am_{c.user?.name || "Anonymous"}_ig</strong>
-                  <span className={style.comment_text}>{c.text}</span>
+                  <span className={style.comment_text}>{c?.text}</span>
                 </p>
               </div>
             ))}
