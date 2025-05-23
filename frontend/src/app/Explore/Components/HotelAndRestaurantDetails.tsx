@@ -1,5 +1,3 @@
-// components/HotelAndRestaurantDetails.tsx
-
 import React from "react";
 import Image from "next/image";
 import style from "../[id]/style.module.css";

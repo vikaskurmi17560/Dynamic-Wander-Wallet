@@ -103,7 +103,7 @@ const CreatePost = () => {
   return (
     <div className={styles.container}>
       <div className={styles.main}>
-        <h1 className={styles.heading}>Create New Post</h1>
+        <p className={styles.heading}>Create New Post</p>
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.image_div}>
             {preview ? (
@@ -167,7 +167,7 @@ const CreatePost = () => {
               onChange={handleChange}
               className={styles.select}
             >
-              <option value="">Accessibility</option>
+              <option value="" disabled>Accessibility</option>
               <option value="public">Public</option>
               <option value="private">Private</option>
               <option value="friends-only">Friends-only</option>

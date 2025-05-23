@@ -2,7 +2,7 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import style from "./tripend.module.css";
-import Image from "next/image";
+
 const TripEnd = () => {
     const searchParams = useSearchParams();
     const router = useRouter();

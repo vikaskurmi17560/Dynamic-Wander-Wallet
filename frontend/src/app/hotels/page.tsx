@@ -194,19 +194,21 @@ const Hotels = () => {
         </form>
       </div>
       {showReward && (
-        <div className={style.reward_popup}>
-          <div className={style.reward_container}>
-            <div className={style.coin_graphic}>
-              <Image
-                src="/images/Trip/give_coin.png"
-                alt="Coin"
-                width={80}
-                height={80}
-                className={style.coin_img}
-              />
-            </div>
-            <div className={style.reward_text}>
-              <span className={style.plus_text}>+{earnBadgePoint}</span> Coins Earned!
+        <div className={style.reward_div}>
+          <div className={style.reward_popup}>
+            <div className={style.reward_container}>
+              <div className={style.coin_graphic}>
+                <Image
+                  src="/images/Trip/give_coin.png"
+                  alt="Coin"
+                  width={80}
+                  height={80}
+                  className={style.coin_img}
+                />
+              </div>
+              <div className={style.reward_text}>
+                <span className={style.plus_text}>+{earnBadgePoint}</span> Coins Earned!
+              </div>
             </div>
           </div>
         </div>

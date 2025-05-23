@@ -37,7 +37,7 @@ const states = [
 const Explore: React.FC = () => {
   const [tripData, setTripData] = useState<Trip[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedState, setSelectedState] = useState<string>(""); // for state filter
+  const [selectedState, setSelectedState] = useState<string>(""); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
