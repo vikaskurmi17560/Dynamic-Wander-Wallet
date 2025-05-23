@@ -1,8 +1,7 @@
 "use client";
 
-import useData from '@/hook/useData';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import style from "./ProfilePost.module.css";
 import { FaHeart, FaComment } from "react-icons/fa";
 import DisplayPost from './DisplayPost';
@@ -26,15 +25,19 @@ interface User {
     profile?: string;
 }
 
+interface ProfilePostProps {
+    userId: string;
+    isDisabled?: boolean;
+}
+
 const isImage = (url: string): boolean => {
     return /\.(jpeg|jpg|png|gif|webp|avif)$/i.test(url);
 };
 
-const ProfilePost = () => {
-    const { userId } = useData();
+const ProfilePost: React.FC<ProfilePostProps> = ({ userId, isDisabled }) => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
-    console.log("User Id : ", userId);
+
     const fetchPosts = async () => {
         try {
             const response = await axios.get(`http://localhost:7050/api/v1/post/getbyuserid?user_id=${userId}`);
@@ -60,7 +63,6 @@ const ProfilePost = () => {
             console.error('Error fetching posts:', error);
         }
     };
-
 
     useEffect(() => {
         if (userId) fetchPosts();
@@ -108,6 +110,7 @@ const ProfilePost = () => {
                     onNext={nextPost}
                     onPrev={prevPost}
                     onDelete={fetchPosts}
+                    isDisabled={isDisabled}
                 />
             )}
         </div>

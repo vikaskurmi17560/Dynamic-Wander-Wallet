@@ -30,8 +30,8 @@ const isVideo = (url: string): boolean => {
     return /\.(mp4|mov|webm|ogg)$/i.test(url);
 };
 
-const ProfileReel = () => {
-    const { userId } = useData();
+const ProfileReel = ({userId}) => {
+    // const { userId } = useData();
     const [posts, setPosts] = useState<Post[]>([]);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
