@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import style from "../[id]/style.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,21 +23,16 @@ interface Restaurant {
 
 interface Props {
     isHotel: Hotel[];
-    isHotelDetail: Hotel | null;
-    setIsHotelDetail: (hotel: Hotel | null) => void;
     isRestaurant: Restaurant[];
-    isRestaurantDetail: Restaurant | null;
-    setIsRestaurantDetail: (restaurant: Restaurant | null) => void;
 }
 
 const HotelAndRestaurantDetails: React.FC<Props> = ({
     isHotel,
-    isHotelDetail,
-    setIsHotelDetail,
     isRestaurant,
-    isRestaurantDetail,
-    setIsRestaurantDetail,
 }) => {
+    const [isHotelDetail, setIsHotelDetail] = useState<Hotel | null>(null);
+    const [isRestaurantDetail, setIsRestaurantDetail] = useState<Restaurant | null>(null);
+
     return (
         <>
             <div className={style.hotel_buttons}>

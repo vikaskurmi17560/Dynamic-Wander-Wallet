@@ -174,7 +174,10 @@ const Explore: React.FC = () => {
                         <p className={style.user_name}>{user.name}</p>
                         <span className={style.place}>{trip.destination}</span>
                       </div>
-                      <FollowButton userId={user._id} currentUserId={userId} />
+                      {
+                        user._id !== userId &&
+                        <FollowButton userId={user._id} currentUserId={userId} />
+                      }
                     </div>
                   </div>
                 )}

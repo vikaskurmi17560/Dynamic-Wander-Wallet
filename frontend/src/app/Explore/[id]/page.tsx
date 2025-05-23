@@ -177,7 +177,6 @@ const Page = () => {
     return (
         <div className={style.container}>
             <TripImage />
-
             {loading && <p className={style.loading}>Loading checkpoints...</p>}
             {error && <p className={style.error}>{error}</p>}
 
@@ -206,7 +205,7 @@ const Page = () => {
                                 center={[activeCheckpoint.source.latitude, activeCheckpoint.source.longitude]}
                                 zoom={9}
                                 className={style.map}
-                               
+
                             >
                                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                                 <Marker position={[activeCheckpoint.source.latitude, activeCheckpoint.source.longitude]} icon={sourceIcon}>
@@ -227,7 +226,10 @@ const Page = () => {
                         <div><strong className={style.modal_name}>Description:</strong><p className={style.modal_value}>{activeCheckpoint.description || "No description available"}</p></div>
 
                         <strong className={style.modal_name}>Hotel</strong>
-                        <HotelAndRestaurantDetails isHotel={isHotel} isRestaurant={isRestaurant} />
+                        <HotelAndRestaurantDetails
+                            isHotel={isHotel}
+                            isRestaurant={isRestaurant}
+                        />
 
                         <p className={style.modal_name}>Transport Budget</p>
                         <ul>
