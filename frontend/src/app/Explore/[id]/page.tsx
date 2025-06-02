@@ -12,6 +12,7 @@ import HotelAndRestaurantDetails from "../Components/HotelAndRestaurantDetails";
 import { MapContainer, TileLayer, Marker, Polyline, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import NavigationMap from "./NavigationMap/page";
 
 interface Checkpoint {
     _id: string;
@@ -57,7 +58,7 @@ const Page = () => {
     const params = useParams();
     const tripId = params?.id as string;
     const router = useRouter();
-
+    const [isOpen, setIsOpen] = useState(false);
     const [checkpoints, setCheckpoints] = useState<Checkpoint[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -245,18 +246,28 @@ const Page = () => {
                         <div className={style.modalButtons}>
                             <button
                                 className={style.btn_checkpoint}
-                                onClick={() => {
-                                    const { source, destination } = activeCheckpoint;
-                                    router.push(
-                                        `/explore/${tripId}/NavigationMap?srcLat=${source.latitude}&srcLng=${source.longitude}&destLat=${destination.latitude}&destLng=${destination.longitude}`
-                                    );
-                                }}
+                                onClick={() => setIsOpen(true)}
                             >
                                 Navigate
                             </button>
                             <button className={style.completeButton}>✅ Complete</button>
                             <button className={style.closeButton} onClick={() => setActiveCheckpoint(null)}>❌ Close</button>
                         </div>
+                        {
+                            isOpen && (
+                                <NavigationMap
+                                    source={{
+                                        latitude: activeCheckpoint.source.latitude,
+                                        longitude: activeCheckpoint.source.longitude
+                                    }}
+                                    destination={{
+                                        latitude: activeCheckpoint.destination.latitude,
+                                        longitude: activeCheckpoint.destination.longitude
+                                    }}
+                                    setIsOpen={setIsOpen}
+                                />
+                            )
+                        }
                     </div>
                 </div>
             )}

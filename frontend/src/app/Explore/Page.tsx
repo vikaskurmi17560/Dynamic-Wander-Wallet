@@ -167,7 +167,13 @@ const Explore: React.FC = () => {
                       height={50}
                       width={50}
                       className={style.profile_pic}
-                      onClick={() => router.push(`/explore/profile/${user._id}`)}
+                      onClick={() => {
+                        if (user._id === userId) {
+                          router.push('/profile');
+                        } else {
+                          router.push(`/explore/profile/${user._id}`);
+                        }
+                      }}
                     />
                     <div className={style.profile_div}>
                       <div>

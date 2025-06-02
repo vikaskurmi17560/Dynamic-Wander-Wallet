@@ -1,24 +1,24 @@
-.main{
+.main {
     margin-top: 6.9em;
 }
 
-.image_div{
+.image_div {
     width: 100%;
     height: 55vh;
     position: relative;
     margin-bottom: 3.2em;
 }
 
-.img{
+.img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.heading_div{
+.heading_div {
     width: 100%;
     height: 100%;
-    background-color: rgb(0,0,0,0.3);
+    background-color: rgb(0, 0, 0, 0.3);
     position: absolute;
     top: 0%;
     left: 0%;
@@ -28,7 +28,7 @@
     justify-content: center;
 }
 
-.btn_div{
+.btn_div {
     width: 100%;
     display: flex;
     align-items: center;
@@ -38,7 +38,7 @@
     left: 0%;
 }
 
-.btn_box{
+.btn_box {
     border: 0.3em solid white;
     min-height: 9vh;
     width: 35vh;
@@ -52,18 +52,22 @@
     gap: 0.8em;
 }
 
-.line{
+.btn {
+    color: white;
+}
+
+.line {
     height: 4vh;
     width: 2px;
     background-color: white;
 }
 
-.btn:hover{
+.btn:hover {
     color: blue;
     cursor: pointer;
 }
 
-.container{
+.container {
     min-height: 40vh;
     /* border: 1px solid black; */
     margin-bottom: 2em;
