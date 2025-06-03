@@ -18,7 +18,7 @@ interface User {
 interface Review {
     reviewBy: string;
     comment?: string;
-    userInfo?: User; 
+    userInfo?: User;
 }
 
 interface Trip {
@@ -120,6 +120,8 @@ const Feedback: React.FC<FeedbackProps> = ({ tripId }) => {
             });
 
             const data = await res.json();
+            setRating(0);
+            setReview('');
             fetchTripData();
         } catch (err) {
             console.error(err);
@@ -179,7 +181,7 @@ const Feedback: React.FC<FeedbackProps> = ({ tripId }) => {
                                     <strong>I_am_{rev.userInfo?.name || 'Anonymous'}</strong>
                                 </p>
                             </div>
-                            <p className={style.comment}>{rev.comment}</p>
+                            <p className={style.comment}>{rev.comment === "" ? "No Comment" : rev.comment}</p>
                         </div>
                     ))
                 ) : (

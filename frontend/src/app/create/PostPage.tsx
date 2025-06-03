@@ -47,14 +47,15 @@ const CreatePost = () => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
-    }
     if (file.size > 10 * 1024 * 1024) {
       alert('Please upload an image less than 10 MB.');
       return;
     }
+    if (file) {
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+    }
+
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
