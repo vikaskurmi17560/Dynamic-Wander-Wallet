@@ -55,7 +55,7 @@
     width: 50%;
     height: 100%;
     background-color: rgb(32, 32, 32);
-    border-right: 1px solid black;
+    border-right: 1px solid rgb(203, 201, 201);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,6 +63,7 @@
 
 .video {
     object-fit: cover;
+    color: white;
 }
 
 .content {
@@ -131,7 +132,11 @@
     min-height: 6vh;
     border-radius: 8px;
     outline: none;
-    transition: border 0.3s, box-shadow 0.3s;
+    /* transition: border 0.3s, box-shadow 0.3s; */
+    /* border: 1px solid white; */
+    /* margin-right: 2em; */
+    /* padding-right: 1em; */
+    
 }
 
 .select option:disabled {
@@ -157,6 +162,7 @@
     padding: 0.75rem;
     min-height: 6vh;
     outline: none;
+    color: white;
 }
 
 .label {

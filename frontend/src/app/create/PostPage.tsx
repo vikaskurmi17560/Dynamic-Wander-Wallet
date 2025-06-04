@@ -115,6 +115,7 @@ const CreatePost = () => {
                 accept="image/*"
                 onChange={handleImageChange}
                 className={styles.fileInput}
+                style={{color:"white"}}
                 required
               />
             )}

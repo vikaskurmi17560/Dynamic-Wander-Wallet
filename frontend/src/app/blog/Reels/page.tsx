@@ -5,6 +5,8 @@ import axios from "axios";
 import style from "./Reels.module.css";
 import { FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import CommentLike from "./CommentLike";
+import FollowButton from "@/app/explore/FollowButton";
+import { useData } from "@/context/UserContext";
 
 interface User {
   _id: string;
@@ -36,7 +38,7 @@ const Reels = () => {
   const [pausedIndex, setPausedIndex] = useState<number | null>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [openCommentPostId, setOpenCommentPostId] = useState<string | null>(null);
-
+  const { userId } = useData();
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -185,7 +187,14 @@ const Reels = () => {
                 <span className={style.profile_name}>
                   i_am_{post.postedUser?.name || "Unknown"}
                 </span>
-                <span className={style.profile_follow}>follow</span>
+                {/* <span className={style.profile_follow}>follow</span> */}
+                {post.postedBy !== userId && (
+                  <FollowButton
+                    userId={post?.postedBy}
+                    currentUserId={userId}
+                  />
+                )}
+
               </div>
 
               <div className={style.desp}>

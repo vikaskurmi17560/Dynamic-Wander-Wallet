@@ -44,7 +44,7 @@
 .image_div {
     width: 50%;
     height: 100%;
-    border: 1px solid black;
+   border-right: 1px solid rgb(203, 201, 201);
     display: flex;
     align-items: center;
     justify-content: center;

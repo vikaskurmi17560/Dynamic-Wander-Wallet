@@ -27,7 +27,6 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-
         ctx.fillStyle = "#d4af37";
         ctx.fillRect(0, 0, width, height);
     }, [width, height]);
