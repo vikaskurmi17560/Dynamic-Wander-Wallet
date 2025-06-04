@@ -7,6 +7,7 @@ exports.createTrip = async (req, res) => {
   try {
     const savedTrip = await Trip.create(req.body);
     res.status(201).json(savedTrip);
+
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -153,7 +154,7 @@ exports.uploadImagesByTripId = async (req, res) => {
 exports.tripBudget = async (req, res) => {
   try {
     const { trip_id } = req.query;
-    const { userId , Earnbadge_point } = req.body;
+    const { userId, Earnbadge_point } = req.body;
     if (!trip_id || !userId) {
       return res.status(400).json({ message: "trip_id or userId is missing" });
     }
@@ -174,10 +175,10 @@ exports.tripBudget = async (req, res) => {
       return res.status(404).json({ message: "Trip not found" });
     }
 
-    await Trip.findByIdAndUpdate(trip_id, { $inc: { Earnbadge_point:Earnbadge_point } });
+    await Trip.findByIdAndUpdate(trip_id, { $inc: { Earnbadge_point: Earnbadge_point } });
     await User.findByIdAndUpdate(userId, { $inc: { total_trip: 1 } });
-    await User.findByIdAndUpdate(userId, { $inc: { Earnbadge_point:Earnbadge_point } });
-
+    await User.findByIdAndUpdate(userId, { $inc: { Earnbadge_point: Earnbadge_point } });
+    await User.findByIdAndUpdate(userId, { $inc: { number_scratch_card: 1 } });
     return res.status(200).json({
       success: true,
       message: "Total trip budget created successfully",
@@ -198,12 +199,12 @@ exports.followTrip = async (req, res) => {
       return res.status(404).json({ error: "Trip not found" });
     }
 
-    
+
     if (trip.followedby.includes(userId)) {
       return res.status(400).json({ error: "User already follows this trip" });
     }
 
-    
+
     trip.followedby.push(userId);
     await trip.save();
 

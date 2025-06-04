@@ -8,6 +8,7 @@ import { faGift, faStar, faCoins, faTicketAlt } from "@fortawesome/free-solid-sv
 import ProductPage from "./ProductPage";
 import WanderPoint from "./WanderPoint";
 import { useData } from "@/context/UserContext";
+import ScratchPage from "./scratch";
 
 interface BadgeUsage {
     product_id: string;
@@ -32,13 +33,14 @@ interface User {
     following: string[];
     createdAt: string;
     updatedAt: string;
+    cashbackwon: number;
 }
 
 const BonusPage = () => {
     const { userId } = useData();
     const [user, setUser] = useState<User | null>(null);
     const [refresh, setRefresh] = useState(false);
-    const [activeTab, setActiveTab] = useState<"product" | "wander">("product");
+    const [activeTab, setActiveTab] = useState<"product" | "wander" | "Cashback">("product");
 
     const loadUser = async () => {
         try {
@@ -65,10 +67,17 @@ const BonusPage = () => {
                 <h1 className={style.h1}>Reward And Cashback</h1>
                 <div className={style.navbar}>
                     <div className={style.navItem} onClick={() => setActiveTab("product")}>
+                        <p className={style.name}>Product Purchase</p>
+                        <div className={style.number_div}>
+                            <FontAwesomeIcon icon={faCoins} className={style.faIcon} />
+                            <p className={style.value}>45+</p>
+                        </div>
+                    </div>
+                    <div className={style.navItem} onClick={() => setActiveTab("Cashback")}>
                         <p className={style.name}>Cashback Won</p>
                         <div className={style.number_div}>
                             <FontAwesomeIcon icon={faGift} className={style.faIcon} />
-                            <p className={style.value}>$40000</p>
+                            <p className={style.value}>₹{user?.cashbackwon}</p>
                         </div>
                     </div>
 
@@ -79,15 +88,6 @@ const BonusPage = () => {
                             <p className={style.value}>{user?.Earnbadge_point ?? "0"}</p>
                         </div>
                     </div>
-
-                    <div className={style.navItem}>
-                        <p className={style.name}>Redeem Coins</p>
-                        <div className={style.number_div}>
-                            <FontAwesomeIcon icon={faCoins} className={style.faIcon} />
-                            <p className={style.value}>4567</p>
-                        </div>
-                    </div>
-
                     <div className={style.navItem}>
                         <p className={style.name}>My Vouchers</p>
                         <div className={style.number_div}>
@@ -98,6 +98,13 @@ const BonusPage = () => {
                 </div>
 
                 <div className={style.reward_container}>
+                    {
+                        activeTab === "Cashback" && (
+                            <ScratchPage
+                                onPurchaseSuccess={handleRefresh}
+                            />
+                        )
+                    }
                     {activeTab === "product" && (
                         <ProductPage
                             WanderPoint={user?.Earnbadge_point}
@@ -110,6 +117,7 @@ const BonusPage = () => {
                             badgeUsageHistory={user?.badge_usage_history || []}
                         />
                     )}
+
                 </div>
             </div>
         </div>

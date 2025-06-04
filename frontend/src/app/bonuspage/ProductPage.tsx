@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./ProductPage.module.css";
 import { useData } from "@/context/UserContext";
+import axios from "axios";
 
 export interface Product {
     _id: string;
@@ -43,7 +44,7 @@ const ProductPage = ({ WanderPoint, onPurchaseSuccess }: ProductPageProps) => {
     }, []);
 
     const calculateWanderPoints = (price: number): number => {
-        if (price <= 500) return 500 * 3;
+        if (price <= 500) return 5;
         if (price <= 1000) return 1000 * 2;
         if (price <= 1500) return 1500 * 2;
         if (price <= 2000) return 5;
@@ -70,9 +71,17 @@ const ProductPage = ({ WanderPoint, onPurchaseSuccess }: ProductPageProps) => {
                     pointsToUse: pointsNeeded,
                 }),
             });
-            onPurchaseSuccess();
-            const data = await res.json();
 
+            const data = await res.json();
+            const cashback = price <= 500 ? 40 : price <= 1000 ? 80 : price <= 1500 ? 100 : price <= 2000 ? 150 : 250;
+
+            const responce = await axios.post("http://localhost:7050/api/v1/product/cashback", { cashback, userId }, {
+                headers: {
+                    "content-Type": "application/json"
+                }
+            })
+            console.log(responce);
+            onPurchaseSuccess();
             if (data.success) {
                 alert("Purchase successful!");
                 setCurrentPoints(data.remaining_points);

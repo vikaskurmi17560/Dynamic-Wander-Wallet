@@ -72,7 +72,7 @@ const User_Schema = new mongoose.Schema(
                 ),
                 message: "done",
             }
-    
+
         },
         badge_usage_history: [
             {
@@ -94,6 +94,16 @@ const User_Schema = new mongoose.Schema(
         total_trip: {
             type: Number,
             default: 0,
+        },
+        cashbackwon: {
+            type: Number,
+            default: 0,
+        },
+        history_cashback: [{
+            type: Number
+        }],
+        number_scratch_card: {
+            type: Number,
         },
     },
     { timestamps: true }

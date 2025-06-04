@@ -38,6 +38,7 @@ exports.createPost = async (req, res) => {
     });
 
     await User.findByIdAndUpdate(user_id, { $push: { posts: newPost._id } });
+    await User.findByIdAndUpdate(user_id, { $inc: { number_scratch_card: 1 } });
 
     return res.status(201).json({
       success: true,
@@ -90,7 +91,7 @@ exports.getPostByUserId = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Posts fetched successfully",
-      posts, 
+      posts,
     });
   } catch (error) {
     return res.status(500).json({
@@ -147,7 +148,7 @@ exports.deletePostById = async (req, res) => {
       })
     }
 
-    
+
     await User.findByIdAndUpdate(userId, { $pull: { posts: post_id } });
 
     return res.status(200).json({

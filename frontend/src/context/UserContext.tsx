@@ -17,7 +17,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const router = useRouter();
     const [userId, setUserId] = useState<string | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-
     const updateUserContext = async () => {
         const token = localStorage.getItem("token");
         const storedUserId = localStorage.getItem("user_id");

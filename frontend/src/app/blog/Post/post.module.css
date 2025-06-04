@@ -1,14 +1,19 @@
 .grid {
+    margin-top: 0.2em;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 2fr));
     gap: 0.2em;
     width: 70%;
+    height: 100vh;
+    overflow: scroll;
+    scrollbar-width: none;
     box-sizing: border-box;
     /* border: 1px solid black; */
 }
 
 .card {
     overflow: hidden;
+    height: 40vh;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     background-color: #fff;

@@ -1,0 +1,122 @@
+.heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    color: #1f2937;
+    /* Dark gray */
+    margin: 2rem 0;
+
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    position: relative;
+}
+
+.heading::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: #f59e0b;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+
+.cashback_div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1em;
+    overflow-x: auto;
+    /* max-height: 500px; */
+    /* padding: 1em; */
+    width: 100%;
+    padding: 0.5em;
+    /* background-color: black; */
+    /* border: 1px solid black; */
+    scrollbar-width: none;
+    /* flex-grow: 1;
+    flex-shrink: 1; */
+}
+
+.no_reward {
+    width: 100%;
+    margin-top: 2rem;
+    padding: 1.5rem 2rem;
+    /* background-color: #fef3c7; */
+    color: #92400e;
+    font-size: 1.2rem;
+    font-weight: 500;
+    /* border: 1px solid #fcd34d; */
+    /* border-radius: 0.75rem; */
+    text-align: center;
+    text-transform: capitalize;
+}
+
+
+
+
+.box_div {
+    display: flex;
+    gap: 1em;
+    overflow-x: auto;
+    scrollbar-width: none;
+    width: 100%;
+}
+
+.box_div::-webkit-scrollbar {
+    display: none;
+}
+
+.card {
+    flex: 0 0 auto;
+    width: 240px;
+    height: 180px;
+    background-image: url('/images/Cashback.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    font-size: 1.4em;
+    font-weight: 400;
+}
+
+.sub_heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    color: #1f2937;
+    /* Dark gray */
+    margin: 2rem 0;
+
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    position: relative;
+}
+
+.sub_heading::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: #f59e0b;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+
+
+.value {
+    font-weight: 500;
+    color: blue;
+}
