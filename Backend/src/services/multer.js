@@ -1,10 +1,10 @@
 const multer = require("multer");
 const path = require("path");
 
-// Configure storage settings
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "./public/uploads"); // Ensure this folder exists
+        cb(null, "./public/uploads");
     },
     filename: function (req, file, cb) {
         const uniqueString = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
@@ -13,7 +13,6 @@ const storage = multer.diskStorage({
 });
 
 
-// File filter to allow only images and videos
 
 const fileFilter = (req, file, cb) => {
     const allowedExtensions = /jpeg|jpg|png|mp4|mov|avi|mkv/;
@@ -22,9 +21,9 @@ const fileFilter = (req, file, cb) => {
         "image/jpg",
         "image/png",
         "video/mp4",
-        "video/quicktime", // .mov
-        "video/x-msvideo", // .avi
-        "video/x-matroska" // .mkv
+        "video/quicktime", 
+        "video/x-msvideo", 
+        "video/x-matroska" 
     ];
 
     const extName = allowedExtensions.test(path.extname(file.originalname).toLowerCase());

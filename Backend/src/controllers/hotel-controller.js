@@ -8,7 +8,7 @@ exports.createHotel = async (req, res) => {
 
     const { trip_id, checkpoint_id, Earnbadge_point, Earnbudget_point, ...hotelData } = req.body;
 
-    // Add required fields back to the hotel data
+  
     hotelData.trip_id = trip_id;
     hotelData.checkpoint_id = checkpoint_id;
 
@@ -22,7 +22,7 @@ exports.createHotel = async (req, res) => {
 
     const hotel = await Hotel.create(hotelData);
 
-    // Update Checkpoint badge points
+
     if (checkpoint_id && Earnbadge_point) {
       await Checkpoints.findByIdAndUpdate(
         checkpoint_id,
@@ -30,7 +30,7 @@ exports.createHotel = async (req, res) => {
       );
     }
 
-    // Update Trip badge points
+  
     if (trip_id && Earnbadge_point) {
       await Trip.findByIdAndUpdate(
         trip_id,
