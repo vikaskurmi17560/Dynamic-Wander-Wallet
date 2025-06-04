@@ -7,6 +7,7 @@ import { FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import CommentLike from "./CommentLike";
 import FollowButton from "@/app/explore/FollowButton";
 import { useData } from "@/context/UserContext";
+import { useRouter } from "next/navigation";
 
 interface User {
   _id: string;
@@ -41,6 +42,7 @@ const Reels = () => {
   const { userId } = useData();
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -182,19 +184,25 @@ const Reels = () => {
                     src={post.postedUser.profile}
                     alt="Profile"
                     className={style.profile_img}
+                    onClick={() => {
+                      if (post.postedUser?._id === userId) {
+                        router.push('/profile');
+                      } else {
+                        router.push(`/explore/profile/${post.postedUser?._id}`);
+                      }
+                    }}
                   />
                 )}
                 <span className={style.profile_name}>
                   i_am_{post.postedUser?.name || "Unknown"}
                 </span>
-                {/* <span className={style.profile_follow}>follow</span> */}
-                {post.postedBy !== userId && (
+
+                {userId && post.postedUser?._id !== userId && (
                   <FollowButton
-                    userId={post?.postedBy}
+                    userId={post.postedUser?._id}
                     currentUserId={userId}
                   />
                 )}
-
               </div>
 
               <div className={style.desp}>
