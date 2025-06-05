@@ -30,25 +30,25 @@ function Navbar() {
       </div>
       <div className={`${styles.nav_links} ${menuOpen ? styles.open : ""}`}>
         <div className={styles.left_section}>
-          <Link href="/" className={styles.nav_item}>
+          <Link href="/" className={styles.nav_item} onClick={() => setMenuOpen(!menuOpen)}>
             Home
           </Link>
-          <Link href={isAuthenticated ? "/blog" : "/login"} className={styles.nav_item}>
+          <Link href={isAuthenticated ? "/blog" : "/login"} className={styles.nav_item} onClick={() => setMenuOpen(!menuOpen)}>
             Blogs
           </Link>
-          <Link href={isAuthenticated ? !isTripEnd ? "/trip" : "/trip/TripCheckpoint" : "/login"} className={styles.nav_item}>
+          <Link href={isAuthenticated ? !isTripEnd ? "/trip" : "/trip/TripCheckpoint" : "/login"} className={styles.nav_item} onClick={() => setMenuOpen(!menuOpen)}>
             Trip
           </Link>
-          <Link href={isAuthenticated ? "/create" : "/login"} className={styles.nav_item}>
+          <Link href={isAuthenticated ? "/create" : "/login"} className={styles.nav_item} onClick={() => setMenuOpen(!menuOpen)}>
             Create
           </Link>
-          <Link href={isAuthenticated ? "/dashboard" : "/login"} className={styles.nav_item}>
+          <Link href={isAuthenticated ? "/dashboard" : "/login"} className={styles.nav_item} onClick={() => setMenuOpen(!menuOpen)}>
             Dashboard
           </Link>
-          <Link href={isAuthenticated ? "/explore" : "/login"} className={styles.nav_item}>
+          <Link href={isAuthenticated ? "/explore" : "/login"} className={styles.nav_item} onClick={() => setMenuOpen(!menuOpen)}>
             Explore
           </Link>
-          <Link href="/bonuspage" className={styles.nav_item}>
+          <Link href="/bonuspage" className={styles.nav_item} onClick={() => setMenuOpen(!menuOpen)}>
             Wallet
           </Link>
         </div>
@@ -56,7 +56,7 @@ function Navbar() {
         <div className={styles.right_section}>
           {isAuthenticated ? (
             <>
-              <Link href="/profile" className={styles.btn}>
+              <Link href="/profile" className={styles.btn} onClick={() => setMenuOpen(!menuOpen)}>
                 Profile
               </Link>
               <div className={styles.line}></div>
@@ -65,7 +65,7 @@ function Navbar() {
               </div>
             </>
           ) : (
-            <Link className={styles.btn} href="/login">
+            <Link className={styles.btn} href="/login" onClick={() => setMenuOpen(!menuOpen)}>
               Log In
             </Link>
           )}
