@@ -5,7 +5,7 @@ import axios from "axios";
 import style from "./Reels.module.css";
 import { FaPause, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import CommentLike from "./CommentLike";
-import FollowButton from "@/app/Explore/FollowButton";
+import FollowButton from "@/app/explore/FollowButton";
 import { useData } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
 
