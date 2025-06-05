@@ -120,47 +120,47 @@ const ProfileTrip: React.FC<ProfileTripProps> = ({ isDisabled, userId }) => {
         <div className={style.main}>
             <div className={style.container}>
                 {trips.map((trip) => (
-                    <div key={trip._id} className={style.tripCard}>
-                        <div className={style.imageWrapper}>
+                    
+                        <div key={trip._id} className={style.imageWrapper}>
                             <img
                                 src={trip.cover_image || "/images/RedBackground.webp"}
                                 onError={(e) => (e.currentTarget.src = "/images/RedBackground.webp")}
                                 alt="Cover"
                                 className={style.image}
                             />
+                            <div className={style.card_info}>
+                                <h3 className={style.h3}>{trip.tripName}</h3>
+                                <div className={style.info_box}>
+                                    <p className={style.name}>City</p>
+                                    <span className={style.value}>{trip.city}</span>
+                                </div>
+                                <div className={style.info_box}>
+                                    <p className={style.name}>State</p>
+                                    <span className={style.value}>{trip.state}</span>
+                                </div>
+                                <div className={style.info_box}>
+                                    <p className={style.name}>Budget</p>
+                                    <span className={style.value}>₹{trip.TotalBudget ?? "N/A"}</span>
+                                </div>
+                                <div className={style.buttonGroup}>
+                                    <button className={style.button} onClick={() => router.push(`/dashboard/trips/${trip._id}`)}>About</button>
+                                    <button className={style.button} onClick={() => openGallery(trip)}>Gallery</button>
+                                    {!isDisabled && (
+                                        <button
+                                            className={style.button}
+                                            onClick={() => {
+                                                setSelectedTripId(trip._id);
+                                                setIsSetting(true);
+                                            }}
+                                            disabled={isDisabled}
+                                        >
+                                            Delete
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
                         </div>
-                        <div className={style.card_info}>
-                            <h3 className={style.h3}>{trip.tripName}</h3>
-                            <div className={style.info_box}>
-                                <p className={style.name}>City</p>
-                                <span className={style.value}>{trip.city}</span>
-                            </div>
-                            <div className={style.info_box}>
-                                <p className={style.name}>State</p>
-                                <span className={style.value}>{trip.state}</span>
-                            </div>
-                            <div className={style.info_box}>
-                                <p className={style.name}>Budget</p>
-                                <span className={style.value}>₹{trip.TotalBudget ?? "N/A"}</span>
-                            </div>
-                            <div className={style.buttonGroup}>
-                                <button className={style.button} onClick={() => router.push(`/dashboard/trips/${trip._id}`)}>About</button>
-                                <button className={style.button} onClick={() => openGallery(trip)}>Gallery</button>
-                                {!isDisabled && (
-                                    <button
-                                        className={style.button}
-                                        onClick={() => {
-                                            setSelectedTripId(trip._id);
-                                            setIsSetting(true);
-                                        }}
-                                        disabled={isDisabled}
-                                    >
-                                        Delete
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                    
                 ))}
             </div>
 

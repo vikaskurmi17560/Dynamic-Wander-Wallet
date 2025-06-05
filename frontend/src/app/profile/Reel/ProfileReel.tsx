@@ -31,7 +31,6 @@ const isVideo = (url: string): boolean => {
 };
 
 const ProfileReel = ({userId}) => {
-    // const { userId } = useData();
     const [posts, setPosts] = useState<Post[]>([]);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
