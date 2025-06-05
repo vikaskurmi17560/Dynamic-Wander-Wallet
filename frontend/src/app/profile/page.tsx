@@ -92,7 +92,7 @@ const Profile = () => {
           className={style.profile_photo_container}
         >
           <div className={style.photo_div}>
-            <img src={userData.profile || "/images/profileIcon.webp"} alt="profile" className={style.profile_photo} />
+            <img src={userData.profile || "/images/ProfileIcon.webp"} alt="profile" className={style.profile_photo} />
           </div>
         </section>
 
@@ -144,7 +144,7 @@ const Profile = () => {
           .map((trip) => (
             <div key={trip._id} className={style.story_image_div}>
               <Image
-                src={trip.cover_image || "/images/Daskboard/Mytrip.jpg"}
+                src={trip.cover_image || "/images/Daskboard/mytrip.jpg"}
                 alt='Loading....'
                 width={500}
                 height={500}

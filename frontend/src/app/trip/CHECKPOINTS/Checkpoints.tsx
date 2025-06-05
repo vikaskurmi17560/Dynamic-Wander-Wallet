@@ -48,7 +48,7 @@ const Checkpoints = () => {
             <div className={styles.container}>
                 <div className={styles.Direction}>
                     <Image
-                        src="/images/Trip/Start.png"
+                        src="/images/Trip/start.png"
                         height={3000}
                         width={4000}
                         alt="Start your trip"
