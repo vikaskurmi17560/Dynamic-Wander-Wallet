@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import style from "./Explore.module.css";
+import style from "./explore.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faStar } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import useCartStore from "@/app/store/useStore";
 import Image from "next/image";
-import FollowButton from "./FollowButton";
 import { useData } from "@/context/UserContext";
+import FollowButton from "./FollowButton";
 
 interface Trip {
   _id: string;
