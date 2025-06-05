@@ -51,7 +51,7 @@ const CommentLike: React.FC<Props> = ({ postId, isCommentOpen, onToggle }) => {
   const fetchLikes = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7050/api/v1/post/like/getalldata`,
+        `https://dynamic-wander-wallet.onrender.com/api/v1/post/like/getalldata`,
         { params: { post_id: postId } }
       );
       const allLikes = res.data.likes;
@@ -70,7 +70,7 @@ const CommentLike: React.FC<Props> = ({ postId, isCommentOpen, onToggle }) => {
   const fetchComments = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7050/api/v1/post/comment/getbypost?post_id=${postId}`
+        `https://dynamic-wander-wallet.onrender.com/api/v1/post/comment/getbypost?post_id=${postId}`
       );
       setComments(res.data.comments || []);
     } catch (error) {
@@ -81,7 +81,7 @@ const CommentLike: React.FC<Props> = ({ postId, isCommentOpen, onToggle }) => {
   const handleLikeToggle = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:7050/api/v1/post/like/create`,
+        `https://dynamic-wander-wallet.onrender.com/api/v1/post/like/create`,
         {
           post_id: postId,
           user_id: userId,
@@ -102,7 +102,7 @@ const CommentLike: React.FC<Props> = ({ postId, isCommentOpen, onToggle }) => {
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
     try {
-      await axios.post(`http://localhost:7050/api/v1/post/comment/create`, {
+      await axios.post(`https://dynamic-wander-wallet.onrender.com/api/v1/post/comment/create`, {
         post_id: postId,
         user_id: userId,
         text: newComment,

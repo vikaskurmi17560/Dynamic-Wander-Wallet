@@ -40,7 +40,7 @@ const ProfilePost: React.FC<ProfilePostProps> = ({ userId, isDisabled }) => {
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get(`http://localhost:7050/api/v1/post/getbyuserid?user_id=${userId}`);
+            const response = await axios.get(`https://dynamic-wander-wallet.onrender.com/api/v1/post/getbyuserid?user_id=${userId}`);
             const postsData: Post[] = response.data.posts || [];
 
             const imagePosts = postsData.filter(post => isImage(post.image));
@@ -48,7 +48,7 @@ const ProfilePost: React.FC<ProfilePostProps> = ({ userId, isDisabled }) => {
             const postsWithUsers = await Promise.all(
                 imagePosts.map(async (post) => {
                     try {
-                        const userRes = await axios.get('http://localhost:7050/api/v1/user/get-user', {
+                        const userRes = await axios.get('https://dynamic-wander-wallet.onrender.com/api/v1/user/get-user', {
                             params: { user_id: post.postedBy },
                         });
                         return { ...post, postedUser: userRes.data.user };

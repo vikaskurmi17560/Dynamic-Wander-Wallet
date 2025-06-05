@@ -46,7 +46,7 @@ const ProfileTrip: React.FC<ProfileTripProps> = ({ isDisabled, userId }) => {
 
         const fetchTrips = async () => {
             try {
-                const response = await axios.get("http://localhost:7050/api/v1/trip/getbyuserid", {
+                const response = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/trip/getbyuserid", {
                     params: { userId },
                 });
                 setTrips(response.data.trips || []);
@@ -95,7 +95,7 @@ const ProfileTrip: React.FC<ProfileTripProps> = ({ isDisabled, userId }) => {
         if (!selectedTripId || !userId) return;
 
         try {
-            const res = await axios.delete("http://localhost:7050/api/v1/trip/delete", {
+            const res = await axios.delete("https://dynamic-wander-wallet.onrender.com/api/v1/trip/delete", {
                 params: { trip_id: selectedTripId },
                 data: { userId },
             });

@@ -62,9 +62,9 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`http://localhost:7050/api/v1/user/get-user?user_id=${userId}`);
+        const res = await fetch(`https://dynamic-wander-wallet.onrender.com/api/v1/user/get-user?user_id=${userId}`);
         const data = await res.json();
-        const response = await axios.get(`http://localhost:7050/api/v1/trip/getbyuserid?userId=${userId}`);
+        const response = await axios.get(`https://dynamic-wander-wallet.onrender.com/api/v1/trip/getbyuserid?userId=${userId}`);
         setTrips(response.data.trips || []);
 
         if (data.success) {

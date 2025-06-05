@@ -33,7 +33,7 @@ const PostCard: React.FC = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axios.get('http://localhost:7050/api/v1/post/getallpost');
+                const response = await axios.get('https://dynamic-wander-wallet.onrender.com/api/v1/post/getallpost');
                 const postsData: Post[] = response.data;
 
                 const imagePosts = postsData.filter(post => isImage(post.image));
@@ -41,7 +41,7 @@ const PostCard: React.FC = () => {
                 const postsWithUsers = await Promise.all(
                     imagePosts.map(async (post) => {
                         try {
-                            const userRes = await axios.get('http://localhost:7050/api/v1/user/get-user', {
+                            const userRes = await axios.get('https://dynamic-wander-wallet.onrender.com/api/v1/user/get-user', {
                                 params: { user_id: post.postedBy },
                             });
                             return { ...post, postedUser: userRes.data.user };

@@ -24,7 +24,7 @@ const EditProfile = () => {
 
     const fetchUserData = async () => {
         try {
-            const response = await axios.get("http://localhost:7050/api/v1/user/get-user", {
+            const response = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/user/get-user", {
                 params: { user_id: userId },
             });
 
@@ -70,7 +70,7 @@ const EditProfile = () => {
             }
 
             const response = await axios.post(
-                `http://localhost:7050/api/v1/user/update-user?user_id=${userId}`,
+                `https://dynamic-wander-wallet.onrender.com/api/v1/user/update-user?user_id=${userId}`,
                 formData
             );
             // alert("update Successfully")

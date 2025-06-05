@@ -44,15 +44,15 @@ const CheckpointDetailsPage = () => {
 
         async function fetchCheckpointDetails() {
             try {
-                const response = await axios.get("http://localhost:7050/api/v1/checkpoint/getbyid", {
+                const response = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/checkpoint/getbyid", {
                     params: { _id: params.id },
                 });
 
-                const hotel_res = await axios.get("http://localhost:7050/api/v1/hotel/getbycheckpointid", {
+                const hotel_res = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/hotel/getbycheckpointid", {
                     params: { checkpointId: params.id },
                 });
 
-                const restaurant_res = await axios.get("http://localhost:7050/api/v1/restaurant/getcheckpoint", {
+                const restaurant_res = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/restaurant/getcheckpoint", {
                     params: { checkpoint_id: params.id },
                 });
                 setIsHotel(hotel_res.data.hotels);

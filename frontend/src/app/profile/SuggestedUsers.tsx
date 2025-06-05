@@ -37,8 +37,8 @@ const SuggestedUsers = ({ onClose }: { onClose: () => void }) => {
         const fetchUsersAndFollowing = async () => {
             try {
                 const [usersRes, currentUserRes] = await Promise.all([
-                    axios.get("http://localhost:7050/api/v1/user/getalluser"),
-                    axios.get("http://localhost:7050/api/v1/user/get-user", {
+                    axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/user/getalluser"),
+                    axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/user/get-user", {
                         params: { user_id: userId },
                     }),
                 ]);
@@ -67,7 +67,7 @@ const SuggestedUsers = ({ onClose }: { onClose: () => void }) => {
     const handleFollowToggle = async (targetUserId: string) => {
         try {
             const isFollowing = followingIds.includes(targetUserId);
-            const url = `http://localhost:7050/api/v1/user/${isFollowing ? "unfollow" : "follow"}?id=${targetUserId}`;
+            const url = `https://dynamic-wander-wallet.onrender.com/api/v1/user/${isFollowing ? "unfollow" : "follow"}?id=${targetUserId}`;
             await axios.post(url, { currentUserId: userId });
 
             setFollowingIds((prev) =>

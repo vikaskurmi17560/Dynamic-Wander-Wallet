@@ -14,7 +14,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ userId, currentUserId }) =>
 
     const checkFollowStatus = async () => {
         try {
-            const res = await axios.get("http://localhost:7050/api/v1/user/check-follow", {
+            const res = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/user/check-follow", {
                 params: {
                     id: userId,
                     currentUserId,
@@ -31,11 +31,11 @@ const FollowButton: React.FC<FollowButtonProps> = ({ userId, currentUserId }) =>
     const handleFollowToggle = async () => {
         try {
             if (isFollowing) {
-                await axios.post(`http://localhost:7050/api/v1/user/unfollow?id=${userId}`, {
+                await axios.post(`https://dynamic-wander-wallet.onrender.com/api/v1/user/unfollow?id=${userId}`, {
                     currentUserId,
                 });
             } else {
-                await axios.post(`http://localhost:7050/api/v1/user/follow?id=${userId}`, {
+                await axios.post(`https://dynamic-wander-wallet.onrender.com/api/v1/user/follow?id=${userId}`, {
                     currentUserId,
                 });
             }
