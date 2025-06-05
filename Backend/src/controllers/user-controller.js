@@ -138,7 +138,7 @@ exports.forgetPassword = async (req, res) => {
         await user.save({ validateBeforeSave: false });
 
 
-        const resetUrl = `http://localhost:3000/login/resetpassword?token=${resetToken}`;
+        const resetUrl = `https://dynamic-wander-wallet.onrender.com/api/v1//user/resetpassword?token=${resetToken}`;
 
 
         await sendEmail({

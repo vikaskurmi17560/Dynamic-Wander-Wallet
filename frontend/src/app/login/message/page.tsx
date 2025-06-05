@@ -12,7 +12,7 @@ const Message = () => {
                 Password Change Notification or Email will be sent Successfully!
             </div>
             <div className={style.link}>
-                If mail not sent <button onClick={() => router.push("/login")} style={{color:"blue"}}>Login?</button>
+                If mail not sent <button onClick={() => router.push("/login")} style={{color:"blue"}} className='bg-blue-400 cursor-pointer hover:bg-blue-700 text-white p-2 rounded-full shadow-md'>Login?</button>
             </div>
         </div>
     )
