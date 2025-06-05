@@ -5,11 +5,22 @@ import { useForm } from "react-hook-form";
 import { Signin } from "@/connection/userConnection";
 import { useData } from "@/context/UserContext";
 import styles from "./SigninForm.module.css";
+import { useEffect, useState } from "react";
 
 export default function Page() {
   const router = useRouter();
-  const { register, handleSubmit } = useForm();
+  
   const { updateUserContext } = useData();
+  const [isError, setIsError] = useState<Boolean | null>(false);
+  const { register, handleSubmit, watch } = useForm();
+  const email = watch("email");
+  const password = watch("password");
+
+  useEffect(() => {
+    if (isError && (email || password)) {
+      setIsError(null);
+    }
+  }, [email, password]);
 
   async function handleSignin(data: any) {
     try {
@@ -17,7 +28,7 @@ export default function Page() {
       if (response.success) {
         toast.success("Login Successfully");
         const expiresAt = Date.now() + 60 * 60 * 1000;
-
+        setIsError(null);
         localStorage.setItem(
           "token",
           JSON.stringify({ value: response.token, expiresAt })
@@ -39,10 +50,13 @@ export default function Page() {
         router.replace("/profile");
       }
       else {
-      toast.error("Login failed. Please check your credentials.");
-    }
+        toast.error("Login failed. Please check your credentials.");
+      }
     } catch (error: any) {
-      toast.error(error.message || "An unexpected error occurred");
+      const message = error.response.data.message;
+      
+      setIsError(message);
+      // toast.error(error.message || "An unexpected error occurred");
     }
   }
 
@@ -75,7 +89,9 @@ export default function Page() {
               className={styles.input}
             />
           </div>
-
+          {
+            isError && <p className={styles.error}>{isError}</p>
+          }
           <button type="submit" className={styles.button}>
             Sign in
           </button>

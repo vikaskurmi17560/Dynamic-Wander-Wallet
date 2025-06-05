@@ -1,14 +1,16 @@
 "use client";
+
 import { Register } from "@/connection/userConnection";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import styles from "./RegisterForm.module.css";
+import { useState } from "react";
 
 export default function Page() {
     const router = useRouter();
     const { register, handleSubmit } = useForm();
-
+    const [isError, setIsError] = useState<Boolean | null>(false);
     async function handleRegister(data: any) {
         try {
             const response = await Register(data);
@@ -17,7 +19,8 @@ export default function Page() {
                 router.push("/login");
             }
         } catch (error: any) {
-            toast.error(error.response.message);
+            const message = error.response.data.message;
+            setIsError(message);
         }
     }
 
@@ -26,7 +29,7 @@ export default function Page() {
             <div className={styles.card}>
                 <div className={styles.formWrapper}>
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                        <h2 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                        <h2 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
                             Create a new account
                         </h2>
                     </div>
@@ -101,7 +104,9 @@ export default function Page() {
                                     />
                                 </div>
                             </div>
-
+                            {
+                                isError && <p className={styles.error}>{isError}</p>
+                            }
                             <div>
                                 <button type="submit" className={styles.button}>
                                     Sign in

@@ -104,13 +104,8 @@ const Profile = () => {
                 {userData.bio?.trim() === '' ? 'Please insert your bio' : userData.bio}
               </div>
             </div>
-            <button
-              className={style.edit_btn}
-              onClick={() => router.push("/profile/editprofile")}>
-              Edit Profile
-            </button>
-          </div>
 
+          </div>
           <div className={style.profile_follow_div}>
             <div className={style.profile_follow}>
               <div className={style.follow_div}>
@@ -130,12 +125,18 @@ const Profile = () => {
                 <p className={style.follow_name}>Trips</p>
               </div>
             </div>
-            <div className={style.suggested_container}>
-              <button onClick={() => setIsShow((prev) => !prev)} className={style.edit_btn}>Suggestion for you</button>
-            </div>
+
             {isShow && <SuggestedUsers onClose={() => setIsShow(false)} />}
           </div>
         </section>
+        <div className={style.button_div}>
+          <button
+            className={style.edit_btn}
+            onClick={() => router.push("/profile/editprofile")}>
+            Edit Profile
+          </button>
+          <button onClick={() => setIsShow((prev) => !prev)} className={style.edit_btn}>Suggestion for you</button>
+        </div>
       </section>
 
       <section className={style.trip_story_div}>

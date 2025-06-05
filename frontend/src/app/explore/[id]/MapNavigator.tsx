@@ -49,7 +49,7 @@ const calculateDistance = (pos1: LatLngExpression, pos2: LatLngExpression): numb
     Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-  return R * c; // in meters
+  return R * c; 
 };
 
 export default function MapNavigator({ source, destination, onClose }: Props) {

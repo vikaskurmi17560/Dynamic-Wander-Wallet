@@ -64,7 +64,7 @@
 
 .profile_data_div {
     /* border: 1px solid black; */
-    height: 40vh;
+    height: 30vh;
     width: 50%;
     padding: 2em;
 }
@@ -98,17 +98,29 @@
     /* border: 1px solid black; */
 }
 
+.button_div {
+    display: flex;
+    justify-content: space-between;
+    padding: 0em 0.2em;
+    margin: 1em 0em;
+}
+
 .edit_btn {
     font-family: sans-serif;
     text-transform: uppercase;
-    padding: 10px 24px;
+    /* padding: 10px 24px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #2563eb;
     color: white;
     font-weight: 300;
+    font-size: auto;
     border: none;
     border-radius: 2px;
     cursor: pointer;
-    width: 100%;
+    width: 49%;
+    height: 6vh;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -118,31 +130,33 @@
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
+
 .profile_follow_div {
+    height: 30vh;
     width: 50%;
     /* border: 1px solid green; */
-    padding: 2em;
+    /* padding: 2em; */
     display: flex;
     flex-direction: column;
-    gap: 6em;
+    gap: 7.3em;
     justify-content: center;
     /* border:1px solid black; */
 }
 
 .profile_follow {
     display: flex;
-    gap: 3em;
+    gap: 2.7em;
     justify-content: center;
-    /* border:1px solid black; */
-    height: 15vh;
-    width: 99%;
+    /* border: 1px solid black; */
+    /* height: 45rem; */
+    width: 100%;
     border-radius: 7px;
-    background-color: whitesmoke;
+
 }
 
 .follow_div {
     /* border : 1px solid black; */
-    height: 15vh;
+    /* height: 15vh; */
     width: 10vh;
     display: flex;
     flex-direction: column;
@@ -164,7 +178,7 @@
     color: rgb(73, 73, 73);
 }
 
-.trip_story_div{
+.trip_story_div {
     /* border: 1px solid black; */
     display: flex;
     gap: 2em;
@@ -176,7 +190,7 @@
     font-family: sans-serif;
 }
 
-.story_image_div{
+.story_image_div {
     max-width: 35vh;
     height: 100%;
     display: flex;
@@ -187,14 +201,14 @@
     /* border: 1px solid red; */
 }
 
-.img{
+.img {
     max-width: 18vh;
     height: 18vh;
     border: 5px solid white;
     border-radius: 50%;
 }
 
-.story_city{
+.story_city {
     color: black;
     font-size: 1em;
     text-transform: uppercase;
@@ -206,19 +220,19 @@
     /* border: 1px solid red; */
 }
 
-.container_combine{
+.container_combine {
     background-color: white;
     width: 98%;
     min-height: 60vh;
 }
 
-.heading_container{
+.heading_container {
     display: flex;
     width: 100%;
     border: 1px solid balck;
 }
 
-.box{
+.box {
     width: 33.5%;
     padding-top: 0.6em;
     height: 6vh;
@@ -231,11 +245,66 @@
     border-bottom: 1px solid rgb(220, 220, 220);
 }
 
-.onclick{
+.onclick {
     border-bottom: 2px solid rgb(49, 49, 49);
 }
 
-.profile_post_data{
+.profile_post_data {
     height: auto;
     width: 100%;
+}
+
+@media screen and (max-width:816px) {
+    .profile_follow {
+        display: flex;
+        gap: 1em;
+        justify-content: center;
+        /* border: 1px solid black; */
+        /* height: 45rem; */
+        width: 100%;
+        border-radius: 7px;
+
+    }
+
+    .follow_number {
+        font-size: 1.5em;
+        font-weight: 500;
+        color: black;
+    }
+
+    .follow_name {
+        font-size: 1em;
+        font-weight: 200;
+        color: rgb(73, 73, 73);
+    }
+}
+
+@media screen and (max-width : 590px) {
+    .profile_container_data {
+        /* border: 2px solid red; */
+        height: auto;
+        gap: 0.5em;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .profile_data_div {
+        /* border: 1px solid black; */
+        height: 25vh;
+        width: 100%;
+        padding: 1em;
+    }
+
+    .profile_follow_div {
+        height: 10vh;
+        width: 100%;
+        /* border: 1px solid green; */
+        /* padding: 2em; */
+        display: flex;
+        flex-direction: column;
+        gap: 7.3em;
+        justify-content: center;
+        /* border:1px solid black; */
+    }
 }

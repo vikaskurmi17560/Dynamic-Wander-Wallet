@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     margin-top: 15vh;
-    /* min-height: 100vh; */
     padding: 2em;
 }
 
@@ -82,3 +81,9 @@
     color: #4338ca;
 }
 
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin: 0%;
+    padding: 0%;
+}

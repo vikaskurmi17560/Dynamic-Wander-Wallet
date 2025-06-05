@@ -129,3 +129,8 @@
 .remember_name{
     color: rgb(59, 59, 59);
 }
+
+.error{
+    color: red;
+    font-size: 0.9em;
+}
