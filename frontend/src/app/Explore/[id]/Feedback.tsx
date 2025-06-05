@@ -52,7 +52,7 @@ const Feedback: React.FC<FeedbackProps> = ({ tripId }) => {
         setLoading(true);
         try {
             const response = await axios.get<{ success: boolean; trip: Trip }>(
-                'http://localhost:7050/api/v1/trip/getbyid',
+                'https://dynamic-wander-wallet.onrender.com/api/v1/trip/getbyid',
                 {
                     params: { trip_id: tripId },
                 }
@@ -65,7 +65,7 @@ const Feedback: React.FC<FeedbackProps> = ({ tripId }) => {
                     rawReviews.map(async (rev) => {
                         try {
                             const userRes = await axios.get<{ success: boolean; user: User }>(
-                                'http://localhost:7050/api/v1/user/get-user',
+                                'https://dynamic-wander-wallet.onrender.com/api/v1/user/get-user',
                                 { params: { user_id: rev.reviewBy } }
                             );
                             return {
@@ -113,7 +113,7 @@ const Feedback: React.FC<FeedbackProps> = ({ tripId }) => {
         };
 
         try {
-            const res = await fetch('http://localhost:7050/api/v1/trip/updateData', {
+            const res = await fetch('https://dynamic-wander-wallet.onrender.com/api/v1/trip/updateData', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),

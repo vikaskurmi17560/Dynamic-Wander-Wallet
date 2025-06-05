@@ -76,7 +76,7 @@ const Checkpoint = () => {
 
     const fetchTripDetails = async (id: string) => {
         try {
-            const response = await axios.post("http://localhost:7050/api/v1/trip/fetch", { _id: id });
+            const response = await axios.post("https://dynamic-wander-wallet.onrender.com/api/v1/trip/fetch", { _id: id });
             if (response.data) {
                 setTripData(response.data);
             } else {

@@ -44,7 +44,7 @@ const BonusPage = () => {
 
     const loadUser = async () => {
         try {
-            const res = await axios.get("http://localhost:7050/api/v1/user/get-user", {
+            const res = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/user/get-user", {
                 params: { user_id: userId },
             });
             setUser(res.data?.user || res.data);

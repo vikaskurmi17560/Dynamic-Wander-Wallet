@@ -80,7 +80,7 @@ const ReelPage = () => {
         console.log(video.name, video.type, video.size);
         try {
             const res = await axios.post(
-                `http://localhost:7050/api/v1/post/create?user_id=${userId}`,
+                `https://dynamic-wander-wallet.onrender.com/api/v1/post/create?user_id=${userId}`,
                 data,
                 { headers: { 'Content-Type': 'multipart/form-data' } }
             );

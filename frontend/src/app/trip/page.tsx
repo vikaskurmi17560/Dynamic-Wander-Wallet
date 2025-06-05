@@ -74,7 +74,7 @@ const Trip = () => {
         setLoading(true);
         try {
             const response = await axios.post(
-                "http://localhost:7050/api/v1/trip/create",
+                "https://dynamic-wander-wallet.onrender.com/api/v1/trip/create",
                 tripData,
                 { headers: { "Content-Type": "application/json" } }
             );

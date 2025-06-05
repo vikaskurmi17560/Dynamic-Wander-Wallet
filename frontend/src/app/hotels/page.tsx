@@ -111,7 +111,7 @@ const Hotels = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:7050/api/v1/hotel/create`,
+        `https://dynamic-wander-wallet.onrender.com/api/v1/hotel/create`,
         updatedFormData,
         { headers: { "Content-Type": "application/json" } }
       );

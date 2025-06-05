@@ -39,7 +39,7 @@ const UploadImages: React.FC<UploadImagesProps> = ({ tripId }) => {
 
     const fetchTripData = async () => {
         try {
-            const response = await axios.post("http://localhost:7050/api/v1/trip/fetch", {
+            const response = await axios.post("https://dynamic-wander-wallet.onrender.com/api/v1/trip/fetch", {
                 _id: tripId,
             });
 
@@ -69,7 +69,7 @@ const UploadImages: React.FC<UploadImagesProps> = ({ tripId }) => {
 
         try {
             await axios.post(
-                `http://localhost:7050/api/v1/trip/update-trip?trip_id=${tripId}`,
+                `https://dynamic-wander-wallet.onrender.com/api/v1/trip/update-trip?trip_id=${tripId}`,
                 formData,
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
@@ -91,7 +91,7 @@ const UploadImages: React.FC<UploadImagesProps> = ({ tripId }) => {
 
         try {
             await axios.post(
-                `http://localhost:7050/api/v1/trip/update-trip?trip_id=${tripId}`,
+                `https://dynamic-wander-wallet.onrender.com/api/v1/trip/update-trip?trip_id=${tripId}`,
                 formData,
                 { headers: { "Content-Type": "multipart/form-data" } }
             );

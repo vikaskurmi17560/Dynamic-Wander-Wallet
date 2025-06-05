@@ -47,14 +47,14 @@ const Reels = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:7050/api/v1/post/getallpost");
+        const response = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/post/getallpost");
         const postsData: Post[] = response.data;
         const videoPosts = postsData.filter((post) => isVideo(post.image));
 
         const postsWithUsers = await Promise.all(
           videoPosts.map(async (post) => {
             try {
-              const userRes = await axios.get("http://localhost:7050/api/v1/user/get-user", {
+              const userRes = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/user/get-user", {
                 params: { user_id: post.postedBy },
               });
               return { ...post, postedUser: userRes.data.user };

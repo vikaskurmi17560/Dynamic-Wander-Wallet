@@ -33,7 +33,7 @@ const WanderPoint: React.FC<WanderPointProps> = ({ WanderPoint, badgeUsageHistor
 
             await Promise.all(uniqueProductIds.map(async (id) => {
                 try {
-                    const res = await axios.get(`http://localhost:7050/api/v1/product/get`, {
+                    const res = await axios.get(`https://dynamic-wander-wallet.onrender.com/api/v1/product/get`, {
                         params: { productId: id },
                     });
                     productMap[id] = res.data;

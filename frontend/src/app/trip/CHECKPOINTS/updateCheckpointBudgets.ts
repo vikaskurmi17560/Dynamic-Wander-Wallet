@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const updateCheckpointBudgets = async (tripId: string, userId: string) => {
   try {
-    const checkpointRes = await axios.get(`http://localhost:7050/api/v1/checkpoint/getbytripid`, {
+    const checkpointRes = await axios.get(`https://dynamic-wander-wallet.onrender.com/api/v1/checkpoint/getbytripid`, {
       params: { tripId },
     });
 
@@ -12,7 +12,7 @@ export const updateCheckpointBudgets = async (tripId: string, userId: string) =>
 
    
     for (const checkpoint of checkpoints) {
-      const res = await axios.post(`http://localhost:7050/api/v1/checkpoint/budget`, null, {
+      const res = await axios.post(`https://dynamic-wander-wallet.onrender.com/api/v1/checkpoint/budget`, null, {
         params: { checkpoint_id: checkpoint._id },
       });
 
@@ -24,7 +24,7 @@ export const updateCheckpointBudgets = async (tripId: string, userId: string) =>
  
     const earnBadgePoint = Math.floor(Math.random() * (100 - 60 + 1)) + 60;
 
-    const tripRes = await axios.post(`http://localhost:7050/api/v1/trip/createBudget`, {
+    const tripRes = await axios.post(`https://dynamic-wander-wallet.onrender.com/api/v1/trip/createBudget`, {
       userId,
       Earnbadge_point: earnBadgePoint,
     }, {
