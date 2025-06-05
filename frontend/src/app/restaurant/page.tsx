@@ -111,7 +111,7 @@ const Restaurant = () => {
 
         try {
             const response = await axios.post(
-                `https://dynamic-wander-wallet.onrender.com/api/v1/restaurant/create`,
+                `http://localhost:7050/api/v1/restaurant/create`,
                 updatedFormData,
                 { headers: { "Content-Type": "application/json" } }
             );

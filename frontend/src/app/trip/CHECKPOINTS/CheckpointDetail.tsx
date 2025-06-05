@@ -57,7 +57,7 @@ const CheckpointDetail = () => {
 
     async function fetchCheckpoints() {
       try {
-        const res = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/checkpoint/getbytripid", {
+        const res = await axios.get("http://localhost:7050/api/v1/checkpoint/getbytripid", {
           params: { tripId },
         });
 

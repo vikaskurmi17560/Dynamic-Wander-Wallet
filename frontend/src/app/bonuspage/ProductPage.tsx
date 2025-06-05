@@ -28,7 +28,7 @@ const ProductPage = ({ WanderPoint, onPurchaseSuccess }: ProductPageProps) => {
     const { userId } = useData();
     const fetchProducts = async () => {
         try {
-            const res = await fetch("https://dynamic-wander-wallet.onrender.com/api/v1/product/getall");
+            const res = await fetch("http://localhost:7050/api/v1/product/getall");
             if (!res.ok) throw new Error("Failed to fetch products");
             const data: Product[] = await res.json();
             setProducts(data);
@@ -60,7 +60,7 @@ const ProductPage = ({ WanderPoint, onPurchaseSuccess }: ProductPageProps) => {
         }
 
         try {
-            const res = await fetch("https://dynamic-wander-wallet.onrender.com/api/v1/user/useBadgePoint", {
+            const res = await fetch("http://localhost:7050/api/v1/user/useBadgePoint", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -75,7 +75,7 @@ const ProductPage = ({ WanderPoint, onPurchaseSuccess }: ProductPageProps) => {
             const data = await res.json();
             const cashback = price <= 500 ? 40 : price <= 1000 ? 80 : price <= 1500 ? 100 : price <= 2000 ? 150 : 250;
 
-            const responce = await axios.post("https://dynamic-wander-wallet.onrender.com/api/v1/product/cashback", { cashback, userId }, {
+            const responce = await axios.post("http://localhost:7050/api/v1/product/cashback", { cashback, userId }, {
                 headers: {
                     "content-Type": "application/json"
                 }

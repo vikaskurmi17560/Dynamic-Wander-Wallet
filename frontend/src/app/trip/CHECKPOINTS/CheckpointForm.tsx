@@ -146,7 +146,7 @@ const CheckpointForm: React.FC<CheckpointFormProps> = ({ onCheckpointAdded }) =>
 
         try {
             const response = await axios.post(
-                `https://dynamic-wander-wallet.onrender.com/api/v1/checkpoint/create?userId=${userId}`,
+                `http://localhost:7050/api/v1/checkpoint/create?userId=${userId}`,
                 newCheckpoint,
                 {
                     headers: { "Content-Type": "application/json" }

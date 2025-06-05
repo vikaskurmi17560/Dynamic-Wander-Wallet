@@ -20,7 +20,7 @@ const VouchersPage: React.FC = () => {
        
         const fetchVouchers = async () => {
             try {
-                const response = await fetch("https://dynamic-wander-wallet.onrender.com/api/v1/voucher/vouchers");
+                const response = await fetch("http://localhost:7050/api/v1/voucher/vouchers");
                 if (!response.ok) {
                     throw new Error("Failed to fetch data");
                 }

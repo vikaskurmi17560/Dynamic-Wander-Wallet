@@ -109,7 +109,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
 
     const fetchLikes = async () => {
         try {
-            const res = await axios.get(`https://dynamic-wander-wallet.onrender.com/api/v1/post/like/getalldata`, {
+            const res = await axios.get(`http://localhost:7050/api/v1/post/like/getalldata`, {
                 params: { post_id: post._id },
             });
             const allLikes = res.data.likes || [];
@@ -133,7 +133,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                 post_id: post._id,
                 user_id: userId,
             });
-            const response = await axios.post(`https://dynamic-wander-wallet.onrender.com/api/v1/post/like/create`, {
+            const response = await axios.post(`http://localhost:7050/api/v1/post/like/create`, {
                 post_id: post._id,
                 user_id: userId,
             });
@@ -154,7 +154,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
     const fetchComments = async () => {
         try {
             const res = await axios.get(
-                `https://dynamic-wander-wallet.onrender.com/api/v1/post/comment/getbypost?post_id=${post._id}`
+                `http://localhost:7050/api/v1/post/comment/getbypost?post_id=${post._id}`
             );
 
             const commentsData = res.data.comments || [];
@@ -167,7 +167,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
     const handleAddComment = async () => {
         if (!newComment.trim()) return;
         try {
-            await axios.post(`https://dynamic-wander-wallet.onrender.com/api/v1/post/comment/create`, {
+            await axios.post(`http://localhost:7050/api/v1/post/comment/create`, {
                 post_id: post._id,
                 user_id: userId,
                 text: newComment,
@@ -180,7 +180,7 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
     };
     const handleDeletePost = async () => {
         try {
-            const response = await axios.delete(`https://dynamic-wander-wallet.onrender.com/api/v1/post/delete`, {
+            const response = await axios.delete(`http://localhost:7050/api/v1/post/delete`, {
                 params: { post_id: post._id },
                 data: { userId },
             });

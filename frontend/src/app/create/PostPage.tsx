@@ -81,7 +81,7 @@ const CreatePost = () => {
 
     try {
       const res = await axios.post(
-        `https://dynamic-wander-wallet.onrender.com/api/v1/post/create?user_id=${formData.postedBy}`,
+        `http://localhost:7050/api/v1/post/create?user_id=${formData.postedBy}`,
         data,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );

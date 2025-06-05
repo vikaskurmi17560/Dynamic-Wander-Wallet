@@ -32,7 +32,7 @@ const MyTrip = () => {
       setLoading(true);
       try {
         const res = await axios.get(
-          `https://dynamic-wander-wallet.onrender.com/api/v1/trip/getbyuserid?userId=${userId}`
+          `http://localhost:7050/api/v1/trip/getbyuserid?userId=${userId}`
         );
         setTrips(res.data.trips || []);
         console.log(res.data);

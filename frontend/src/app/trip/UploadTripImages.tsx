@@ -24,7 +24,7 @@ const UploadTripImages = () => {
         }
         try {
             const response = await axios.post(
-                `https://dynamic-wander-wallet.onrender.com/api/v1/trip/update-trip?trip_id=${tripId}`,
+                `http://localhost:7050/api/v1/trip/update-trip?trip_id=${tripId}`,
                 formData,
                 {
                     headers: {

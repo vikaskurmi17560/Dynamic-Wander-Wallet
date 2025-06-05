@@ -78,7 +78,7 @@ const Page = () => {
         const fetchCheckpoints = async () => {
             setLoading(true);
             try {
-                const res = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/checkpoint/getbytripid", {
+                const res = await axios.get("http://localhost:7050/api/v1/checkpoint/getbytripid", {
                     params: { tripId },
                 });
                 setCheckpoints(res.data.checkpoints || []);
@@ -98,7 +98,7 @@ const Page = () => {
 
         const fetchTripData = async () => {
             try {
-                const response = await axios.post("https://dynamic-wander-wallet.onrender.com/api/v1/trip/fetch", { _id: tripId });
+                const response = await axios.post("http://localhost:7050/api/v1/trip/fetch", { _id: tripId });
                 const trip = response.data;
                 if (!trip) return alert("Trip data not found!");
 
@@ -156,10 +156,10 @@ const Page = () => {
         const fetchHotelsAndRestaurants = async () => {
             try {
                 const [hotelRes, restaurantRes] = await Promise.all([
-                    axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/hotel/getbycheckpointid", {
+                    axios.get("http://localhost:7050/api/v1/hotel/getbycheckpointid", {
                         params: { checkpointId: activeCheckpoint._id },
                     }),
-                    axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/restaurant/getcheckpoint", {
+                    axios.get("http://localhost:7050/api/v1/restaurant/getcheckpoint", {
                         params: { checkpoint_id: activeCheckpoint._id },
                     }),
                 ]);

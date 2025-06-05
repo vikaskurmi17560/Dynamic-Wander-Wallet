@@ -50,7 +50,7 @@ const Explore: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/trip/alltrip");
+        const res = await axios.get("http://localhost:7050/api/v1/trip/alltrip");
         const sortedTrips = res.data.sort(
           (a: Trip, b: Trip) =>
             new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime()
@@ -75,7 +75,7 @@ const Explore: React.FC = () => {
       await Promise.all(
         uniqueUserIds.map(async (userId) => {
           try {
-            const res = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/user/get-user", {
+            const res = await axios.get("http://localhost:7050/api/v1/user/get-user", {
               params: { user_id: userId },
             });
             profiles[userId] = res.data.user;

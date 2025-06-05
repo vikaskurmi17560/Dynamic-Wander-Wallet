@@ -21,7 +21,7 @@ const ScratchPage: React.FC<ScratchPageProps> = ({ onPurchaseSuccess }) => {
 
   const fetchCashback = async () => {
     try {
-      const res = await axios.get("https://dynamic-wander-wallet.onrender.com/api/v1/user/get-user", {
+      const res = await axios.get("http://localhost:7050/api/v1/user/get-user", {
         params: { user_id: userId },
       });
 
@@ -47,7 +47,7 @@ const ScratchPage: React.FC<ScratchPageProps> = ({ onPurchaseSuccess }) => {
       hasHandled.current = true;
 
       const res = await axios.post(
-        "https://dynamic-wander-wallet.onrender.com/api/v1/product/cashback",
+        "http://localhost:7050/api/v1/product/cashback",
         { cashback, userId },
         { headers: { "Content-Type": "application/json" } }
       );
