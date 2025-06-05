@@ -85,7 +85,7 @@ const ReelPage = () => {
                 { headers: { 'Content-Type': 'multipart/form-data' } }
             );
 
-            router.push('/');
+            router.push('/blog');
             setFormData({
                 description: '',
                 tags: '',
