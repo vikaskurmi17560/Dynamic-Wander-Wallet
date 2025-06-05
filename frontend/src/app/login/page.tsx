@@ -76,7 +76,7 @@ export default function Page() {
             />
           </div>
 
-          <button type="submit" className={`${styles.button} bg-blue-200 cursor-pointer hover:bg-blue-900 text-white p-2 rounded-full shadow-md rounded-md`}>
+          <button type="submit" className={`${styles.button} bg-blue-200 cursor-pointer hover:bg-blue-900 text-white p-2 focus:p-4 rounded-full shadow-md rounded-md`}>
             Sign in
           </button>
         </form>

@@ -178,7 +178,7 @@ const EditProfile = () => {
                     <button
                         type="submit"
                         onClick={handleUpdate}
-                        className="w-full bg-indigo-600 text-white py-2 rounded-md text-sm font-semibold shadow-sm hover:bg-indigo-500"
+                        className="w-full bg-indigo-600 text-white bg-blue-200 cursor-pointer focus-p4 hover:bg-blue-900 text-white p-2  shadow-md rounded-md text-sm font-semibold shadow-sm"
                     >
                         Save Changes
                     </button>
