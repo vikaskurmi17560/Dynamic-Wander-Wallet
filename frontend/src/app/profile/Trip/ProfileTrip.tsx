@@ -34,8 +34,8 @@ const ProfileTrip: React.FC<ProfileTripProps> = ({ isDisabled, userId }) => {
     const [isGallery, setIsGallery] = useState(false);
     const [isUrl, setIsUrl] = useState("");
     const [uploadedData, setUploadedData] = useState<{
-        cover_image?: string;
-        image?: string[];
+        cover_image?: string ;
+        image?: string[] ;
     }>({});
     const [isSetting, setIsSetting] = useState(false);
     const [isDelete, setIsDelete] = useState(false);

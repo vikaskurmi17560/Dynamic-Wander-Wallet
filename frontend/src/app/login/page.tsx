@@ -89,15 +89,8 @@ export default function Page() {
               className={styles.input}
             />
           </div>
-<<<<<<< HEAD
-          {
-            isError && <p className={styles.error}>{isError}</p>
-          }
-          <button type="submit" className={styles.button}>
-=======
 
           <button type="submit" className={`${styles.button} bg-blue-200 cursor-pointer hover:bg-blue-900 text-white p-2 focus:p-4 rounded-full shadow-md rounded-md`}>
->>>>>>> 14e46be1eacf0a14649fe1976a5c034e08a90f2e
             Sign in
           </button>
         </form>
