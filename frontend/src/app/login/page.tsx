@@ -76,7 +76,7 @@ export default function Page() {
             />
           </div>
 
-          <button type="submit" className={`${styles.button} bg-blue-400 cursor-pointer hover:bg-blue-700 text-white p-2 rounded-full shadow-md`}>
+          <button type="submit" className={`${styles.button} bg-blue-200 cursor-pointer hover:bg-blue-900 text-white p-2 rounded-full shadow-md rounded-md`}>
             Sign in
           </button>
         </form>
@@ -85,7 +85,7 @@ export default function Page() {
             <input type="checkbox" className={styles.remember_input} />
             <p className={styles.remember_name}>Remember me</p>
           </div>
-          <button className={`${styles.forget_btn} bg-blue-400 cursor-pointer hover:bg-blue-700 text-white p-2 rounded-full shadow-md`} onClick={() => router.push("/login/forget_password")} >Forget Password?</button>
+          <button className={styles.forget_btn} onClick={() => router.push("/login/forget_password")} >Forget Password?</button>
         </div>
         <p className={styles.footerText}>
           Not a member?{" "}
