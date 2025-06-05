@@ -41,7 +41,7 @@ const ForgetPassword = () => {
                     className={styles.email}
                     placeholder='Email'
                 />
-                <button type='submit' className={styles.button}>Send Request Link</button>
+                <button type='submit' className={`${styles.button} bg-blue-200 cursor-pointer focus-p4 hover:bg-blue-900 text-white p-2 rounded-full shadow-md rounded-md`}>Send Request Link</button>
             </form>
         </div>
     )

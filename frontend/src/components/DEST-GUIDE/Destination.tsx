@@ -36,13 +36,13 @@ const Destination = () => {
     };
 
     const Photo = [
-        "/Images/Destination/tajmahal.jpeg", "/Images/Destination/jaipur.jpg", "/Images/Destination/ladak.jpg",
-        "/Images/Destination/goa.jpg", "/Images/Destination/kerala.jpg", "/Images/Destination/manali.jpg",
-        "/Images/Destination/varanshi.jpeg", "/Images/Destination/rishikesh.jpeg", "/Images/Destination/andaman.jpg",
-        "/Images/Destination/darjeling.jpg", "/Images/Destination/udaipur.jpg", "/Images/Destination/coorg.jpg",
-        "/Images/Destination/shillong.jpg", "/Images/Destination/hampi.jpg", "/Images/Destination/ooty.jpg",
-        "/Images/Destination/amristar.jpg", "/Images/Destination/kaziranga.jpeg", "/Images/Destination/ranthambore.cms",
-        "/Images/Destination/auli.jpg"
+        "/images/Destination/tajmahal.jpeg","/images/Destination/Jaipur.jpg", "/images/Destination/ladak.jpg",
+        "/images/Destination/Goa.jpg", "/images/Destination/kerala.jpg", "/images/Destination/manali.jpg",
+        "/images/Destination/varanshi.jpeg", "/images/Destination/rishikesh.jpeg", "/images/Destination/andaman.jpg",
+        "/images/Destination/darjeling.jpg", "/images/Destination/udaipur.jpg", "/images/Destination/coorg.jpg",
+        "/images/Destination/shillong.jpg", "/images/Destination/hampi.jpg", "/images/Destination/ooty.jpg",
+        "/images/Destination/amristar.jpg", "/images/Destination/kaziranga.jpeg",
+        "/images/Destination/auli.jpg"
     ];
 
     const visiblePlaces = Places.slice(currentIndex, currentIndex + cardsPerView);

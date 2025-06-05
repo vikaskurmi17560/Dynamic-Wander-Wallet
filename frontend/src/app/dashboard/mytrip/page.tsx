@@ -60,7 +60,7 @@ const MyTrip = () => {
             <div key={trip._id} className={style.box}>
               <div className={style.img_div}>
                 <Image
-                  src={trip.cover_image || "/images/Daskboard/Mytrip.jpg"}
+                  src={trip.cover_image || "/images/Daskboard/mytrip.jpg"}
                   className={style.img}
                   alt={trip.tripName}
                   height={500}

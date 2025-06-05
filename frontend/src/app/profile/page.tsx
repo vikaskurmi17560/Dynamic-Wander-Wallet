@@ -135,6 +135,7 @@ const Profile = () => {
             onClick={() => router.push("/profile/editprofile")}>
             Edit Profile
           </button>
+
           <button onClick={() => setIsShow((prev) => !prev)} className={style.edit_btn}>Suggestion for you</button>
         </div>
       </section>

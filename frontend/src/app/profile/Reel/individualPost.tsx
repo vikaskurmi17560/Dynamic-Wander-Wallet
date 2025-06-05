@@ -337,10 +337,10 @@ const IndividualPost: React.FC<IndividualPostProps> = ({
                     </div>
                 </div>
 
-                <button onClick={onPrev} className={style.modalNavLeft}>
+                <button onClick={onPrev} className={`${style.modalNavLeft} bg-blue-200 cursor-pointer focus-p4 hover:bg-blue-900 text-white p-2  shadow-md rounded-md`}>
                     <FontAwesomeIcon icon={faChevronLeft} />
                 </button>
-                <button onClick={onNext} className={style.modalNavRight}>
+                <button onClick={onNext} className={`${style.modalNavRight} bg-blue-200 cursor-pointer focus-p4 hover:bg-blue-900 text-white p-2  shadow-md rounded-md`}>
                     <FontAwesomeIcon icon={faChevronRight} />
                 </button>
                 <FontAwesomeIcon icon={faTimes} onClick={onClose} className={style.modalClose} />
