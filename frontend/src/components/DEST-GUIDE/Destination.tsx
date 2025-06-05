@@ -36,12 +36,12 @@ const Destination = () => {
     };
 
     const Photo = [
-        "/images/Destination/tajmahal.jpeg", "/images/Destination/jaipur.jpg", "/images/Destination/ladak.jpg",
-        "/images/Destination/goa.jpg", "/images/Destination/kerala.jpg", "/images/Destination/manali.jpg",
+        "/images/Destination/tajmahal.jpeg","/images/Destination/Jaipur.jpg", "/images/Destination/ladak.jpg",
+        "/images/Destination/Goa.jpg", "/images/Destination/kerala.jpg", "/images/Destination/manali.jpg",
         "/images/Destination/varanshi.jpeg", "/images/Destination/rishikesh.jpeg", "/images/Destination/andaman.jpg",
         "/images/Destination/darjeling.jpg", "/images/Destination/udaipur.jpg", "/images/Destination/coorg.jpg",
         "/images/Destination/shillong.jpg", "/images/Destination/hampi.jpg", "/images/Destination/ooty.jpg",
-        "/images/Destination/amristar.jpg", "/images/Destination/kaziranga.jpeg", "/images/Destination/ranthambore.cms",
+        "/images/Destination/amristar.jpg", "/images/Destination/kaziranga.jpeg",
         "/images/Destination/auli.jpg"
     ];
 

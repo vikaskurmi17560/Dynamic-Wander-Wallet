@@ -153,15 +153,6 @@ const Destination = [
         image: "https://source.unsplash.com/600x400/?kaziranga",
     },
     {
-        name: "Ranthambore National Park",
-        location: "Rajasthan",
-        type: "Wildlife & Safaris",
-        description:
-            "A renowned wildlife sanctuary known for its tiger population and ancient Ranthambore Fort.",
-        link: "https://www.ranthamborenationalpark.com/",
-        image: "https://source.unsplash.com/600x400/?ranthambore",
-    },
-    {
         name: "Auli",
         location: "Uttarakhand",
         type: "Skiing & Mountains",
